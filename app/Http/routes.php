@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('/producto/update', "ProductoController@update");
+Route::post('/usuario/update', "UsuarioController@update");
