@@ -5,22 +5,25 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
-{ 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+{
+  protected $fillable = [
+    'nombre',
+    'email',
+    'password',
+    'calle',
+    'colonia',
+    'referencia',
+    'codigo_postal',
+    'imagen_usuario',
+    'tipo_usuario_id',
+    'remember_token'
+  ];
+  protected $hidden = [
+      'password',
+      'remember_token'
+  ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+  public function setPasswordAttribute($value) {
+    $this->attributes['password'] = bcrypt($value);
+  }
 }

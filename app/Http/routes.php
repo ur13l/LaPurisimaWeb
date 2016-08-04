@@ -16,5 +16,15 @@ Route::get('/', function () {
 });
 
 
+
+
+Route::get('/photo', function(){
+  return view('pruebaPhoto');
+});
+
 Route::post('/producto/update', "ProductoController@update");
-Route::post('/usuario/update', "UsuarioController@update");
+
+Route::post('/usuario/update', "UserController@update");
+Route::post('/usuario/authenticate', "UserController@authenticate");
+Route::post('/usuario/create', "UserController@create");
+Route::post('/usuario/uploadPhoto', "UserController@uploadPhoto");

@@ -9,11 +9,19 @@ use App\Producto;
 
 class ProductoController extends Controller
 {
-    public function update(Request $request){
-      Producto::create($request->all());
-      return response()->json([
-        "success" => $request->all()
-      ]);
-    }
+
+  public function create(Request $request){
+    Producto::create($request->all());
+    return response()->json([
+      "success" => $request->all()
+    ]);
+  }
+
+  public function update(Request $request){
+    Producto::create($request->all());
+    return response()->json([
+      "success" => $request->all()
+    ]);
+  }
 
 }
