@@ -14,8 +14,9 @@
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
-        "laravelcollective/html": "~5.0"
-
+        "laravelcollective/html": "~5.0",
+        "guzzlehttp/guzzle": "~4.0",
+        "caouecs/laravel-lang": "~3.0"
     },
     "autoload": {
         "classmap": [

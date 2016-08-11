@@ -10,6 +10,12 @@ use Auth;
 
 use App\User;
 
+use Carbon\Carbon;
+
+use App\CodigoPassword;
+
+use Mail;
+
 class UserController extends Controller
 {
   /**
@@ -19,9 +25,20 @@ class UserController extends Controller
    * @return [string] [JSON con success, puede ser true o false]
    */
   public function create(Request $request){
-    $user = User::create($request->all());
+    $user = User::where('email', '=', $request->input('email'))->first();
+    if ($user === null) {
+      $user = User::create($request->all());
+      $codigo = CodigoPassword::create([
+        "user_id" => $user->id,
+      ]);
+      $success = $user->exists() && $codigo->exists();
+    }
+    //Se ejecuta cuando el usuario ya existe.
+    else {
+      $success = false;
+    }
     return response()->json([
-      "success" => $user->exists()
+      "success" => $success
     ]);
   }
 
@@ -80,5 +97,30 @@ class UserController extends Controller
     return response()->json([
       "success" => "false"
     ]);
+  }
+
+  /**
+   * Función para devolver el password de contraseña de un usuario
+   * @param  Request $request [description]
+   * @return [type]           [description]
+   */
+  public function sendPasswordCode(Request $request){
+    $user = User::where('email', $request->input('email'))->first();
+    var_dump($user);
+    $codigo = CodigoPassword::where('user_id', $user->  id)->first();
+    $codigo->codigo = str_random(5);
+    $codigo->vigencia = Carbon::now()->addMinutes(30);
+    $codigo->save();
+    Mail::send("email", [], function($message) {
+          $message->to($request->input('email'))
+          ->subject("Recupera tu contraseña!");
+    });
+    return response()->json([
+      "success" => "true"
+    ]);
+  }
+
+  public function sendEmail(Request $request){
+
   }
 }
