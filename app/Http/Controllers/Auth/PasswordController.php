@@ -40,6 +40,61 @@ class PasswordController extends Controller
         $this->passwords = $passwords;
     }
 
+    /**
+     * Send a reset link to the given user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postEmail(Request $request)
+    {
+        return $this->sendResetLinkEmail($request);
+    }
+
+    /**
+     * Send a reset link to the given user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResetLinkEmail(Request $request)
+    {
+        $this->validateSendResetLinkEmail($request);
+
+        $broker = $this->getBroker();
+
+        $response = Password::broker($broker)->sendResetLink(
+            $this->getSendResetLinkEmailCredentials($request),
+            $this->resetEmailBuilder()
+        );
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+              if($request->isJson()){
+                return response()->json([
+                  "success" => "true",
+                  "errors" => []
+                ]);
+              }
+              else{
+                return $this->getSendResetLinkEmailSuccessResponse($response);
+              }
+            case Password::INVALID_USER:
+            default:
+              if($request->isJson()){
+                return response()->json([
+                  "success" => "false",
+                  "errors" => [Password::INVALID_USER]
+                ]);
+              }
+              else {
+                return $this->getSendResetLinkEmailFailureResponse($response);
+              }
+
+        }
+    }
+
+
     public function postReset(Request $request){
       $this->validate(
           $request,
@@ -86,8 +141,12 @@ class PasswordController extends Controller
     }
 
     protected function getResetFailureResponse($request, $response){
+
         if($request->isJson()){
-          return response()->json(["error"=>$response]);
+          return response()->json([
+            "success" => "false",
+            "errors"=>[$response]
+          ]);
         }
         else{
           return redirect()->back()

@@ -15,19 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::auth();
+
 Route::post('/producto/update', "ProductoController@update");
 
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
-  Route::post('uploadPhoto', "UserController@uploadPhoto");
+  Route::post('uploadimage', "UserController@uploadImage");
   Route::post('update', "UserController@update");
 });
 Route::post('/usuario/authenticate', "UserController@authenticate");
 Route::post('/usuario/create', "UserController@create");
 
-
-
-Route::auth();
 Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 

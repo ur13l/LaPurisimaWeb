@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use Auth;
-
 use App\User;
-
 use Carbon\Carbon;
-
-use App\CodigoPassword;
-
 use Mail;
+use Validator;
 
 class UserController extends Controller
 {
@@ -25,20 +19,20 @@ class UserController extends Controller
    * @return [string] [JSON con success, puede ser true o false]
    */
   public function create(Request $request){
-    $user = User::where('email', '=', $request->input('email'))->first();
-    if ($user === null) {
-      $user = User::create($request->all());
-      $codigo = CodigoPassword::create([
-        "user_id" => $user->id,
-      ]);
-      $success = $user->exists() && $codigo->exists();
-    }
-    //Se ejecuta cuando el usuario ya existe.
-    else {
+    $rules = array('email' => 'unique:users,email');
+    $validator = Validator::make($request->all(), $rules);
+    $errors = [];
+    if ($validator->fails()) {
       $success = false;
+      $errors[] = "email.exists";
+    }
+    else{
+      $user = User::create($request->all());
+      $success = $user->exists();
     }
     return response()->json([
-      "success" => $success
+      "success" => var_export($success, true),
+      "errors" => $errors
     ]);
   }
 
@@ -71,11 +65,14 @@ class UserController extends Controller
   public function authenticate(Request $request){
     $email = $request->input('email');
     $password = $request->input('password');
+    $errors = ["bad.login"];
     if (Auth::once(['email' => $email, 'password' => $password ])) {
       return Auth::user();
     }
+
     return response()->json([
-      "success"=>"false"
+      "success"=>"false",
+      "errors" => $errors
     ]);
   }
 
@@ -84,7 +81,7 @@ class UserController extends Controller
    * @param  Request $request [description]
    * @return [type]           [description]
    */
-  public function uploadPhoto(Request $request){
+  public function uploadImage(Request $request){
     $file = $request->file('imagen_usuario');
     $id = $request->input('id');
     if ($file->isValid()) {
