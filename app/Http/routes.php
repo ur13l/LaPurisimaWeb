@@ -30,4 +30,8 @@ Route::post('/usuario/create', "UserController@create");
 Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
+Route::get('password/test', function(){
+  return view('auth.emails.password');
+});
+
 Route::get('/home', 'HomeController@index');
