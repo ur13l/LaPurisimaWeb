@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'celdesitl@gmail.com', 'name' => 'Uriel Infante'],
+    'from' => ['address' => 'lapurisima.info@gmail.com', 'name' => 'La Purísima'],
 
     /*
     |--------------------------------------------------------------------------
