@@ -229,8 +229,7 @@ apply necessary styling e.g. background-color.
                     <td align="left" class="textContent">
                       <div style=
                       "font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                      The introduction of your message preview goes here. Try to make it
-                      short.</div>
+                      Enlace para la recuperación de contraseña.</div>
                     </td>
                   </tr>
                 </table>
