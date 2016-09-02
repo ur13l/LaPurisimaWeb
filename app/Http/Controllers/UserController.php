@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use App\User;
+use App\Http\Controllers\ImageController;
 use Carbon\Carbon;
 use Mail;
 use Validator;
@@ -27,12 +28,15 @@ class UserController extends Controller
       $errors[] = "email.exists";
     }
     else{
-      $user = User::create($request->all());
-      $success = $user->exists();
+      $user = User::create($request->except('imagen_usuario'));
+      $data = $request->input('imagen_usuario');
+      $route = "storage/perfil/";
+      $user->imagen_usuario = ImageController::saveImage($data, $route, $user->id);
+      $success = $user->save();
     }
     return response()->json([
       "success" => var_export($success, true),
-      "errors" => $errors
+      "error" => $errors
     ]);
   }
 
@@ -43,11 +47,19 @@ class UserController extends Controller
    * @return [string] [JSON con success, puede ser true o false]
    */
   public function update(Request $request){
-    $id = $request->input('id');
-    $usuario = User::find($id);
+    $usuario = Auth::guard('api')->user();
     $saved = false;
     if($usuario->exists()){
-      $usuario->update($request->all());
+      if(base64_decode($request->input('imagen_usuario'))){
+        $usuario->update($request->except('imagen_usuario'));
+        $data = $request->input('imagen_usuario');
+        $route = "storage/perfil/";
+        $usuario->imagen_usuario = ImageController::saveImage($data, $route, $usuario->id);
+      }
+      else{
+        $usuario->update($request->all());
+      }
+
       $saved = $usuario->save();
     }
     return response()->json([
@@ -72,7 +84,7 @@ class UserController extends Controller
 
     return response()->json([
       "success"=>"false",
-      "errors" => $errors
+      "error" => $errors
     ]);
   }
 
@@ -96,28 +108,5 @@ class UserController extends Controller
     ]);
   }
 
-  /**
-   * Función para devolver el password de contraseña de un usuario
-   * @param  Request $request [description]
-   * @return [type]           [description]
-   */
-  public function sendPasswordCode(Request $request){
-    $user = User::where('email', $request->input('email'))->first();
-    var_dump($user);
-    $codigo = CodigoPassword::where('user_id', $user->  id)->first();
-    $codigo->codigo = str_random(5);
-    $codigo->vigencia = Carbon::now()->addMinutes(30);
-    $codigo->save();
-    Mail::send("email", [], function($message) {
-          $message->to($request->input('email'))
-          ->subject("Recupera tu contraseña!");
-    });
-    return response()->json([
-      "success" => "true"
-    ]);
-  }
 
-  public function sendEmail(Request $request){
-
-  }
 }

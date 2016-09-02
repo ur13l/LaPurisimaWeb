@@ -17,8 +17,10 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::post('/producto/update', "ProductoController@update");
-
+Route::group(['prefix' => 'producto', 'middleware' => 'auth:api'], function () {
+  Route::post('create', "ProductoController@create");
+  Route::post('update', "ProductoController@update");
+});
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
   Route::post('uploadimage', "UserController@uploadImage");
