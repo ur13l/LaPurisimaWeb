@@ -11,16 +11,25 @@ use Auth;
 class ProductoController extends Controller
 {
 
-  public function index(){
+    /**
+     * Llamada inicial de productos, muestra la vista de los productos para ser mostrados.
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+  public function index(Request $request){
     if(Auth::user()){
-      if(Auth::user()->tipo_usuario_id == 1)
-
-        $productos = Producto::all();
-        return view('productos.lista', ['productos' => $productos]);
+      if(Auth::user()->tipo_usuario_id == 1) {
+          $productos = Producto::paginate(10);
+          return view('productos.lista', ['productos' => $productos, 'message' => $request->message]);
+      }
     }
     return redirect()->action('HomeController@index');
   }
 
+    /**
+     * Método que devuelve la vista con el formulario para un nuevo producto.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
   public function nuevo(){
     if(Auth::user()){
       if(Auth::user()->tipo_usuario_id == 1)
@@ -29,13 +38,34 @@ class ProductoController extends Controller
     return redirect()->action('HomeController@index');
   }
 
+    /**
+     * Se devuelve la vista para el formulario para editar un producto.
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
   public function editar(Request $request){
     if(Auth::user()){
-      if(Auth::user()->tipo_usuario_id == 1)
-        return view('productos.form', ['action' => 'update', 'producto' => Producto::find($request->input('id'))]);
+        if(Auth::user()->tipo_usuario_id == 1)
+            return view('productos.form', ['action' => 'update', 'producto' => Producto::find($request->input('id'))]);
     }
     return redirect()->action('HomeController@index');
   }
+
+    /**
+     * Método de eliminar, recibe una petición con el ID del elemento a eliminar y realiza un soft delete.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function eliminar(Request $request){
+        if(Auth::user()){
+            if(Auth::user()->tipo_usuario_id == 1){
+                $producto = Producto::find($request->input('id'));
+                $producto->delete();
+            }
+        }
+        return redirect()->action('ProductoController@index', ['message' => 'delete']);
+    }
+
 
 
   /**
@@ -68,7 +98,7 @@ class ProductoController extends Controller
         }
       }
     }
-    return redirect()->action('HomeController@index');
+    return redirect()->action('ProductoController@index',['message' => 'create'] );
   }
 
   /**
@@ -102,7 +132,7 @@ class ProductoController extends Controller
         $producto->save();
       }
     }
-    return redirect()->action('HomeController@index');
+    return redirect()->action('ProductoController@index', ['message' => 'update']);
   }
 
 }

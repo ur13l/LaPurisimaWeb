@@ -16,6 +16,17 @@
           </div>
 
         <div class="panel-body">
+          @if(isset($message))
+            <div class="alert alert-info info">
+              @if($message == 'create')
+                Producto guardado con éxito.
+              @elseif ($message == 'update')
+                Producto actualizado con éxito.
+              @elseif ($message == 'delete')
+                Producto eliminado.
+              @endif
+            </div>
+          @endif
           <table class="table table-striped">
             <thead>
               <tr>
@@ -34,22 +45,34 @@
                   <td>{{$producto->stock}}</td>
                   <td>
                     @if ($producto->contenido >= 1000)
-                      {{$producto->contenido / 1000}} l.
+                      {{$producto->contenido / 1000}} L
                     @else
-                      {{$producto->contenido}} ml.
+                      {{$producto->contenido}} ml
                     @endif
                   </td>
-                  <td> $ {{$producto->precio}}</td>
-                  <td> <a href="/producto/editar?id={{$producto->id }}">Editar</a></td>
-                  <td> <a href="{{url('/producto/eliminar')}}">Eliminar</a></td>
+                  <td> $ {{number_format($producto->precio, 2)}}</td>
+                  <td> <a href="{{url('/producto/editar?id='. $producto->id)}}">Editar</a></td>
+                  <td> <a href="{{url('/producto/eliminar?id='. $producto->id)}}">Eliminar</a></td>
                 </tr>
               @endforeach
             </tbody>
           </table>
-
+              <div class="text-right">
+                  {{$productos->links()}}
+              </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
+
+@section ('scripts')
+  <script type="text/javascript">
+    $(function(){
+      if($('.info')){
+        $('.info').delay(5000).fadeOut();
+      }
+    });
+  </script>
 @endsection

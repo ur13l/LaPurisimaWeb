@@ -21,9 +21,13 @@ Route::auth();
 
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
-  Route::post('uploadimage', "UserController@uploadImage");
   Route::post('update', "UserController@update");
 });
+
+Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
+   Route::post('nuevo', 'PedidoController@nuevo');
+});
+
 Route::post('/usuario/authenticate', "UserController@authenticate");
 Route::post('/usuario/create', "UserController@create");
 
@@ -38,5 +42,6 @@ Route::get('/home', 'HomeController@index');
 Route::get('/productos', 'ProductoController@index');
 Route::get('/producto/nuevo', 'ProductoController@nuevo');
 Route::get('/producto/editar', 'ProductoController@editar');
+Route::get('/producto/eliminar', 'ProductoController@eliminar');
 Route::post('/producto/create', "ProductoController@create");
 Route::post('/producto/update', "ProductoController@update");
