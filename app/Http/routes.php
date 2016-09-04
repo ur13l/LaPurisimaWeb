@@ -15,12 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::auth();
 
-Route::group(['prefix' => 'producto', 'middleware' => 'auth:api'], function () {
-  Route::post('create', "ProductoController@create");
-  Route::post('update', "ProductoController@update");
-});
+
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
   Route::post('uploadimage', "UserController@uploadImage");
@@ -37,3 +35,8 @@ Route::get('password/test', function(){
 });
 
 Route::get('/home', 'HomeController@index');
+Route::get('/productos', 'ProductoController@index');
+Route::get('/producto/nuevo', 'ProductoController@nuevo');
+Route::get('/producto/editar', 'ProductoController@editar');
+Route::post('/producto/create', "ProductoController@create");
+Route::post('/producto/update', "ProductoController@update");

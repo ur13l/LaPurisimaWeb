@@ -11,6 +11,33 @@ use Auth;
 class ProductoController extends Controller
 {
 
+  public function index(){
+    if(Auth::user()){
+      if(Auth::user()->tipo_usuario_id == 1)
+
+        $productos = Producto::all();
+        return view('productos.lista', ['productos' => $productos]);
+    }
+    return redirect()->action('HomeController@index');
+  }
+
+  public function nuevo(){
+    if(Auth::user()){
+      if(Auth::user()->tipo_usuario_id == 1)
+        return view('productos.form', ['action' => 'create','producto' => new Producto()]);
+    }
+    return redirect()->action('HomeController@index');
+  }
+
+  public function editar(Request $request){
+    if(Auth::user()){
+      if(Auth::user()->tipo_usuario_id == 1)
+        return view('productos.form', ['action' => 'update', 'producto' => Producto::find($request->input('id'))]);
+    }
+    return redirect()->action('HomeController@index');
+  }
+
+
   /**
    * Función utilizada para crear un nuevo producto.
    *
@@ -18,21 +45,30 @@ class ProductoController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function create(Request $request){
-    $tipoUsuario = Auth::guard('api')->user()['tipo_usuario_id'];
-    $errors = [];
-    //Solo los usuarios de tipo 1 (Administrador) son autorizados para crear nuevos productos.
-    if($tipoUsuario == 1){
-      Producto::create($request->all());
-      $success = "true";
+    $this->validate($request, [
+       'nombre' => 'required',
+       'stock' => 'required|numeric|min:0|max:100000000',
+       'contenido' => 'required|numeric|min:0|max:10000000',
+       'precio' => 'required|numeric|min:0.01|max:10000000',
+       'imagen' => 'required'
+   ]);
+
+    if(Auth::user()){
+      if(Auth::user()->tipo_usuario_id == 1){
+        $producto = Producto::create($request->except('imagen'));
+        if ($request->hasFile('imagen')) {
+          if($request->file('imagen')->isValid()){
+            $extension = $request->file('imagen')->getClientOriginalExtension();
+            $path = "storage/productos/";
+            $filename= $producto->id . "." . $extension;
+            $request->file('imagen')->move($path ,  $filename);
+            $producto->imagen = $path.$filename;
+            $producto->save();
+          }
+        }
+      }
     }
-    else {
-      $success = "false";
-      $errors[] = "not.authorized";
-    }
-    return response()->json([
-      "success" => $success,
-      "error" => $errors
-    ]);
+    return redirect()->action('HomeController@index');
   }
 
   /**
@@ -42,23 +78,31 @@ class ProductoController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function update(Request $request){
-    $tipoUsuario = Auth::guard('api')->user()['tipo_usuario_id'];
-    $errors = [];
-    //Solo los usuarios de tipo 1 (Administrador) son autorizados para crear nuevos productos.
-    if($tipoUsuario == 1){
-      $id = $request->input('id');
-      $producto = Producto::find($id);
-      $producto->update($request->all());
-      $success = $producto->save();
+    $this->validate($request, [
+       'nombre' => 'required',
+       'stock' => 'required|numeric|min:0|max:100000000',
+       'contenido' => 'required|numeric|min:0|max:10000000',
+       'precio' => 'required|numeric|min:0.01|max:10000000'
+   ]);
+
+    if(Auth::user()){
+      if(Auth::user()->tipo_usuario_id == 1){
+        $producto = Producto::find($request->input('id'));
+        $producto->update($request->except('imagen'));
+        if ($request->hasFile('imagen')) {
+          if($request->file('imagen')->isValid()){
+            $extension = $request->file('imagen')->getClientOriginalExtension();
+            $path = "storage/productos/";
+            $filename= $producto->id . "." . $extension;
+            $request->file('imagen')->move($path ,  $filename);
+            $producto->imagen = $path.$filename;
+            $producto->save();
+          }
+        }
+        $producto->save();
+      }
     }
-    else {
-      $success = "false";
-      $errors[] = "not.authorized";
-    }
-    return response()->json([
-      "success" => $success,
-      "error" => $errors
-    ]);
+    return redirect()->action('HomeController@index');
   }
 
 }
