@@ -26,6 +26,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
 
 Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
    Route::post('nuevo', 'PedidoController@nuevo');
+   Route::post('cancelar', 'PedidoController@cancelar');
 });
 
 Route::post('/usuario/authenticate', "UserController@authenticate");
