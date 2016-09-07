@@ -25,8 +25,8 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
 });
 
 Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
-   Route::post('nuevo', 'PedidoController@nuevo');
-   Route::post('cancelar', 'PedidoController@cancelar');
+   Route::post('nuevo', 'PedidoApiController@nuevo');
+   Route::post('cancelar', 'PedidoApiController@cancelar');
 });
 
 Route::post('/usuario/authenticate', "UserController@authenticate");
@@ -39,6 +39,8 @@ Route::get('password/test', function(){
   return view('auth.emails.password');
 });
 
+
+Route::get('/pedidos', 'PedidoController@pedidos');
 Route::get('/home', 'HomeController@index');
 Route::get('/productos', 'ProductoController@index');
 Route::get('/producto/nuevo', 'ProductoController@nuevo');

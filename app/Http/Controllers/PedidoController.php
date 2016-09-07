@@ -2,56 +2,45 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
+
 use App\Pedido;
 use App\Detalle;
 use App\Http\Requests;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
 
-    public function nuevo(Request $request){
-        $pedido = Pedido::create($request->except('detalles'));
-        $cliente = Auth::guard('api')->user();
-        $pedido->cliente_id = $cliente->id;
-        $pedido->save();
-        foreach( $request->input('detalles') as $detalle){
-            $detalle['pedido_id'] = $pedido->id;
-            Detalle::create($detalle);
-        }
-        return response()->json([
-            "id" => $pedido->id,
-            "success"=> "true",
-            "error" => []
-        ]);
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
-    public function cancelar(Request $request){
-        $user = Auth::guard('api')->user();
-        $pedido = Pedido::where([
-            ['id', '=', $request->input('id')],
-            ['cliente_id', '=', $user->id]
-        ])->first();
-        $errors = [];
-        $save = false;
-        if(isset($pedido)){
-            if($pedido->status != Pedido::CANCELADO){
-                $pedido->status = Pedido::CANCELADO;
-                $save = $pedido->save();
-            }
-            else{
-                $errors[] = "already.cancelled";
-            }
-            //Aquí se puede enviar una notificación push al conductor para indicar la cancelación de un envío.
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pedidos()  {
+        if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2){
+            $pedidosPendientes = Pedido::where('status', '=', Pedido::SOLICITADO)->get();
+            $pedidosAsignados = Pedido::where('status', '=', Pedido::ASIGNADO)->paginate(10);
+            $pedidosTerminados = Pedido::where('status', '=', Pedido::ENTREGADO)
+                ->orWhere('status', '=', Pedido::CANCELADO)->paginate(10);
+            return view('pedidos.index', [
+                'pedidosPendientes' => $pedidosPendientes,
+                'pedidosAsignados' => $pedidosAsignados,
+                'pedidosTerminados' => $pedidosTerminados,
+            ]);
         }
-        else{
-            $errors[] = "unauthorized.user";
-        }
-        return response()->json([
-            "success"=> $save,
-            "error" => $errors
-        ]);
+
+        return redirect()->action('HomeController@index');
     }
 }

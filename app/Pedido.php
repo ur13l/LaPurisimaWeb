@@ -26,11 +26,16 @@ class Pedido extends Model
         'latitud',
         'longitud',
         'direccion',
-        'status'
+        'status',
+        'fecha'
     ];
 
     public function detalles(){
         return $this->hasMany('App\Detalle');
+    }
+
+    public function cliente(){
+        return $this->belongsTo('App\User');
     }
 
     protected $dates = ['deleted_at'];
