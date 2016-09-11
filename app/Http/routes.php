@@ -41,6 +41,7 @@ Route::get('password/test', function(){
 
 
 Route::get('/pedidos', 'PedidoController@pedidos');
+Route::get('/pedidos/data', 'PedidoController@getRowDetailsData');
 Route::get('/home', 'HomeController@index');
 Route::get('/productos', 'ProductoController@index');
 Route::get('/producto/nuevo', 'ProductoController@nuevo');

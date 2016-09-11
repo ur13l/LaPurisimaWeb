@@ -15,28 +15,18 @@
 
                     <div class="panel-body">
                         <div class="col-xs-12">
-                        <table id="table-pendientes" class="table table-striped  table-hover">
-                            <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Usuario</th>
-                                <th>Direccion</th>
-                                <th>Total</th>
-                                <th>Cancelar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($pedidosPendientes as $pedido)
-                                    <tr class='clickable-row' data-href='#'>
-                                        <td class="details-control">{{$pedido->cliente->nombre}}</td>
-                                        <td class="details-control">{{$pedido->direccion}}</td>
-                                        <td class="details-control">{{$pedido->fecha}}</td>
-                                        <td class="details-control">{{$pedido->total}}</td>
-                                        <td class="details-control">X</td>
-                                    </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                            <table id="table-pendientes" class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Fecha</th>
+                                    <th>Usuario</th>
+                                    <th>Direccion</th>
+                                    <th>Total</th>
+                                    <th>Cancelar</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
 
                     </div>
@@ -84,63 +74,141 @@
             </div>
         </div>
     </div>
+
+
 @endsection
 
 
 @section ('styles')
     <link rel="stylesheet" href="css/tables.css">
-@section ('scripts')
-    <script type="text/javascript">
-        function format ( d ) {
-            // `d` is the original data object for the row
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                    '<tr>'+
-                    '<td>Full name:</td>'+
-                    '<td>'+d.name+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>Extension number:</td>'+
-                    '<td>'+d.extn+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>Extra info:</td>'+
-                    '<td>And any further details here (images etc)...</td>'+
-                    '</tr>'+
-                    '</table>';
-        }
 
-        $(function(){
-            var table= $("#table-pendientes").DataTable( {
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+@section ('scripts')
+    <script type="text/javascript" src="js/moment-with-locales.js"></script>
+    <script type="text/javascript">
+        var template = function (d){
+            var list = "";
+            for(var i = 0 ; i < d.detalles.length; i++){
+                list += '<tr>'+
+                        '<td>'+d.detalles[i].cantidad+'</td>'+
+                        '<td>'+d.detalles[i].producto.nombre+'</td>'+
+                        '<td>$'+ d.detalles[i].producto.precio+'</td>'+
+                '</tr>';
+            }
+
+            return '<div class="row slider">'+
+                    '<div class="col-xs-12 col-md-8" >'+
+                    '<h4>Detalle de pedido</h4>' +
+                    '<table class="table table-bordered">'+
+                    '<thead>'+
+                    '<th>Cantidad</th>'+
+                    '<th>Producto</th>'+
+                    '<th>Precio</th>'+
+                    '</thead>'+
+                    '<tbody>'+
+                    list+
+                    '</tbody>'+
+                    '</table>'+
+                    '</div>'+
+                    '<div class="col-xs-12 col-md-4" style="padding:22px">'+
+                    '<span><b>Total:</b> $'+d.total+'</span><br>'+
+                    '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
+                    '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
+                    '<a href="#" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>'+
+                    '<a href="#" class="btn btn-danger col-xs-12">Cancelar</a>'+
+                    '</div>'+
+                    '</div>';
+        };
+
+        var table = $('#table-pendientes').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{url('/pedidos/data')}}",
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+            },
+            bLengthChange: false,
+            columns: [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "searchable":     true,
+                    "data":           null,
+                    "defaultContent": '<img src="img/arrow-open.png" height="16">'
                 },
-                "columnDefs": [
-                    {
-                        "orderable":false,
-                        "targets": ["_all"]
+
+                {data: 'fecha', name: 'fecha',"className":'details-control',
+                    "orderable":      false,
+                    "searchable":     true,
+                    "defaultContent": '-',
+                    "render": function ( data, type, full, meta ) {
+                        fecha = moment(data).format('DD/MM/YYYY');
+                        if(fecha != "Invalid date")
+                            return fecha;
+                        else
+                            return "-";
+                    }},
+                {data: 'cliente.nombre', name: 'cliente.nombre',"className":'details-control',
+                    "orderable":      false,
+                    "searchable":     true},
+                {data: 'direccion', name: 'direccion',"className":'details-control',
+                    "orderable":      false,
+                    "searchable":     true},
+                {data: 'total', name: 'total',"className":'details-control',
+                    "orderable":      false,
+                    "searchable":     true},
+                {data: 'total', name: 'total',"className":'details-control',
+                    "orderable":      false,
+                    "searchable":     true}
+            ],
+            order: []
+        });
+
+        // Add event listener for opening and closing details
+        $('#table-pendientes tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+
+            table.rows().every( function () {
+                var r = this;
+                if(row.index() != r.index()) {
+                    $('div.slider', r.child()).slideUp(function () {
+                        r.child.hide();
+                    });
+                    if(r.child.isShown()){
+                        $elem = $($("img")[r.index()]);
+                        rotateArrow($elem, 90, 0);
                     }
-                ],
-                "sDom": '<"top">rt<"bottom"lp><"clear">',
-                "order" : [],
-                "bLengthChange": false //used to hide the property
+                }
             } );
 
-            // Add event listener for opening and closing details
-            $('#table-pendientes tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-                var row = table.row( tr );
-
-                if ( row.child.isShown() ) {
-                    // This row is already open - close it
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                $('div.slider', row.child()).slideUp(function () {
                     row.child.hide();
                     tr.removeClass('shown');
-                }
-                else {
-                    // Open this row
-                    row.child( format(row.data()) ).show();
-                    tr.addClass('shown');
-                }
-            } );
+                } );
+                $elem = $($("img")[row.index()]);
+                rotateArrow($elem, 90,0);
+            }
+            else {
+                // Open this row
+                row.child( template(row.data()), 'no-padding'  ).show();
+                tr.addClass('shown');
+                $('div.slider', row.child()).slideDown();
+                $elem = $($("img")[row.index()]);
+                rotateArrow($elem, 0, 90);
+            }
         });
+
+        function rotateArrow($elem, from, to){
+            $({deg: from}).animate({deg: to}, {
+                duration: 200,
+                step: function(now) {
+                    $elem.css({
+                        transform: 'rotate(' + now + 'deg)'
+                    });
+                }
+            });
+        }
     </script>
 @endsection

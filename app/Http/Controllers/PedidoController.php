@@ -8,6 +8,7 @@ use App\Pedido;
 use App\Detalle;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
 
 class PedidoController extends Controller
 {
@@ -42,5 +43,13 @@ class PedidoController extends Controller
         }
 
         return redirect()->action('HomeController@index');
+    }
+
+    public function getRowDetailsData()
+    {
+        $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->with('cliente')->with('detalles')
+            ->with('detalles.producto')->get();
+
+        return Datatables::of($pedidos)->make(true);
     }
 }
