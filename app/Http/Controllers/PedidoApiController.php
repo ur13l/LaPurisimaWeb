@@ -60,14 +60,15 @@ class PedidoApiController extends Controller
 
     public function pedidosUsuario(Request $request){
         $user = Auth::guard('api')->user();
-        $pedidos = Pedido::where('cliente_id', '=', $user->id)->with('detalles')->with('detalles.producto')->get()->toArray();
+        $pedidos = Pedido::where('cliente_id', '=', $user->id)->with('detalles')->with('detalles.producto')->
+            with('repartidor')->get()->toArray();
         return $pedidos;
     }
 
     public function pedidosRepartidor(Request $request){
         $user = Auth::guard('api')->user();
         if($user->tipo_usuario_id == 2) {
-            $pedidos = Pedido::where('conductor_id', '=', $user->id)->with('detalles')->with('detalles.producto')->get();
+            $pedidos = Pedido::where('conductor_id', '=', $user->id)->with('detalles')->with('detalles.producto')->with('cliente')->get();
             return $pedidos->toArray();
         }
         else {

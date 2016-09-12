@@ -35,7 +35,11 @@ class Pedido extends Model
     }
 
     public function cliente(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'cliente_id');
+    }
+
+    public function repartidor(){
+        return $this->belongsTo('App\User', 'conductor_id');
     }
 
     protected $dates = ['deleted_at'];
