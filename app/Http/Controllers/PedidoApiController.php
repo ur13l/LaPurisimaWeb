@@ -57,4 +57,24 @@ class PedidoApiController extends Controller
             "error" => $errors
         ]);
     }
+
+    public function pedidosUsuario(Request $request){
+        $user = Auth::guard('api')->user();
+        $pedidos = Pedido::where('cliente_id', '=', $user->id)->with('detalles')->with('detalles.producto')->get()->toArray();
+        return $pedidos;
+    }
+
+    public function pedidosRepartidor(Request $request){
+        $user = Auth::guard('api')->user();
+        if($user->tipo_usuario_id == 2) {
+            $pedidos = Pedido::where('conductor_id', '=', $user->id)->with('detalles')->with('detalles.producto')->get();
+            return $pedidos->toArray();
+        }
+        else {
+            return response()->json([
+                "success" => false,
+                "error" => ['unauthorized.user']
+            ]);
+        }
+    }
 }

@@ -27,6 +27,8 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
 Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
    Route::post('nuevo', 'PedidoApiController@nuevo');
    Route::post('cancelar', 'PedidoApiController@cancelar');
+   Route::post('usuario', 'PedidoApiController@pedidosUsuario');
+   Route::post('repartidor', 'PedidoApiController@pedidosRepartidor');
 });
 
 Route::post('/usuario/authenticate', "UserController@authenticate");
@@ -49,3 +51,4 @@ Route::get('/producto/editar', 'ProductoController@editar');
 Route::get('/producto/eliminar', 'ProductoController@eliminar');
 Route::post('/producto/create', "ProductoController@create");
 Route::post('/producto/update', "ProductoController@update");
+Route::post('/producto/get', "ProductoApiController@getProductos");
