@@ -17,6 +17,7 @@ class Pedido extends Model
     const EN_CAMINO = 3;
     const ENTREGADO = 4;
     const CANCELADO = 5;
+    const FAILED = 6;
 
     protected $fillable = [
         'id',
@@ -46,5 +47,5 @@ class Pedido extends Model
         ));
     }
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['fecha','deleted_at'];
 }

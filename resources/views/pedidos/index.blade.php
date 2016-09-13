@@ -23,7 +23,6 @@
                                     <th>Usuario</th>
                                     <th>Direccion</th>
                                     <th>Total</th>
-                                    <th>Cancelar</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -91,7 +90,7 @@
                 list += '<tr>'+
                         '<td>'+d.detalles[i].cantidad+'</td>'+
                         '<td>'+d.detalles[i].producto.nombre+'</td>'+
-                        '<td>$'+ d.detalles[i].producto.precio+'</td>'+
+                        '<td>$'+ d.detalles[i].producto.precio.toFixed(2)+'</td>'+
                 '</tr>';
             }
 
@@ -113,8 +112,8 @@
                     '<span><b>Total:</b> $'+d.total+'</span><br>'+
                     '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
                     '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
-                    '<a href="#" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>'+
-                    '<a href="#" class="btn btn-danger col-xs-12">Cancelar</a>'+
+                    '<a href="{{url('/pedidos')}}/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>'+
+                    '<a href="{{url('/pedidos')}}/'+d.id+'" class="btn btn-danger col-xs-12">Cancelar</a>'+
                     '</div>'+
                     '</div>';
         };
@@ -155,10 +154,12 @@
                     "searchable":     true},
                 {data: 'total', name: 'total',"className":'details-control',
                     "orderable":      false,
-                    "searchable":     true},
-                {data: 'total', name: 'total',"className":'details-control',
-                    "orderable":      false,
-                    "searchable":     true}
+                    "searchable":     true,
+                    "render": function(data, type, full, meta){
+                        if(data)
+                            return "$" + data.toFixed(2);
+                        else return data;
+                    }}
             ],
             order: []
         });
