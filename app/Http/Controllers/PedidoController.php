@@ -57,7 +57,7 @@ class PedidoController extends Controller
     public function detalle($pedido_id){
         if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2) {
             $pedido = Pedido::find($pedido_id);
-            $repartidores = User::where('tipo_usuario_id', '=', '2')->paginate(3);
+            $repartidores = User::where('tipo_usuario_id', '=', '2')->paginate(15);
             return view('pedidos.detalle', [ "pedido" =>$pedido, "repartidores" => $repartidores ]);
         }
         return redirect()->action('HomeController@index');

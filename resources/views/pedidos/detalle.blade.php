@@ -15,7 +15,7 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-12 col-md-5">
                                 <h4>Detalles del pedido</h4>
                                 <table class="table table-bordered">
                                     <tbody>
@@ -61,15 +61,53 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-12 col-md-7">
 
                                 @if($pedido->status == 1)
                                     <h4>Asignar repartidor</h4>
-                                    <div class="repartidores-content">
-                                        @foreach($repartidores as $repartidor)
-                                            <h5>{{$repartidor->nombre}}</h5>
-                                        @endforeach
-                                        {{$repartidores->links()}}
+                                    <div class="repartidores">
+                                        <div class="row search-repartidores">
+                                            <div class="col-xs-4">
+                                                <img class="picture" src="#" height="100">
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" id="inputSuccess4">
+                                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row repartidores-content">
+                                            @foreach($repartidores as $index => $repartidor)
+                                                @if($index >= 3)
+                                                    <?php $display = 'none'; ?>
+                                                @else
+                                                    <?php $display = 'inline-block'; ?>
+                                                @endif
+
+                                                <div class="col-xs-4" id="repartidor{{$index}}" style="padding:10px; display:{{$display}}">
+                                                    <div class="panel panel-default">
+                                                        <div class="row">
+                                                            <div class="text-center col-xs-5">
+                                                                <img class="picture" src="{{url($repartidor->imagen_usuario . '')}}" height="50">
+                                                            </div>
+                                                            <div class="text-center col-xs-7" style="padding-top:20px">
+                                                                <i class="glyphicon glyphicon-star"></i>
+                                                                <span>{{$repartidor->calificacion}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" text-center col-xs-12">
+                                                                <h5>{{$repartidor->nombre}}</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            @endforeach
+                                            <div id="left-repartidor">IZQ</div>
+                                            <div id="right-repartidor">DER</div>
+                                        </div>
                                     </div>
                                 @else
                                     <h4>Detalles del repartidor</h4>
@@ -98,12 +136,25 @@
 
 @section('scripts')
     <script type="text/javascript">
+        var paginatePositionRepartidores = 1;
+
         $(document).ready(function()
         {
             $(".picture").error(function(){
                 console.log("w");
                 $(this).attr('src', '{{url('/img/default.png')}}');
             });
+
+            $("#right-repartidor").on('click',function(){
+                console.log("SHIT");
+                $("#repartidor" + paginatePositionRepartidores).hide();
+                $("#repartidor" + paginatePositionRepartidores-1).hide();
+                $("#repartidor" + paginatePositionRepartidores+1).hide();
+                $("#repartidor" + paginatePositionRepartidores+2).show();
+                $("#repartidor" + paginatePositionRepartidores+3).show();
+                $("#repartidor" + paginatePositionRepartidores+4).show();
+                paginatePositionRepartidores+=3
+            })
         });
 
         $(document).on('click', ".pagination a", function(e){
