@@ -15,53 +15,93 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-12 col-md-5">
-                                <h4>Detalles del pedido</h4>
+                            <div class="col-xs-12 col-md-6">
+                                <h4>Pedido No. {{$pedido->id}}</h4>
                                 <table class="table table-bordered">
                                     <tbody>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <td>{{$pedido->fecha->format('d/m/Y ')}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Hora</th>
-                                            <td>{{$pedido->fecha->format('H:i:s')}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Usuario</th>
-                                            <td>{{$pedido->cliente->nombre}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Dirección de envío</th>
-                                            <td>{{$pedido->direccion}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total</th>
-                                            <td>${{number_format($pedido->total, 2)}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Estatus del pedido</th>
-                                            <td>
-                                                @if($pedido->status == 1)
-                                                    <span style="color:rebeccapurple">Solicitado</span>
-                                                @elseif($pedido->status == 2)
-                                                    <span style="color:cornflowerblue">Asignado</span>
-                                                @elseif($pedido->status == 3)
-                                                    <span style="color:darkolivegreen">En camino</span>
-                                                @elseif($pedido->status == 4)
-                                                    <span style="color:green">Entregado</span>
-                                                @elseif($pedido->status == 5)
-                                                    <span style="color:red">Cancelador</span>
-                                                @elseif($pedido->status == 6)
-                                                    <span style="color:rebeccapurple">Fallido</span>
-                                                @endif
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <td>{{$pedido->fecha->format('d/m/Y ')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Hora</th>
+                                        <td>{{$pedido->fecha->format('H:i:s')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dirección de envío</th>
+                                        <td>{{$pedido->direccion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td>${{number_format($pedido->total, 2)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Estatus del pedido</th>
+                                        <td>
+                                            @if($pedido->status == 1)
+                                                <span style="color:rebeccapurple">Solicitado</span>
+                                            @elseif($pedido->status == 2)
+                                                <span style="color:cornflowerblue">Asignado</span>
+                                            @elseif($pedido->status == 3)
+                                                <span style="color:darkolivegreen">En camino</span>
+                                            @elseif($pedido->status == 4)
+                                                <span style="color:green">Entregado</span>
+                                            @elseif($pedido->status == 5)
+                                                <span style="color:red">Cancelador</span>
+                                            @elseif($pedido->status == 6)
+                                                <span style="color:rebeccapurple">Fallido</span>
+                                            @endif
 
-                                            </td>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <h4>Datos del usuario</h4>
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="2"><img height="100" src="{{url("/".$pedido->cliente->imagen_usuario)}}" alt=""></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <td>{{$pedido->cliente->nombre}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td>{{$pedido->cliente->email}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12">
+                                <h4>Detalles de pedido</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th>Imagen</th>
+                                        <th>Cant.</th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($pedido->detalles as $detalle)
+                                            <tr>
+                                                <td><img src="{{url('/'.$detalle->producto->imagen)}}" height="50" alt=""></td>
+                                                <td>{{$detalle->cantidad}}</td>
+                                                <td>{{$detalle->producto->nombre}}</td>
+                                                <td>${{number_format($detalle->producto->precio,2)}}</td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <th colspan="3">Total</th>
+                                            <td>${{number_format($pedido->total,2)}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-xs-12 col-md-7">
+
+                            <div class="col-xs-12">
 
                                 @if($pedido->status == 1)
                                     <h4>Asignar repartidor</h4>
@@ -72,20 +112,22 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <div class="form-group has-feedback">
-                                                    <input type="text" class="form-control" id="inputSuccess4">
+                                                    <input type="text" class="form-control" id="buscar-repartidores">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row repartidores-content">
+                                        </div> <div class="content-loading" style="display: none;"></div>
+                                        <div class="row row-horizon repartidores-container"  style="overflow: hidden; white-space:nowrap;">
+
+
                                             @foreach($repartidores as $index => $repartidor)
-                                                @if($index >= 3)
+                                                @if($index >= 4)
                                                     <?php $display = 'none'; ?>
                                                 @else
                                                     <?php $display = 'inline-block'; ?>
                                                 @endif
 
-                                                <div class="col-xs-4" id="repartidor{{$index}}" style="padding:10px; display:{{$display}}">
+                                                <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px; display:{{$display}}">
                                                     <div class="panel panel-default">
                                                         <div class="row">
                                                             <div class="text-center col-xs-5">
@@ -105,8 +147,9 @@
 
                                                 </div>
                                             @endforeach
-                                            <div id="left-repartidor">IZQ</div>
-                                            <div id="right-repartidor">DER</div>
+                                        </div>
+                                        <div id="left-repartidor">IZQ</div>
+                                        <div id="right-repartidor">DER</div>
                                         </div>
                                     </div>
                                 @else
@@ -136,7 +179,8 @@
 
 @section('scripts')
     <script type="text/javascript">
-        var paginatePositionRepartidores = 1;
+        var firstPosition = 0;
+        var xhr;
 
         $(document).ready(function()
         {
@@ -146,26 +190,79 @@
             });
 
             $("#right-repartidor").on('click',function(){
-                console.log("SHIT");
-                $("#repartidor" + paginatePositionRepartidores).hide();
-                $("#repartidor" + paginatePositionRepartidores-1).hide();
-                $("#repartidor" + paginatePositionRepartidores+1).hide();
-                $("#repartidor" + paginatePositionRepartidores+2).show();
-                $("#repartidor" + paginatePositionRepartidores+3).show();
-                $("#repartidor" + paginatePositionRepartidores+4).show();
-                paginatePositionRepartidores+=3
+                $("#repartidor" + firstPosition).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+1)).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+2)).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+3)).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+4)).addClass('show-slide');
+                $("#repartidor" + (firstPosition+5)).addClass('show-slide');
+                $("#repartidor" + (firstPosition+6)).addClass('show-slide');
+                $("#repartidor" + (firstPosition+7)).addClass('show-slide');
+                firstPosition+=4;
+                animation("-", "+");
+            });
+
+            $("#left-repartidor").on('click',function(){
+                $("#repartidor" + firstPosition).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+1)).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+2)).addClass('hide-slide');
+                $("#repartidor" + (firstPosition+3)).addClass('hide-slide');
+                $("#repartidor" + (firstPosition-1)).addClass('show-slide');
+                $("#repartidor" + (firstPosition-2)).addClass('show-slide');
+                $("#repartidor" + (firstPosition-3)).addClass('show-slide');
+                $("#repartidor" + (firstPosition-4)).addClass('show-slide');
+                firstPosition-=4;
+                animation("+","-");
+            });
+
+            $("#buscar-repartidores").on("keyup paste change",function(){
+                if(xhr){
+                    xhr.abort();
+                }
+                $(".content-loading").show();
+                $(".repartidores-container").hide();
+                xhr = $.ajax({
+                    url: "{{url('/pedidos/repartidores')}}",
+                    data:{
+                        search: $("#buscar-repartidores").val()
+                    },
+                    success:function(data){
+                        firstPosition = 0;
+                        if(data == "")
+                            data = "<div style='height:128px; text-align:center'>No se encontraron registros</div>";
+                        $(".repartidores-container").html(data);
+                        $(".content-loading").hide();
+                        $(".repartidores-container").show();
+                    }
+                })
             })
         });
 
-        $(document).on('click', ".pagination a", function(e){
-            e.preventDefault();
-            var page =  this.href.split('?page=')[1];
-            $.ajax({
-                url: "{{url('/pedidos/repartidores')}}?page=" + page
-            }).done(function(data){
-                $(".repartidores-content").html(data);
-                location.hash = page;
+        function animation(op1, op2){
+            var side = $(".repartidores-container").width() -50;
+            if(op1 == "+") {
+                $(".show-slide, .hide-slide").animate({
+                    left: "-=" + side + "px"
+                }, 0);
+            }
+            $(".show-slide").show();
+            $(".hide-slide, .show-slide").animate({
+                left: op1+"=" + side + "px"
+            }, function(){
+                if(op1 != "+") {
+                    $(".hide-slide, .show-slide").animate({
+                        left: op2 + "=" + side + "px"
+                    }, 0);
+                }
+                $(".hide-slide").hide();
+                $(".show-slide").removeClass("show-slide");
+                $(".hide-slide").removeClass("hide-slide");
             });
-        });
+
+        }
     </script>
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" href="{{url('/css/pedidos.css')}}">
 @endsection
