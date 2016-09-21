@@ -17,7 +17,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <h4>Pedido No. {{$pedido->id}}</h4>
-                                <table class="table table-bordered">
+                                <table class="table ">
                                     <tbody>
                                     <tr>
                                         <th>Fecha</th>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <h4>Datos del usuario</h4>
-                                <table class="table table-bordered">
+                                <table class="table ">
                                     <tbody>
                                     <tr>
                                         <td class="text-center" colspan="2"><img height="100" src="{{url("/".$pedido->cliente->imagen_usuario)}}" alt=""></td>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <h4>Detalles de pedido</h4>
-                                <table class="table table-bordered">
+                                <table class="table table-striped">
                                     <thead>
                                         <th>Imagen</th>
                                         <th>Cant.</th>
@@ -107,10 +107,14 @@
                                     <h4>Asignar repartidor</h4>
                                     <div class="repartidores">
                                         <div class="row search-repartidores">
-                                            <div class="col-xs-4">
+                                            <div class="col-xs-4 col-md-2">
                                                 <img class="picture" src="#" height="100">
                                             </div>
-                                            <div class="col-xs-8">
+                                            <div class="col-xs-4 col-md-6">
+                                                <p id="repartidor-definido-nombre">Conductor no asignado</p>
+                                                <p id="repartidor-definido-src">Conductor no asignado</p>
+                                            </div>
+                                            <div class="col-xs-4">
                                                 <div class="form-group has-feedback">
                                                     <input type="text" class="form-control" id="buscar-repartidores">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
@@ -118,8 +122,6 @@
                                             </div>
                                         </div> <div class="content-loading" style="display: none;"></div>
                                         <div class="row row-horizon repartidores-container"  style="overflow: hidden; white-space:nowrap;">
-
-
                                             @foreach($repartidores as $index => $repartidor)
                                                 @if($index >= 4)
                                                     <?php $display = 'none'; ?>
@@ -127,20 +129,21 @@
                                                     <?php $display = 'inline-block'; ?>
                                                 @endif
 
-                                                <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px; display:{{$display}}">
-                                                    <div class="panel panel-default">
+                                                <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px; margin-left:14px; display:{{$display}}">
+                                                    <div class="panel panel-default repartidor-container" style="cursor:pointer;">
+                                                        {{Form::hidden('',$repartidor->id, ['class' => 'repartidor-id'])}}
                                                         <div class="row">
                                                             <div class="text-center col-xs-5">
-                                                                <img class="picture" src="{{url($repartidor->imagen_usuario . '')}}" height="50">
+                                                                <img class="picture repartidor-imagen" src="{{url($repartidor->imagen_usuario . '')}}" height="50">
                                                             </div>
                                                             <div class="text-center col-xs-7" style="padding-top:20px">
                                                                 <i class="glyphicon glyphicon-star"></i>
-                                                                <span>{{$repartidor->calificacion}}</span>
+                                                                <span class="repartidor-calificacion">{{$repartidor->calificacion}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class=" text-center col-xs-12">
-                                                                <h5>{{$repartidor->nombre}}</h5>
+                                                                <h5 class="repartidor-nombre">{{$repartidor->nombre}}</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -148,8 +151,8 @@
                                                 </div>
                                             @endforeach
                                         </div>
-                                        <div id="left-repartidor">IZQ</div>
-                                        <div id="right-repartidor">DER</div>
+                                        <div id="left-repartidor"><img src="{{url('/img/previous.png')}}" height="32" alt=""></div>
+                                        <div id="right-repartidor"><img src="{{url('/img/next.png')}}" height="32" alt=""></div>
                                         </div>
                                     </div>
                                 @else
@@ -215,11 +218,23 @@
                 animation("+","-");
             });
 
-            $("#buscar-repartidores").on("keyup paste change",function(){
+            $(".repartidor-container").on('click', function(){
+                var nombre = $($(this).find(".repartidor-nombre")).html();
+                var src = $($(this).find(".repartidor-imagen")).attr('src');
+                $("#repartidor-definido-nombre").html(nombre);
+                $("#repartidor-definido-src").html(src);
+            });
+
+            $("#buscar-repartidores").on("keyup paste",function(){
+                //Se cancela la búsqueda si hay una activa.
                 if(xhr){
                     xhr.abort();
                 }
+
+                //Mensaje de cargado
                 $(".content-loading").show();
+
+                //Se ocultan los repartidores
                 $(".repartidores-container").hide();
                 xhr = $.ajax({
                     url: "{{url('/pedidos/repartidores')}}",
@@ -234,7 +249,9 @@
                         $(".content-loading").hide();
                         $(".repartidores-container").show();
                     }
-                })
+                });
+
+
             })
         });
 

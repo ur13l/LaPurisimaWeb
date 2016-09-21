@@ -3,3 +3,15 @@
     height: 127px;
     background: white url('../img/loader2.gif') center center no-repeat;
 }
+
+#left-repartidor{
+     position:absolute;
+     bottom:21%;
+    left:1%;
+ }
+
+#right-repartidor{
+    position:absolute;
+    bottom:21%;
+    right:1%;
+}

@@ -6,7 +6,7 @@
         <?php $display = 'inline-block'; ?>
     @endif
 
-    <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px; display:{{$display}}">
+    <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px;  margin-left:14px; cursor: pointer; display:{{$display}}">
         <div class="panel panel-default">
             <div class="row">
                 <div class="text-center col-xs-5">
