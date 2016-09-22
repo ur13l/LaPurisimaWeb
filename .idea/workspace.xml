@@ -2,10 +2,96 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fbe888-3067-4cbc-ba4d-ee0a440b84cc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml___jb_tmp___" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml___jb_tmp___" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/images/bx_loader.gif" afterPath="$PROJECT_DIR$/public/css/images/bx_loader.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/images/controls.png" afterPath="$PROJECT_DIR$/public/css/images/controls.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/arrow-open.png" afterPath="$PROJECT_DIR$/public/img/arrow-open.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/default.png" afterPath="$PROJECT_DIR$/public/img/default.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/loader2.gif" afterPath="$PROJECT_DIR$/public/img/loader2.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/logo-lapurisima.png" afterPath="$PROJECT_DIR$/public/img/logo-lapurisima.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/next.png" afterPath="$PROJECT_DIR$/public/img/next.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/previous.png" afterPath="$PROJECT_DIR$/public/img/previous.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/productos/212.jpg" afterPath="$PROJECT_DIR$/storage/productos/212.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/LaPurisimaWeb.iml" afterPath="$PROJECT_DIR$/.idea/LaPurisimaWeb.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/blade.xml" afterPath="$PROJECT_DIR$/.idea/blade.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Procfile" afterPath="$PROJECT_DIR$/Procfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Detalle.php" afterPath="$PROJECT_DIR$/app/Detalle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ImageController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ImageController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PedidoApiController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PedidoApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Pedido.php" afterPath="$PROJECT_DIR$/app/Pedido.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/datatables.php" afterPath="$PROJECT_DIR$/config/datatables.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/excel.php" afterPath="$PROJECT_DIR$/config/excel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/bootstrap-horizon.css" afterPath="$PROJECT_DIR$/public/css/bootstrap-horizon.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/demo-ie8.css" afterPath="$PROJECT_DIR$/public/css/demo-ie8.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/demo.css" afterPath="$PROJECT_DIR$/public/css/demo.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/fileinput.css" afterPath="$PROJECT_DIR$/public/css/fileinput.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/fileinput.min.css" afterPath="$PROJECT_DIR$/public/css/fileinput.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/jquery.bxslider.css" afterPath="$PROJECT_DIR$/public/css/jquery.bxslider.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/pedidos.css" afterPath="$PROJECT_DIR$/public/css/pedidos.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/tables.css" afterPath="$PROJECT_DIR$/public/css/tables.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/fileinput.js" afterPath="$PROJECT_DIR$/public/js/fileinput.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/fileinput.min.js" afterPath="$PROJECT_DIR$/public/js/fileinput.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/handlebars-v4.0.5.js" afterPath="$PROJECT_DIR$/public/js/handlebars-v4.0.5.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/jquery.bxslider.min.js" afterPath="$PROJECT_DIR$/public/js/jquery.bxslider.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/LANG.js" afterPath="$PROJECT_DIR$/public/js/locales/LANG.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/ar.js" afterPath="$PROJECT_DIR$/public/js/locales/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/bg.js" afterPath="$PROJECT_DIR$/public/js/locales/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/ca.js" afterPath="$PROJECT_DIR$/public/js/locales/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/cr.js" afterPath="$PROJECT_DIR$/public/js/locales/cr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/cz.js" afterPath="$PROJECT_DIR$/public/js/locales/cz.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/da.js" afterPath="$PROJECT_DIR$/public/js/locales/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/de.js" afterPath="$PROJECT_DIR$/public/js/locales/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/el.js" afterPath="$PROJECT_DIR$/public/js/locales/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/es.js" afterPath="$PROJECT_DIR$/public/js/locales/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/fa.js" afterPath="$PROJECT_DIR$/public/js/locales/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/fi.js" afterPath="$PROJECT_DIR$/public/js/locales/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/fr.js" afterPath="$PROJECT_DIR$/public/js/locales/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/hu.js" afterPath="$PROJECT_DIR$/public/js/locales/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/id.js" afterPath="$PROJECT_DIR$/public/js/locales/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/it.js" afterPath="$PROJECT_DIR$/public/js/locales/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/ja.js" afterPath="$PROJECT_DIR$/public/js/locales/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/nl.js" afterPath="$PROJECT_DIR$/public/js/locales/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/pl.js" afterPath="$PROJECT_DIR$/public/js/locales/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/pt-BR.js" afterPath="$PROJECT_DIR$/public/js/locales/pt-BR.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/pt.js" afterPath="$PROJECT_DIR$/public/js/locales/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/ro.js" afterPath="$PROJECT_DIR$/public/js/locales/ro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/ru.js" afterPath="$PROJECT_DIR$/public/js/locales/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/sk.js" afterPath="$PROJECT_DIR$/public/js/locales/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/th.js" afterPath="$PROJECT_DIR$/public/js/locales/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/tr.js" afterPath="$PROJECT_DIR$/public/js/locales/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/uk.js" afterPath="$PROJECT_DIR$/public/js/locales/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/vi.js" afterPath="$PROJECT_DIR$/public/js/locales/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/zh-TW.js" afterPath="$PROJECT_DIR$/public/js/locales/zh-TW.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/locales/zh.js" afterPath="$PROJECT_DIR$/public/js/locales/zh.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/moment-with-locales.js" afterPath="$PROJECT_DIR$/public/js/moment-with-locales.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/plugins/canvas-to-blob.js" afterPath="$PROJECT_DIR$/public/js/plugins/canvas-to-blob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/plugins/canvas-to-blob.min.js" afterPath="$PROJECT_DIR$/public/js/plugins/canvas-to-blob.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/plugins/purify.js" afterPath="$PROJECT_DIR$/public/js/plugins/purify.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/plugins/purify.min.js" afterPath="$PROJECT_DIR$/public/js/plugins/purify.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/plugins/sortable.js" afterPath="$PROJECT_DIR$/public/js/plugins/sortable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/plugins/sortable.min.js" afterPath="$PROJECT_DIR$/public/js/plugins/sortable.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/datatables/buttons.server-side.js" afterPath="$PROJECT_DIR$/public/vendor/datatables/buttons.server-side.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/lang/es/auth.php" afterPath="$PROJECT_DIR$/resources/lang/es/auth.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/lang/es/pagination.php" afterPath="$PROJECT_DIR$/resources/lang/es/pagination.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/lang/es/passwords.php" afterPath="$PROJECT_DIR$/resources/lang/es/passwords.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/lang/es/validation.php" afterPath="$PROJECT_DIR$/resources/lang/es/validation.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layouts/repartidores.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/repartidores.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layouts/row-details.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/row-details.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" afterPath="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pedidos/index1.blade.php" afterPath="$PROJECT_DIR$/resources/views/pedidos/index1.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/productos/form.blade.php" afterPath="$PROJECT_DIR$/resources/views/productos/form.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/productos/lista.blade.php" afterPath="$PROJECT_DIR$/resources/views/productos/lista.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/vendor/datatables/print.blade.php" afterPath="$PROJECT_DIR$/resources/views/vendor/datatables/print.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/vendor/datatables/script.blade.php" afterPath="$PROJECT_DIR$/resources/views/vendor/datatables/script.blade.php" />
     </list>
     <ignored path="LaPurisimaWeb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,22 +120,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PedidoController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PedidoController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1037">
-              <caret line="68" column="76" selection-start-line="68" selection-start-column="76" selection-end-line="68" selection-end-column="76" />
-              <folding>
-                <element signature="e#40#68#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="repartidores.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/layouts/repartidores.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="120">
               <caret line="8" column="92" selection-start-line="8" selection-start-column="92" selection-end-line="8" selection-end-column="92" />
               <folding />
             </state>
@@ -59,7 +133,7 @@
       <file leaf-file-name="pedidos.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/pedidos.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="210">
               <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding />
             </state>
@@ -69,7 +143,7 @@
       <file leaf-file-name="Detalle.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Detalle.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="195">
               <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
               <folding>
                 <element signature="e#23#62#0#PHP" expanded="true" />
@@ -81,7 +155,7 @@
       <file leaf-file-name="ProductoController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductoController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2074">
+            <state relative-caret-position="1830">
               <caret line="126" column="7" selection-start-line="126" selection-start-column="7" selection-end-line="126" selection-end-column="7" />
               <folding />
             </state>
@@ -91,25 +165,51 @@
       <file leaf-file-name="lista.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/productos/lista.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
+            <state relative-caret-position="780">
               <caret line="52" column="64" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detalle.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="detalle.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="224" column="43" selection-start-line="224" selection-start-column="43" selection-end-line="224" selection-end-column="43" />
+            <state relative-caret-position="187">
+              <caret line="239" column="41" selection-start-line="239" selection-start-column="34" selection-end-line="239" selection-end-column="41" />
               <folding>
-                <element signature="e#7266#7311#0#HTML" expanded="true" />
-                <element signature="e#7845#7905#0#HTML" expanded="true" />
-                <element signature="e#8013#8036#0#HTML" expanded="true" />
-                <marker date="1474424982895" expanded="true" signature="14017:14036" ph="..." />
-                <marker date="1474424982895" expanded="true" signature="14017:14048" ph="..." />
+                <marker date="1474502426391" expanded="true" signature="14017:14048" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/pedidos/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="559">
+              <caret line="56" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,28 +217,8 @@
       <file leaf-file-name="Pedido.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Pedido.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
+            <state relative-caret-position="720">
               <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="68" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -160,7 +240,6 @@
         <option value="$PROJECT_DIR$/app/Producto.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/config/database.php" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/public/js/moment-with-locales.js" />
         <option value="$PROJECT_DIR$/resources/views/layouts/row-details.blade.php" />
@@ -169,15 +248,16 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProductoController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PedidoApiController.php" />
-        <option value="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Pedido.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
         <option value="$PROJECT_DIR$/public/css/pedidos.css" />
         <option value="$PROJECT_DIR$/resources/views/layouts/repartidores.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" />
       </list>
     </option>
   </component>
@@ -196,10 +276,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1366" />
+    <option name="height" value="743" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -280,7 +358,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
+              <option name="myItemId" value="pedidos" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -476,18 +554,19 @@
       <workItem from="1474230694965" duration="443000" />
       <workItem from="1474233674010" duration="871000" />
       <workItem from="1474421907084" duration="3072000" />
+      <workItem from="1474502563295" duration="1696000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98222000" />
+    <option name="totallyTimeSpent" value="99918000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1366" height="743" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.284041" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28372434" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -767,13 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/app.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3502">
@@ -831,23 +903,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pedidos/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="114" column="45" selection-start-line="114" selection-start-column="45" selection-end-line="114" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="45" column="66" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="300">
           <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
           <folding />
         </state>
@@ -855,7 +913,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PedidoController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
+        <state relative-caret-position="915">
           <caret line="68" column="76" selection-start-line="68" selection-start-column="76" selection-end-line="68" selection-end-column="76" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
@@ -865,7 +923,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="240">
           <caret line="16" column="68" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
           <folding />
         </state>
@@ -873,7 +931,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductoController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
+        <state relative-caret-position="1830">
           <caret line="126" column="7" selection-start-line="126" selection-start-column="7" selection-end-line="126" selection-end-column="7" />
           <folding />
         </state>
@@ -881,7 +939,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Detalle.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="195">
           <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
           <folding>
             <element signature="e#23#62#0#PHP" expanded="true" />
@@ -891,7 +949,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Pedido.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
+        <state relative-caret-position="720">
           <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
           <folding />
         </state>
@@ -899,7 +957,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/productos/lista.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
+        <state relative-caret-position="780">
           <caret line="52" column="64" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="64" />
           <folding />
         </state>
@@ -907,7 +965,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/pedidos.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
+        <state relative-caret-position="210">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding />
         </state>
@@ -915,23 +973,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layouts/repartidores.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
+        <state relative-caret-position="120">
           <caret line="8" column="92" selection-start-line="8" selection-start-column="92" selection-end-line="8" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="56" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="224" column="43" selection-start-line="224" selection-start-column="43" selection-end-line="224" selection-end-column="43" />
+        <state relative-caret-position="187">
+          <caret line="239" column="41" selection-start-line="239" selection-start-column="34" selection-end-line="239" selection-end-column="41" />
           <folding>
-            <element signature="e#7266#7311#0#HTML" expanded="true" />
-            <element signature="e#7845#7905#0#HTML" expanded="true" />
-            <element signature="e#8013#8036#0#HTML" expanded="true" />
-            <marker date="1474424982895" expanded="true" signature="14017:14036" ph="..." />
-            <marker date="1474424982895" expanded="true" signature="14017:14048" ph="..." />
+            <marker date="1474502426391" expanded="true" signature="14017:14048" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pedidos/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
