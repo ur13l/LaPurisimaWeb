@@ -1,0 +1,30 @@
+.table-striped tr{
+    cursor: pointer;
+}
+
+.sorting, .sorting_asc, .sorting_desc {
+    background : none;
+    content:""
+}
+
+
+
+table.dataTable thead .sorting_desc:after {
+    content: "";
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: "";
+}
+
+table.dataTable thead .sorting:after {
+    content: "";
+}
+
+div.slider{
+    display: none;
+}
+
+table.dataTable tbody td.no-padding {
+    padding: 0;
+}

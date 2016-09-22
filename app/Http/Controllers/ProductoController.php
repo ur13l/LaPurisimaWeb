@@ -11,18 +11,21 @@ use Auth;
 class ProductoController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Llamada inicial de productos, muestra la vista de los productos para ser mostrados.
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
   public function index(Request $request){
-    if(Auth::user()){
       if(Auth::user()->tipo_usuario_id == 1) {
           $productos = Producto::paginate(10);
           return view('productos.lista', ['productos' => $productos, 'message' => $request->message]);
       }
-    }
     return redirect()->action('HomeController@index');
   }
 
@@ -31,10 +34,8 @@ class ProductoController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
   public function nuevo(){
-    if(Auth::user()){
       if(Auth::user()->tipo_usuario_id == 1)
         return view('productos.form', ['action' => 'create','producto' => new Producto()]);
-    }
     return redirect()->action('HomeController@index');
   }
 
@@ -44,10 +45,8 @@ class ProductoController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
   public function editar(Request $request){
-    if(Auth::user()){
         if(Auth::user()->tipo_usuario_id == 1)
             return view('productos.form', ['action' => 'update', 'producto' => Producto::find($request->input('id'))]);
-    }
     return redirect()->action('HomeController@index');
   }
 
@@ -57,12 +56,10 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function eliminar(Request $request){
-        if(Auth::user()){
             if(Auth::user()->tipo_usuario_id == 1){
                 $producto = Producto::find($request->input('id'));
                 $producto->delete();
             }
-        }
         return redirect()->action('ProductoController@index', ['message' => 'delete']);
     }
 
@@ -83,7 +80,6 @@ class ProductoController extends Controller
        'imagen' => 'required'
    ]);
 
-    if(Auth::user()){
       if(Auth::user()->tipo_usuario_id == 1){
         $producto = Producto::create($request->except('imagen'));
         if ($request->hasFile('imagen')) {
@@ -97,12 +93,11 @@ class ProductoController extends Controller
           }
         }
       }
-    }
     return redirect()->action('ProductoController@index',['message' => 'create'] );
   }
 
   /**
-   * Función utilizada para crear un nuevo producto.
+   * Función utilizada para actualizar un producto.
    *
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
@@ -115,7 +110,6 @@ class ProductoController extends Controller
        'precio' => 'required|numeric|min:0.01|max:10000000'
    ]);
 
-    if(Auth::user()){
       if(Auth::user()->tipo_usuario_id == 1){
         $producto = Producto::find($request->input('id'));
         $producto->update($request->except('imagen'));
@@ -131,7 +125,6 @@ class ProductoController extends Controller
         }
         $producto->save();
       }
-    }
     return redirect()->action('ProductoController@index', ['message' => 'update']);
   }
 

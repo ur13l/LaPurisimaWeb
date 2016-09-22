@@ -25,7 +25,10 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
 });
 
 Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
-   Route::post('nuevo', 'PedidoController@nuevo');
+   Route::post('nuevo', 'PedidoApiController@nuevo');
+   Route::post('cancelar', 'PedidoApiController@cancelar');
+   Route::post('usuario', 'PedidoApiController@pedidosUsuario');
+   Route::post('repartidor', 'PedidoApiController@pedidosRepartidor');
 });
 
 Route::post('/usuario/authenticate', "UserController@authenticate");
@@ -38,6 +41,11 @@ Route::get('password/test', function(){
   return view('auth.emails.password');
 });
 
+
+Route::get('/pedidos', 'PedidoController@pedidos');
+Route::get('/pedidos/data', 'PedidoController@getRowDetailsData');
+Route::get('/pedidos/repartidores', 'PedidoController@repartidores');
+Route::get('/pedidos/{pedido_id}', 'PedidoController@detalle');
 Route::get('/home', 'HomeController@index');
 Route::get('/productos', 'ProductoController@index');
 Route::get('/producto/nuevo', 'ProductoController@nuevo');
@@ -45,3 +53,4 @@ Route::get('/producto/editar', 'ProductoController@editar');
 Route::get('/producto/eliminar', 'ProductoController@eliminar');
 Route::post('/producto/create', "ProductoController@create");
 Route::post('/producto/update', "ProductoController@update");
+Route::post('/producto/get', "ProductoApiController@getProductos");

@@ -23,16 +23,21 @@ class UserController extends Controller
     $rules = array('email' => 'unique:users,email');
     $validator = Validator::make($request->all(), $rules);
     $errors = [];
+      $success = true;
     if ($validator->fails()) {
       $success = false;
       $errors[] = "email.exists";
     }
     else{
-      $user = User::create($request->except('imagen_usuario'));
-      $data = $request->input('imagen_usuario');
-      $route = "storage/perfil/";
-      $user->imagen_usuario = ImageController::saveImage($data, $route, $user->id);
-      $success = $user->save();
+        $user = User::create($request->except('imagen_usuario'));
+        $user->tipo_usuario_id = 3;
+        $user->save();
+        $data = $request->input('imagen_usuario');
+        if(isset($data)) {
+            $route = "storage/perfil/";
+            $user->imagen_usuario = ImageController::saveImage($data, $route, $user->id);
+            $success = $user->save();
+        }
     }
     return response()->json([
       "success" => var_export($success, true),
