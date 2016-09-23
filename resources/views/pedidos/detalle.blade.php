@@ -107,10 +107,13 @@
                                     <h4>Asignar repartidor</h4>
                                     <div class="repartidores">
                                         <div class="row search-repartidores">
-                                            <div class="col-xs-4 col-md-2">
-                                                <img class="picture" src="#" height="100">
+                                            <div class="col-xs-4 col-md-3">
+                                                <img class="picture repartidor-definido-imagen" src="#" height="100">
                                             </div>
-                                            <div class="col-xs-4 col-md-6">
+                                            {{Form::open(array('url' => '/pedidos/asignar'))}}
+                                            {{Form::hidden('repartidor-definido-id', "", array('id' => 'repartidor-definido-id'))}}
+                                            {{Form::hidden('pedido-id', $pedido->id, array('id' => 'pedido-id'))}}
+                                            <div class="col-xs-4 col-md-5">
                                                 <p id="repartidor-definido-nombre">Conductor no asignado</p>
                                                 <p id="repartidor-definido-src">Conductor no asignado</p>
                                             </div>
@@ -119,9 +122,15 @@
                                                     <input type="text" class="form-control" id="buscar-repartidores">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                                 </div>
+                                                <div class="form-group">
+                                                    {{Form::submit('Asignar', array('class'=>'form-control btn btn-primary'))}}
+                                                </div>
+                                                <div></div>
                                             </div>
+
+                                            {{Form::close()}}
                                         </div> <div class="content-loading" style="display: none;"></div>
-                                        <div class="row row-horizon repartidores-container"  style="overflow: hidden; white-space:nowrap;">
+                                        <div class="row row-horizon repartidores-container"  style="overflow: hidden; text-align:center; white-space:nowrap;">
                                             @foreach($repartidores as $index => $repartidor)
                                                 @if($index >= 4)
                                                     <?php $display = 'none'; ?>
@@ -129,7 +138,7 @@
                                                     <?php $display = 'inline-block'; ?>
                                                 @endif
 
-                                                <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px; margin-left:14px; display:{{$display}}">
+                                                <div class="col-xs-3" id="repartidor{{$index}}" style="padding:10px; display:{{$display}}">
                                                     <div class="panel panel-default repartidor-container" style="cursor:pointer;">
                                                         {{Form::hidden('',$repartidor->id, ['class' => 'repartidor-id'])}}
                                                         <div class="row">
@@ -156,9 +165,22 @@
                                         </div>
                                     </div>
                                 @else
-                                    <h4>Detalles del repartidor</h4>
-                                    <img class="picture" src="{{url($pedido->cliente->imagen_usuario)}}" height="200">
-                                    {{$pedido->cliente->nombre}}
+                                    <h4>Datos del repartidor</h4>
+                                    <table class="table ">
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-center" colspan="2"><img height="100" src="{{url("/".$pedido->repartidor->imagen_usuario)}}" alt=""></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <td>{{$pedido->repartidor->nombre}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>{{$pedido->repartidor->email}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 @endif
 
                             </div>
@@ -193,36 +215,42 @@
             });
 
             $("#right-repartidor").on('click',function(){
-                $("#repartidor" + firstPosition).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+1)).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+2)).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+3)).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+4)).addClass('show-slide');
-                $("#repartidor" + (firstPosition+5)).addClass('show-slide');
-                $("#repartidor" + (firstPosition+6)).addClass('show-slide');
-                $("#repartidor" + (firstPosition+7)).addClass('show-slide');
-                firstPosition+=4;
-                animation("-", "+");
+                if(firstPosition >= 0) {
+                    $("#repartidor" + firstPosition).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 1)).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 2)).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 3)).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 4)).addClass('show-slide');
+                    $("#repartidor" + (firstPosition + 5)).addClass('show-slide');
+                    $("#repartidor" + (firstPosition + 6)).addClass('show-slide');
+                    $("#repartidor" + (firstPosition + 7)).addClass('show-slide');
+                    firstPosition += 4;
+                    animation("-", "+");
+                }
             });
 
             $("#left-repartidor").on('click',function(){
-                $("#repartidor" + firstPosition).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+1)).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+2)).addClass('hide-slide');
-                $("#repartidor" + (firstPosition+3)).addClass('hide-slide');
-                $("#repartidor" + (firstPosition-1)).addClass('show-slide');
-                $("#repartidor" + (firstPosition-2)).addClass('show-slide');
-                $("#repartidor" + (firstPosition-3)).addClass('show-slide');
-                $("#repartidor" + (firstPosition-4)).addClass('show-slide');
-                firstPosition-=4;
-                animation("+","-");
+                if(firstPosition < 96) {
+                    $("#repartidor" + firstPosition).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 1)).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 2)).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition + 3)).addClass('hide-slide');
+                    $("#repartidor" + (firstPosition - 1)).addClass('show-slide');
+                    $("#repartidor" + (firstPosition - 2)).addClass('show-slide');
+                    $("#repartidor" + (firstPosition - 3)).addClass('show-slide');
+                    $("#repartidor" + (firstPosition - 4)).addClass('show-slide');
+                    firstPosition -= 4;
+                    animation("+", "-");
+                }
             });
 
             $(".repartidor-container").on('click', function(){
                 var nombre = $($(this).find(".repartidor-nombre")).html();
                 var src = $($(this).find(".repartidor-imagen")).attr('src');
+                var id = $($(this).find(".repartidor-id")).val();
                 $("#repartidor-definido-nombre").html(nombre);
-                $("#repartidor-definido-src").html(src);
+                $(".repartidor-definido-imagen").attr('src', src);
+                $("#repartidor-definido-id").val(id);
             });
 
             $("#buscar-repartidores").on("keyup paste",function(){

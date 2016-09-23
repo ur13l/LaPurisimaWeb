@@ -69,5 +69,25 @@ class PedidoController extends Controller
         return view('layouts.repartidores', ['repartidores' => $repartidores]);
     }
 
+    public function asignarRepartidor(Request $request){
+        $idRepartidor = $request->input('repartidor-definido-id');
+        $repartidor = User::find($idRepartidor);
+        $idPedido = $request->input('pedido-id');
+        if(Auth::user()->tipo_usuario_id == 1) {
+            if (isset($repartidor)) {
+                if ($repartidor->tipo_usuario_id == 2) {
+                    ;
+                    $pedido = Pedido::find($idPedido);
+                    $pedido->conductor_id = $idRepartidor;
+                    $pedido->status = Pedido::ASIGNADO;
+                    $pedido->save();
+                }
+            }
+        }
+        //ASIGNADO EL PEDIDO SE LE PUEDE ENVIAR UNA NOTIFICACION AL REPARTIDOR.
+        return redirect()->route('detalle', ['pedido_id' => $idPedido]);
+
+    }
+
 
 }
