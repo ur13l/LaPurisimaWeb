@@ -90,4 +90,38 @@ class PedidoController extends Controller
     }
 
 
+    public static function tieneSuficienteStock($pedido, $repartidor){
+        $detalles = $pedido->detalles;
+        $stockRepartidor = $repartidor->datosRepartidor->productos;
+        foreach($detalles as $detalle){
+            $exists = false;
+            foreach($stockRepartidor as $stock){
+                if($stock->id == $detalle->producto_id){
+                    $exists = true;
+                    if($stock->pivot->cantidad < $detalle->cantidad){
+                        return false;
+                    }
+                }
+            }
+            if(!$exists)
+                return false;
+        }
+        return true;
+    }
+
+    public static function restarStockRepartidor($pedido, $repartidor){
+        $detalles = $pedido->detalles;
+        $stockRepartidor = $repartidor->datosRepartidor->productos;
+        foreach($detalles as $detalle){
+            foreach($stockRepartidor as $stock){
+                if($stock->id == $detalle->producto_id){
+                    $stock->pivot->cantidad -= $detalle->cantidad;
+                    $stock->pivot->save();
+                }
+            }
+        }
+        return true;
+    }
+
+
 }

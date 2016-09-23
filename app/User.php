@@ -18,7 +18,10 @@ class User extends Authenticatable
     'tipo_usuario_id',
     'remember_token',
     'api_token',
-    'calificacion'
+    'calificacion',
+     'telefono',
+     'datos_repartidor_id'
+
   ];
   protected $hidden = [
       'password',
@@ -36,5 +39,10 @@ class User extends Authenticatable
   public function setPasswordAttribute($value) {
     $this->attributes['password'] = bcrypt($value);
   }
+
+  public function datosRepartidor(){
+      return $this->hasOne("App\DatosRepartidor");
+  }
+
 
 }
