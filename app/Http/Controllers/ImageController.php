@@ -18,4 +18,5 @@ class ImageController extends Controller
       file_put_contents($filePath, $data);
       return $filePath;
     }
+
 }
