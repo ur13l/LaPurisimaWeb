@@ -47,13 +47,19 @@
                                             @elseif($pedido->status == 4)
                                                 <span style="color:green">Entregado</span>
                                             @elseif($pedido->status == 5)
-                                                <span style="color:red">Cancelador</span>
+                                                <span style="color:red">Cancelado</span>
                                             @elseif($pedido->status == 6)
                                                 <span style="color:rebeccapurple">Fallido</span>
                                             @endif
 
                                         </td>
                                     </tr>
+                                    @if($pedido->status != 4 && $pedido->status != 5 && $pedido->status != 6)
+                                        <tr>
+                                            <th>Cancelar Pedido</th>
+                                            <td><a href="{{url("/pedidos/cancelar/".$pedido->id)}}" class="btn btn-danger">Cancelar</a></td>
+                                        </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -187,8 +193,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <img class="picture" src="https://maps.googleapis.com/maps/api/staticmap?center={{$pedido->latitud}},{{$pedido->longitud}}&markers={{$pedido->latitud}},{{$pedido->longitud}}&zoom=15&size=600x200&key=AIzaSyBm7WFeq4Oa1M9sL6HQ9NZbIxdibgSEEOE" height="200">
-                                <div>{{$pedido->direccion}}</div>
+                               <div id="map" style="height:400px"></div>
                             </div>
                         </div>
 
@@ -206,6 +211,8 @@
     <script type="text/javascript">
         var firstPosition = 0;
         var xhr;
+        var map = null;
+        var markers = [];
 
         $(document).ready(function()
         {
@@ -278,8 +285,6 @@
                         $(".repartidores-container").show();
                     }
                 });
-
-
             })
         });
 
@@ -305,7 +310,100 @@
             });
 
         }
+
+        function initMap() {
+            var myLatLng = {
+                lat: Number("{{$pedido->latitud}}"),
+                lng: Number("{{$pedido->longitud}}")};
+
+            // Create a map object and specify the DOM element for display.
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                scrollwheel: false,
+                zoom: 14
+            });
+
+            marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+            showRepartidores();
+            setInterval(showRepartidores, 5000);
+        }
+
+        function showRepartidores(){
+
+                $.ajax({
+                    url: "{{url('/pedidos/repartidores-json')}}",
+                    data: {
+                        latitud: Number("{{$pedido->latitud}}"),
+                        longitud: Number("{{$pedido->longitud}}")
+                    },
+                    success: function (data) {
+                        removeMarkers();
+                        for(var i = 0 ; i < data.length; i++){
+                            var infoMarker = getInfoMarker(data[i]);
+                            var marker = new google.maps.Marker({
+                                position: {
+                                    lat: data[i].latitud,
+                                    lng: data[i].longitud
+                                },
+                                map: map,
+                                id: data[i].id,
+                                title: 'Hello World!',
+                                icon: '{{url("/img/repartidor.png")}}'
+                            });
+                            google.maps.event.addListener(marker, 'click',(function(marker, i, infowindow) {
+                                return function() {
+                                    infowindow.open(map, marker);
+                                    $(".btnMap").on('click', function(e){
+                                        $("#repartidor-definido-nombre").html(this.dataset.nombreRepartidor);
+                                        $(".repartidor-definido-imagen").attr('src',"{{url("/")}}/"+ this.dataset.imagenRepartidor);
+                                        $("#repartidor-definido-id").val(this.id);
+                                    })
+                                }
+                            })(marker, i, infoMarker))
+                            markers.push(marker);
+                        }
+
+                    }
+                });
+            }
+
+            function removeMarkers(){
+                for(var i = 0 ; i < markers.length; i++){
+                    markers[i].setMap(null);
+                }
+                markers = [];
+            }
+
+            function getInfoMarker(repartidor){
+                var contentString = '<div id="content" style="width: 900" >'+
+                        '<div class="col-xs-4">' +
+                        '<img src="{{url("/")}}/'+repartidor.user.imagen_usuario+'" alt="">'+
+                        '</div>'+
+                        '<div class="col-xs-8">' +
+                        '<h4>'+ repartidor.user.nombre+'</h4>'+
+                        '<button class="btn btn-primary btnMap" id="'+repartidor.user.id+'" data-nombre-repartidor="'
+                        +repartidor.user.nombre+'" data-imagen-repartidor ="'+repartidor.user.imagen_usuario+'">Asignar</button>'+
+                        '</div>'+
+                        '</div>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 900
+                });
+
+                return infowindow;
+            }
+
+            function asignarDesdeMapa(nombre){
+                alert(nombre);
+            }
+
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm7WFeq4Oa1M9sL6HQ9NZbIxdibgSEEOE&callback=initMap"
+            async defer></script>
 @endsection
 
 @section('styles')

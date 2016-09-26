@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DatosRepartidor;
+use App\Producto;
 use Illuminate\Http\Request;
 
 use App\Pedido;
@@ -9,6 +11,7 @@ use App\Detalle;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 
 class PedidoController extends Controller
@@ -25,7 +28,7 @@ class PedidoController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Muestra la interfaz principal de pedidos. En donde se listan los pedidos recibidos, los asignados y completados.
      *
      * @return \Illuminate\Http\Response
      */
@@ -45,7 +48,10 @@ class PedidoController extends Controller
         return redirect()->action('HomeController@index');
     }
 
-    public function getRowDetailsData()
+    /**
+     * @return mixed
+     */
+    public function pedidosSolicitadosTable()
     {
         $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->with('cliente')->with('detalles')
             ->with('detalles.producto')->get();
@@ -69,6 +75,13 @@ class PedidoController extends Controller
         return view('layouts.repartidores', ['repartidores' => $repartidores]);
     }
 
+    public function repartidoresJSON(Request $request){
+        $latitude = $request->input('latitud');
+        $longitude = $request->input('longitud');
+        $repartidores = DatosRepartidor::where(DB::raw("(POW(69.1 * (latitud - $latitude), 2) + POW(69.1 * ($longitude - longitud) * COS(latitud / 57.3),2))"), '<', DB::raw("SQRT(25)"))->with('user')->get();
+        return response()->json($repartidores->all());
+    }
+
     public function asignarRepartidor(Request $request){
         $idRepartidor = $request->input('repartidor-definido-id');
         $repartidor = User::find($idRepartidor);
@@ -87,6 +100,39 @@ class PedidoController extends Controller
         //ASIGNADO EL PEDIDO SE LE PUEDE ENVIAR UNA NOTIFICACION AL REPARTIDOR.
         return redirect()->route('detalle', ['pedido_id' => $idPedido]);
 
+    }
+
+    /**
+     * Función para cancelar un pedido que no ha sido entregado.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancelarPedido($idPedido){
+        if(Auth::user()->tipo_usuario_id == 1) {
+            $pedido = Pedido::find($idPedido);
+            $errors = [];
+            $save = false;
+            if (isset($pedido)) {
+                if ($pedido->status != Pedido::CANCELADO && $pedido->status != Pedido::FAILED && $pedido->status != Pedido::ENTREGADO) {
+                    $pedido->status = Pedido::CANCELADO;
+                    $pedido->total = 0;
+                    foreach ($pedido->detalles as $detalle) {
+                        $producto = Producto::find($detalle->producto->id);
+                        $producto->stock += $detalle->cantidad;
+                        $producto->save();
+                    }
+                    $save = $pedido->save();
+                } elseif ($pedido->status != Pedido::ENTREGADO) {
+                    $errors[] = "already.delivered";
+                } else {
+                    $errors[] = "already.cancelled";
+                }
+                //Aquí se puede enviar una notificación push al conductor para indicar la cancelación de un envío.
+            }
+
+            //ASIGNADO EL PEDIDO SE LE PUEDE ENVIAR UNA NOTIFICACION AL REPARTIDOR.
+            return redirect()->route('detalle', ['pedido_id' => $idPedido]);
+        }
     }
 
 
@@ -110,6 +156,7 @@ class PedidoController extends Controller
     }
 
     public static function restarStockRepartidor($pedido, $repartidor){
+
         $detalles = $pedido->detalles;
         $stockRepartidor = $repartidor->datosRepartidor->productos;
         foreach($detalles as $detalle){
@@ -122,6 +169,8 @@ class PedidoController extends Controller
         }
         return true;
     }
+
+
 
 
 }
