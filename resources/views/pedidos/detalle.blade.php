@@ -193,7 +193,11 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                               <div id="map" style="height:400px"></div>
+                                @if($pedido->status == 1 || $pedido->status == 2 || $pedido->status == 3)
+                                   <div id="map" style="height:400px"></div>
+                                @elseif($pedido->status == 4 || $pedido->status == 5)
+
+                                @endif
                             </div>
                         </div>
 
@@ -311,101 +315,211 @@
 
         }
 
-        function initMap() {
-            var myLatLng = {
-                lat: Number("{{$pedido->latitud}}"),
-                lng: Number("{{$pedido->longitud}}")};
-
-            // Create a map object and specify the DOM element for display.
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: myLatLng,
-                scrollwheel: false,
-                zoom: 14
-            });
-
-            marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!'
-            });
-            showRepartidores();
-            setInterval(showRepartidores, 5000);
+        function removeMarkers(){
+            var act = new Date();
+            for(var i = markers.length - 1 ; i >= 0; i--){
+                if (act - markers[i].updated_at > 10000){
+                    markers[i].setMap(null);
+                    markers.splice(i, 1);
+                }
+            }
         }
 
-        function showRepartidores(){
+        function getInfoMarker(repartidor){
+            var contentString = '<div id="content" style="width: 900" >'+
+                    '<div class="col-xs-5">' +
+                    '<img src="{{url("/")}}/'+repartidor.user.imagen_usuario+'" width="100" alt="">'+
+                    '</div>'+
+                    '<div class="col-xs-6">' +
+                    '<h4>'+ repartidor.user.nombre+'</h4>'+
+                    '<button class="btn btn-primary btnMap" id="'+repartidor.user.id+'" data-nombre-repartidor="'
+                    +repartidor.user.nombre+'" data-imagen-repartidor ="'+repartidor.user.imagen_usuario+'">Asignar</button>'+
+                    '</div>'+
+                    '</div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 900
+            });
 
-                $.ajax({
-                    url: "{{url('/pedidos/repartidores-json')}}",
-                    data: {
-                        latitud: Number("{{$pedido->latitud}}"),
-                        longitud: Number("{{$pedido->longitud}}")
-                    },
-                    success: function (data) {
-                        removeMarkers();
-                        for(var i = 0 ; i < data.length; i++){
-                            var infoMarker = getInfoMarker(data[i]);
-                            var marker = new google.maps.Marker({
-                                position: {
-                                    lat: data[i].latitud,
-                                    lng: data[i].longitud
-                                },
-                                map: map,
-                                id: data[i].id,
-                                title: 'Hello World!',
-                                icon: '{{url("/img/repartidor.png")}}'
-                            });
-                            google.maps.event.addListener(marker, 'click',(function(marker, i, infowindow) {
-                                return function() {
-                                    infowindow.open(map, marker);
-                                    $(".btnMap").on('click', function(e){
-                                        $("#repartidor-definido-nombre").html(this.dataset.nombreRepartidor);
-                                        $(".repartidor-definido-imagen").attr('src',"{{url("/")}}/"+ this.dataset.imagenRepartidor);
-                                        $("#repartidor-definido-id").val(this.id);
-                                    })
-                                }
-                            })(marker, i, infoMarker))
-                            markers.push(marker);
-                        }
+            return infowindow;
+        }
 
-                    }
-                });
-            }
-
-            function removeMarkers(){
-                for(var i = 0 ; i < markers.length; i++){
-                    markers[i].setMap(null);
+        function findWithAttr(array, attr, value) {
+            for(var i = 0; i < array.length; i += 1) {
+                if(array[i][attr] === value) {
+                    return i;
                 }
-                markers = [];
             }
+            return -1;
+        }
 
-            function getInfoMarker(repartidor){
-                var contentString = '<div id="content" style="width: 900" >'+
-                        '<div class="col-xs-4">' +
-                        '<img src="{{url("/")}}/'+repartidor.user.imagen_usuario+'" alt="">'+
-                        '</div>'+
-                        '<div class="col-xs-8">' +
-                        '<h4>'+ repartidor.user.nombre+'</h4>'+
-                        '<button class="btn btn-primary btnMap" id="'+repartidor.user.id+'" data-nombre-repartidor="'
-                        +repartidor.user.nombre+'" data-imagen-repartidor ="'+repartidor.user.imagen_usuario+'">Asignar</button>'+
-                        '</div>'+
-                        '</div>';
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    maxWidth: 900
+
+        function transition(marker, newPosition){
+            var numDeltas = 100;
+            var delay = 10; //milliseconds
+            var i = 0;
+            var deltaLat;
+            var deltaLng;
+            i = 0;
+            deltaLat = (newPosition.lat() - marker.position.lat())/numDeltas;
+            deltaLng = (newPosition.lng() - marker.position.lng())/numDeltas;
+            moveMarker(marker, i, deltaLat, deltaLng, numDeltas, delay);
+        }
+
+        function moveMarker(marker, i, deltaLat, deltaLng, numDeltas, delay){
+            var lat =   marker.position.lat() + deltaLat;
+            var lng =   marker.position.lng() + deltaLng;
+            //console.log(lat);
+            //console.log(lng);
+            var latlng = new google.maps.LatLng(lat, lng);
+            marker.setPosition(latlng);
+            if(i!=numDeltas){
+                i++;
+                setTimeout(function(){moveMarker(marker, i, deltaLat, deltaLng, numDeltas, delay)}, delay);
+            }
+        }
+
+        </script>
+    @if($pedido->status == 1 || $pedido->status == 2 || $pedido->status == 3)
+        <script>
+            function initMap() {
+                var myLatLng = {
+                    lat: Number("{{$pedido->latitud}}"),
+                    lng: Number("{{$pedido->longitud}}")};
+
+                // Create a map object and specify the DOM element for display.
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: myLatLng,
+                    scrollwheel: false,
+                    zoom: 14
                 });
 
-                return infowindow;
+                marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'Hello World!'
+                });
+                showRepartidores();
+                setInterval(showRepartidores, 5000);
             }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm7WFeq4Oa1M9sL6HQ9NZbIxdibgSEEOE&callback=initMap"
+                async defer></script>
+    @endif
+    @if($pedido->status == 1)
+       <script>
+             function showRepartidores(){
 
-            function asignarDesdeMapa(nombre){
-                alert(nombre);
-            }
+                   $.ajax({
+                       url: "{{url('/pedidos/repartidores-json')}}",
+                       data: {
+                           latitud: Number("{{$pedido->latitud}}"),
+                           longitud: Number("{{$pedido->longitud}}")
+                       },
+                       success: function (data) {
+                           removeMarkers();
+                           for(var i = 0 ; i < data.length; i++){
 
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm7WFeq4Oa1M9sL6HQ9NZbIxdibgSEEOE&callback=initMap"
-            async defer></script>
+                               //Esto se ejecuta cuando el marcador ya existe en el mapa. Busca el que concuerda
+                               //con la propiedad id.
+                               var index = findWithAttr(markers, 'id', data[i].id);
+                               if(index != -1){
+                                   var newDestination =new google.maps.LatLng( data[i].latitud, data[i].longitud );
+                                   markers[index].updated_at = new Date(); //Se actualiza la fecha, para que no se elimine.
+                                   transition(markers[index], newDestination);
+                               }
+                               //En caso de que el marcador no exista, se genera uno nuevo.
+                               else {
+                                   var infoMarker = getInfoMarker(data[i]);
+                                   var marker = new google.maps.Marker({
+                                       position: {
+                                           lat: data[i].latitud,
+                                           lng: data[i].longitud
+                                       },
+                                       map: map,
+                                       id: data[i].id,
+                                       title: 'Hello World!',
+                                       icon: '{{url("/img/repartidor.png")}}',
+                                       updated_at: new Date()
+                                   });
+                                   google.maps.event.addListener(marker, 'click',(function(marker, i, infowindow) {
+                                       return function() {
+                                           infowindow.open(map, marker);
+                                           $(".btnMap").on('click', function(e){
+                                               $("#repartidor-definido-nombre").html(this.dataset.nombreRepartidor);
+                                               $(".repartidor-definido-imagen").attr('src',"{{url("/")}}/"+ this.dataset.imagenRepartidor);
+                                               $("#repartidor-definido-id").val(this.id);
+                                           })
+                                       }
+                                   })(marker, i, infoMarker))
+                                   markers.push(marker);
+                               }
+                           }
+
+                       }
+                   });
+               }
+       </script>
+
+
+       @endif
+
+        @if($pedido->status == 2 || $pedido->status == 3)
+            <script>
+                function showRepartidores(){
+                    $.ajax({
+                        url: "{{url('/pedidos/repartidores-json')}}",
+                        data: {
+                            latitud: Number("{{$pedido->latitud}}"),
+                            longitud: Number("{{$pedido->longitud}}")
+                        },
+                        success: function (data) {
+                            removeMarkers();
+                            for(var i = 0 ; i < data.length; i++){
+
+                                //Esto se ejecuta cuando el marcador ya existe en el mapa. Busca el que concuerda
+                                //con la propiedad id.
+                                var index = findWithAttr(markers, 'id', data[i].id);
+                                if(index != -1){
+                                    var newDestination =new google.maps.LatLng( data[i].latitud, data[i].longitud );
+                                    markers[index].updated_at = new Date(); //Se actualiza la fecha, para que no se elimine.
+                                    transition(markers[index], newDestination);
+                                }
+                                //En caso de que el marcador no exista, se genera uno nuevo.
+                                else {
+                                    var infoMarker = getInfoMarker(data[i]);
+                                    var marker = new google.maps.Marker({
+                                        position: {
+                                            lat: data[i].latitud,
+                                            lng: data[i].longitud
+                                        },
+                                        map: map,
+                                        id: data[i].id,
+                                        title: 'Hello World!',
+                                        icon: '{{url("/img/repartidor.png")}}',
+                                        updated_at: new Date()
+                                    });
+                                    google.maps.event.addListener(marker, 'click',(function(marker, i, infowindow) {
+                                        return function() {
+                                            infowindow.open(map, marker);
+                                            $(".btnMap").on('click', function(e){
+                                                $("#repartidor-definido-nombre").html(this.dataset.nombreRepartidor);
+                                                $(".repartidor-definido-imagen").attr('src',"{{url("/")}}/"+ this.dataset.imagenRepartidor);
+                                                $("#repartidor-definido-id").val(this.id);
+                                            })
+                                        }
+                                    })(marker, i, infoMarker))
+                                    markers.push(marker);
+                                }
+                            }
+
+                        }
+                    });
+                }
+            </script>
+        @endif
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{url('/css/pedidos.css')}}">
+   <link rel="stylesheet" href="{{url('/css/pedidos.css')}}">
 @endsection
