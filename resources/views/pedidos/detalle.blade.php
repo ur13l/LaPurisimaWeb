@@ -83,6 +83,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <h4>Detalles de pedido</h4>
+                                @if($pedido->status != 6)
                                 <table class="table table-striped">
                                     <thead>
                                         <th>Imagen</th>
@@ -105,6 +106,11 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                @else
+                                    <div class="panel text-center">
+                                        <p>Pedido fallido.</p>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="col-xs-12">
@@ -170,7 +176,7 @@
                                         <div id="right-repartidor"><img src="{{url('/img/next.png')}}" height="32" alt=""></div>
                                         </div>
                                     </div>
-                                @else
+                                @elseif(isset($pedido->repartidor))
                                     <h4>Datos del repartidor</h4>
                                     <table class="table ">
                                         <tbody>
@@ -187,17 +193,30 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                @else
+                                    <h4>Datos del repartidor</h4>
+                                    <div class="panel text-center">
+                                        <p>Repartidor no asignado</p>
+                                    </div>
+
                                 @endif
 
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
+                        <div class="row col-xs-12">
+                            <h4 >Ubicación</h4>
+                            <div class="text-center">
+
                                 @if($pedido->status == 1 || $pedido->status == 2 || $pedido->status == 3)
                                    <div id="map" style="height:400px"></div>
                                 @elseif($pedido->status == 4 || $pedido->status == 5)
-
+                                    <img class="picture" src="https://maps.googleapis.com/maps/api/staticmap?center={{$pedido->latitud}},{{$pedido->longitud}}&markers={{$pedido->latitud}},{{$pedido->longitud}}&zoom=14&size=600x200&key=AIzaSyBm7WFeq4Oa1M9sL6HQ9NZbIxdibgSEEOE" height="200">
+                                @elseif($pedido->status == 6)
+                                    <div class="panel text-center">
+                                        <p>Ubicación desconocida</p>
+                                    </div>
                                 @endif
+
                             </div>
                         </div>
 
@@ -325,17 +344,21 @@
             }
         }
 
-        function getInfoMarker(repartidor){
+        function getInfoMarker(repartidor, assigned){
             var contentString = '<div id="content" style="width: 900" >'+
                     '<div class="col-xs-5">' +
                     '<img src="{{url("/")}}/'+repartidor.user.imagen_usuario+'" width="100" alt="">'+
                     '</div>'+
                     '<div class="col-xs-6">' +
-                    '<h4>'+ repartidor.user.nombre+'</h4>'+
-                    '<button class="btn btn-primary btnMap" id="'+repartidor.user.id+'" data-nombre-repartidor="'
-                    +repartidor.user.nombre+'" data-imagen-repartidor ="'+repartidor.user.imagen_usuario+'">Asignar</button>'+
-                    '</div>'+
-                    '</div>';
+                    '<h4>'+ repartidor.user.nombre+'</h4>';
+
+                    if(!assigned) {
+                        contentString += '<button class="btn btn-primary btnMap" id="' + repartidor.user.id + '" data-nombre-repartidor="' +
+                                 repartidor.user.nombre + '" data-imagen-repartidor ="' + repartidor.user.imagen_usuario + '">Asignar</button>';
+                    }
+
+                    contentString+=  '</div>' +
+                            '</div>';
             var infowindow = new google.maps.InfoWindow({
                 content: contentString,
                 maxWidth: 900
@@ -468,15 +491,14 @@
             <script>
                 function showRepartidores(){
                     $.ajax({
-                        url: "{{url('/pedidos/repartidores-json')}}",
+                        url: "{{url('/pedidos/repartidor-pedido-json')}}",
                         data: {
-                            latitud: Number("{{$pedido->latitud}}"),
-                            longitud: Number("{{$pedido->longitud}}")
+                            id_pedido: "{{$pedido->id}}"
                         },
                         success: function (data) {
+                            console.log(data);
                             removeMarkers();
                             for(var i = 0 ; i < data.length; i++){
-
                                 //Esto se ejecuta cuando el marcador ya existe en el mapa. Busca el que concuerda
                                 //con la propiedad id.
                                 var index = findWithAttr(markers, 'id', data[i].id);
@@ -487,7 +509,7 @@
                                 }
                                 //En caso de que el marcador no exista, se genera uno nuevo.
                                 else {
-                                    var infoMarker = getInfoMarker(data[i]);
+                                    var infoMarker = getInfoMarker(data[i], true);
                                     var marker = new google.maps.Marker({
                                         position: {
                                             lat: data[i].latitud,
@@ -502,11 +524,7 @@
                                     google.maps.event.addListener(marker, 'click',(function(marker, i, infowindow) {
                                         return function() {
                                             infowindow.open(map, marker);
-                                            $(".btnMap").on('click', function(e){
-                                                $("#repartidor-definido-nombre").html(this.dataset.nombreRepartidor);
-                                                $(".repartidor-definido-imagen").attr('src',"{{url("/")}}/"+ this.dataset.imagenRepartidor);
-                                                $("#repartidor-definido-id").val(this.id);
-                                            })
+
                                         }
                                     })(marker, i, infoMarker))
                                     markers.push(marker);

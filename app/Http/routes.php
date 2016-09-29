@@ -43,9 +43,11 @@ Route::get('password/test', function(){
 
 
 Route::get('/pedidos', 'PedidoController@pedidos');
-Route::get('/pedidos/data', 'PedidoController@pedidosSolicitadosTable');
+Route::get('/pedidos/solicitados', 'PedidoController@pedidosSolicitadosTable');
+Route::get('/pedidos/asignados', 'PedidoController@pedidosAsignadosTable');
 Route::get('/pedidos/repartidores', 'PedidoController@repartidores');
 Route::get('/pedidos/repartidores-json', 'PedidoController@repartidoresJSON');
+Route::get('/pedidos/repartidor-pedido-json', 'PedidoController@obtenerRepartidor');
 Route::get('/pedidos/cancelar/{pedido_id}', 'PedidoController@cancelarPedido');
 Route::get('/pedidos/{pedido_id}', 'PedidoController@detalle')->name('detalle');
 Route::post('/pedidos/asignar', 'PedidoController@asignarRepartidor');
