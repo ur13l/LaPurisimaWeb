@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-md-6">
-                                Pedidos Pendientes
+                                Pedidos pendientesPendientes
                             </div>
                         </div>
                     </div>
@@ -43,26 +43,17 @@
 
                     <div class="panel-body">
                         <div class="col-xs-10 col-xs-offset-1">
-                            <h4>Pedidos pendientes</h4>
-                            <table class="table table-striped  table-hover">
+                            <h4>Pedidos en camino</h4>
+                            <table id="table-asignados" class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Cliente</th>
-                                    <th>Direccion</th>
+                                    <th></th>
                                     <th>Fecha</th>
+                                    <th>Usuario</th>
+                                    <th>Direccion</th>
+                                    <th>Total</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach ($pedidosPendientes as $pedido)
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
                             </table>
                         </div>
                         <div class="text-right">
@@ -118,51 +109,8 @@
                     '</div>';
         };
 
-        var table = $('#table-pendientes').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{url('/pedidos/data')}}",
-            language: {
-                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
-            },
-            bLengthChange: false,
-            columns: [
-                {
-                    "className":      'details-control',
-                    "orderable":      false,
-                    "searchable":     true,
-                    "data":           null,
-                    "defaultContent": '<img src="img/arrow-open.png" height="16">'
-                },
+        var table = $('#table-pendientes').DataTable(generarTabla('solicitados'));
 
-                {data: 'fecha', name: 'fecha',"className":'details-control',
-                    "orderable":      false,
-                    "searchable":     true,
-                    "defaultContent": '-',
-                    "render": function ( data, type, full, meta ) {
-                        fecha = moment(data).format('DD/MM/YYYY');
-                        if(fecha != "Invalid date")
-                            return fecha;
-                        else
-                            return "-";
-                    }},
-                {data: 'cliente.nombre', name: 'cliente.nombre',"className":'details-control',
-                    "orderable":      false,
-                    "searchable":     true},
-                {data: 'direccion', name: 'direccion',"className":'details-control',
-                    "orderable":      false,
-                    "searchable":     true},
-                {data: 'total', name: 'total',"className":'details-control',
-                    "orderable":      false,
-                    "searchable":     true,
-                    "render": function(data, type, full, meta){
-                        if(data)
-                            return "$" + data.toFixed(2);
-                        else return data;
-                    }}
-            ],
-            order: []
-        });
 
         // Add event listener for opening and closing details
         $('#table-pendientes tbody').on('click', 'td.details-control', function () {
@@ -201,6 +149,51 @@
             }
         });
 
+
+
+        //TABLA DE ASIGNADOS
+        var table = $('#table-asignados').DataTable(generarTabla('asignados'));
+
+
+        // Add event listener for opening and closing details
+        $('#table-asignados tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+
+            table.rows().every( function () {
+                var r = this;
+                if(row.index() != r.index()) {
+                    $('div.slider', r.child()).slideUp(function () {
+                        r.child.hide();
+                    });
+                    if(r.child.isShown()){
+                        $elem = $($("img")[r.index()]);
+                        rotateArrow($elem, 90, 0);
+                    }
+                }
+            } );
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                $('div.slider', row.child()).slideUp(function () {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } );
+                $elem = $($("img")[row.index()]);
+                rotateArrow($elem, 90,0);
+            }
+            else {
+                // Open this row
+                row.child( template(row.data()), 'no-padding'  ).show();
+                tr.addClass('shown');
+                $('div.slider', row.child()).slideDown();
+                $elem = $($("img")[row.index()]);
+                rotateArrow($elem, 0, 90);
+            }
+        });
+
+        //
+
         function rotateArrow($elem, from, to){
             $({deg: from}).animate({deg: to}, {
                 duration: 200,
@@ -210,6 +203,54 @@
                     });
                 }
             });
+        }
+
+        function generarTabla(tipo){
+            return {
+                processing: true,
+                serverSide: true,
+                ajax: "{{url('/pedidos/')}}/" + tipo,
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                bLengthChange: false,
+                columns: [
+                    {
+                        "className":      'details-control',
+                        "orderable":      false,
+                        "searchable":     true,
+                        "data":           null,
+                        "defaultContent": '<img src="img/arrow-open.png" height="16">'
+                    },
+
+                    {data: 'fecha', name: 'fecha',"className":'details-control',
+                        "orderable":      false,
+                        "searchable":     true,
+                        "defaultContent": '-',
+                        "render": function ( data, type, full, meta ) {
+                            fecha = moment(data).format('DD/MM/YYYY');
+                            if(fecha != "Invalid date")
+                                return fecha;
+                            else
+                                return "-";
+                        }},
+                    {data: 'cliente.nombre', name: 'cliente.nombre',"className":'details-control',
+                        "orderable":      false,
+                        "searchable":     true},
+                    {data: 'direccion', name: 'direccion',"className":'details-control',
+                        "orderable":      false,
+                        "searchable":     true},
+                    {data: 'total', name: 'total',"className":'details-control',
+                        "orderable":      false,
+                        "searchable":     true,
+                        "render": function(data, type, full, meta){
+                            if(data)
+                                return "$" + data.toFixed(2);
+                            else return data;
+                        }}
+                ],
+                order: []
+            }
         }
     </script>
 @endsection
