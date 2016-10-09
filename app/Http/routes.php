@@ -56,4 +56,4 @@ Route::get('/producto/editar', 'ProductoController@editar');
 Route::get('/producto/eliminar', 'ProductoController@eliminar');
 Route::post('/producto/create', "ProductoController@create");
 Route::post('/producto/update', "ProductoController@update");
-Route::post('/producto/get', "ProductoApiController@getProductos");
+Route::get('/producto/get', "ProductoApiController@getProductos");
