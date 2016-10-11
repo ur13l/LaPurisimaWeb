@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-md-6">
-                                Pedidos pendientesPendientes
+                                Pedidos Pendientes
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
 @section ('scripts')
     <script type="text/javascript" src="js/moment-with-locales.js"></script>
     <script type="text/javascript">
-        var template = function (d){
+        var template = function (d, tipo){
             var list = "";
             for(var i = 0 ; i < d.detalles.length; i++){
                 list += '<tr>'+
@@ -85,7 +85,7 @@
                 '</tr>';
             }
 
-            return '<div class="row slider">'+
+            return '<div class="row slider '+tipo+'">'+
                     '<div class="col-xs-12 col-md-8" >'+
                     '<h4>Detalle de pedido</h4>' +
                     '<table class="table table-bordered">'+
@@ -109,88 +109,14 @@
                     '</div>';
         };
 
-        var table = $('#table-pendientes').DataTable(generarTabla('solicitados'));
-
-
-        // Add event listener for opening and closing details
-        $('#table-pendientes tbody').on('click', 'td.details-control', function () {
-            var tr = $(this).closest('tr');
-            var row = table.row( tr );
-
-            table.rows().every( function () {
-                var r = this;
-                if(row.index() != r.index()) {
-                    $('div.slider', r.child()).slideUp(function () {
-                        r.child.hide();
-                    });
-                    if(r.child.isShown()){
-                        $elem = $($("img")[r.index()]);
-                        rotateArrow($elem, 90, 0);
-                    }
-                }
-            } );
-
-            if ( row.child.isShown() ) {
-                // This row is already open - close it
-                $('div.slider', row.child()).slideUp(function () {
-                    row.child.hide();
-                    tr.removeClass('shown');
-                } );
-                $elem = $($("img")[row.index()]);
-                rotateArrow($elem, 90,0);
-            }
-            else {
-                // Open this row
-                row.child( template(row.data()), 'no-padding'  ).show();
-                tr.addClass('shown');
-                $('div.slider', row.child()).slideDown();
-                $elem = $($("img")[row.index()]);
-                rotateArrow($elem, 0, 90);
-            }
-        });
-
+        var tablePendientes = $('#table-pendientes').DataTable(generarTabla('solicitados'));
+        addTableEvents( $('#table-pendientes tbody'), tablePendientes, 'solicitados')
 
 
         //TABLA DE ASIGNADOS
-        var table = $('#table-asignados').DataTable(generarTabla('asignados'));
+        var tableAsignados = $('#table-asignados').DataTable(generarTabla('asignados'));
+        addTableEvents($('#table-asignados tbody'), tableAsignados, 'asignados')
 
-
-        // Add event listener for opening and closing details
-        $('#table-asignados tbody').on('click', 'td.details-control', function () {
-            var tr = $(this).closest('tr');
-            var row = table.row( tr );
-
-            table.rows().every( function () {
-                var r = this;
-                if(row.index() != r.index()) {
-                    $('div.slider', r.child()).slideUp(function () {
-                        r.child.hide();
-                    });
-                    if(r.child.isShown()){
-                        $elem = $($("img")[r.index()]);
-                        rotateArrow($elem, 90, 0);
-                    }
-                }
-            } );
-
-            if ( row.child.isShown() ) {
-                // This row is already open - close it
-                $('div.slider', row.child()).slideUp(function () {
-                    row.child.hide();
-                    tr.removeClass('shown');
-                } );
-                $elem = $($("img")[row.index()]);
-                rotateArrow($elem, 90,0);
-            }
-            else {
-                // Open this row
-                row.child( template(row.data()), 'no-padding'  ).show();
-                tr.addClass('shown');
-                $('div.slider', row.child()).slideDown();
-                $elem = $($("img")[row.index()]);
-                rotateArrow($elem, 0, 90);
-            }
-        });
 
         //
 
@@ -205,6 +131,44 @@
             });
         }
 
+        function addTableEvents(elemTable, table, tipo){
+            // Add event listener for opening and closing details
+            elemTable.on('click', 'td.details-control-' + tipo, function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+
+                table.rows().every( function () {
+                    var r = this;
+                    if(row.index() != r.index()) {
+                        $('.' +tipo +'.slider', r.child()).slideUp(function () {
+                            r.child.hide();
+                        });
+                        if(r.child.isShown()){
+                            $elem = $($(".img-"+tipo)[r.index()]);
+                            rotateArrow($elem, 90, 0);
+                        }
+                    }
+                } );
+
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    $('.' +tipo +'.slider', row.child()).slideUp(function () {
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    } );
+                    var $elem = $($(".img-"+ tipo)[row.index()]);
+                    rotateArrow($elem, 90,0);
+                }
+                else {
+                    // Open this row
+                    row.child( template(row.data(), tipo), 'no-padding'  ).show();
+                    tr.addClass('shown');
+                    $('.' +tipo +'.slider', row.child()).slideDown();
+                    var $elem = $($(".img-"+ tipo)[row.index()]);
+                    rotateArrow($elem, 0, 90);
+                }
+            });
+        }
         function generarTabla(tipo){
             return {
                 processing: true,
@@ -216,14 +180,14 @@
                 bLengthChange: false,
                 columns: [
                     {
-                        "className":      'details-control',
+                        "className":      'details-control-'+tipo,
                         "orderable":      false,
                         "searchable":     true,
                         "data":           null,
-                        "defaultContent": '<img src="img/arrow-open.png" height="16">'
+                        "defaultContent": '<img class="img-'+tipo+'" src="img/arrow-open.png" height="16">'
                     },
 
-                    {data: 'fecha', name: 'fecha',"className":'details-control',
+                    {data: 'fecha', name: 'fecha',"className":'details-control-' + tipo,
                         "orderable":      false,
                         "searchable":     true,
                         "defaultContent": '-',
@@ -234,13 +198,13 @@
                             else
                                 return "-";
                         }},
-                    {data: 'cliente.nombre', name: 'cliente.nombre',"className":'details-control',
+                    {data: 'cliente.nombre', name: 'cliente.nombre',"className":'details-control-' + tipo,
                         "orderable":      false,
                         "searchable":     true},
-                    {data: 'direccion', name: 'direccion',"className":'details-control',
+                    {data: 'direccion', name: 'direccion',"className":'details-control-' + tipo,
                         "orderable":      false,
                         "searchable":     true},
-                    {data: 'total', name: 'total',"className":'details-control',
+                    {data: 'total', name: 'total',"className":'details-control-' + tipo,
                         "orderable":      false,
                         "searchable":     true,
                         "render": function(data, type, full, meta){

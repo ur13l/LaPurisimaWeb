@@ -16,6 +16,7 @@ class ProductoApiController extends Controller
      * @return array
      */
     public function getProductos(Request $request){
-        return Producto::all()->toArray();
+        $search = $request->input('search');
+        return Producto::where('nombre', 'LIKE', "%$search%")->get();
     }
 }

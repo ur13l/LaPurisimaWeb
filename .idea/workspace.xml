@@ -2,7 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fbe888-3067-4cbc-ba4d-ee0a440b84cc" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+=======
+<<<<<<< HEAD
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Producto.php" afterPath="$PROJECT_DIR$/app/Producto.php" />
+=======
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/pedidos/index1.blade.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Kernel.php" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" afterPath="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
     </list>
     <ignored path="LaPurisimaWeb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,6 +48,57 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
+      <file leaf-file-name="PedidoApiController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PedidoApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="115" column="5" selection-start-line="75" selection-start-column="3" selection-end-line="115" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductoApiController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatosRepartidor.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/DatosRepartidor.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+              <folding>
+                <element signature="e#23#62#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Producto.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Producto.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="17" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detalle.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="833">
+              <caret line="49" column="81" selection-start-line="49" selection-start-column="81" selection-end-line="49" selection-end-column="81" />
+              <folding>
+                <marker date="1474847548095" expanded="true" signature="16092:16123" ph="..." />
+=======
       <file leaf-file-name="detalle.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -50,11 +118,59 @@
                 <marker date="1475113632515" expanded="true" signature="16339:16775" ph="..." />
                 <marker date="1475113632515" expanded="true" signature="16359:16774" ph="..." />
                 <marker date="1475113632515" expanded="true" signature="16820:17850" ph="..." />
+<<<<<<< HEAD
+=======
+                <marker date="1475113632515" expanded="true" signature="16845:17833" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="16930:16980" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="17415:17815" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="17546:17577" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="17902:18280" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="17996:18114" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="18294:18660" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="18327:18462" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="18709:18988" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="18860:18964" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="19044:19977" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="19441:19748" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="20075:20271" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="20177:20224" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="20324:20732" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="20812:21273" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="21121:21263" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="21421:21851" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="22418:25360" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="22760:25339" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="23170:23521" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="23652:24367" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="24436:25194" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="24486:25169" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="24545:25132" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="25172:25193" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="25538:28022" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="25809:28000" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="26271:26626" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="26759:27492" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="27562:27851" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="27612:27826" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="27672:27788" ph="..." />
+                <marker date="1475113632515" expanded="true" signature="27829:27850" ph="..." />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="Detalle.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Detalle.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+              <folding>
+                <element signature="e#23#62#0#PHP" expanded="true" />
+              </folding>
+=======
       <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/pedidos/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -71,6 +187,7 @@
             <state relative-caret-position="15">
               <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
               <folding />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
             </state>
           </provider>
         </entry>
@@ -78,9 +195,21 @@
       <file leaf-file-name="Kernel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="765">
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="1887">
+              <caret line="121" column="42" selection-start-line="121" selection-start-column="42" selection-end-line="121" selection-end-column="42" />
+              <folding>
+                <element signature="e#40#64#0#PHP" expanded="true" />
+              </folding>
+=======
+            <state relative-caret-position="470">
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
               <caret line="51" column="14" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
               <folding />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
             </state>
           </provider>
         </entry>
@@ -88,7 +217,11 @@
       <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="289">
+=======
             <state relative-caret-position="255">
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
               <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
               <folding />
             </state>
@@ -98,7 +231,15 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="555">
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="461">
+              <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
+=======
+            <state relative-caret-position="290">
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
               <caret line="46" column="67" selection-start-line="46" selection-start-column="67" selection-end-line="46" selection-end-column="67" />
               <folding />
             </state>
@@ -110,6 +251,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="690">
               <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
               <folding />
             </state>
           </provider>
@@ -118,7 +260,11 @@
       <file leaf-file-name="Pedido.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Pedido.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="731">
+=======
             <state relative-caret-position="645">
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
               <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="46" selection-end-column="11" />
               <folding />
             </state>
@@ -138,7 +284,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/VentaController.php" />
         <option value="$PROJECT_DIR$/app/Venta.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" />
-        <option value="$PROJECT_DIR$/app/Producto.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/config/database.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
@@ -146,7 +291,6 @@
         <option value="$PROJECT_DIR$/resources/views/layouts/row-details.blade.php" />
         <option value="$PROJECT_DIR$/public/css/tables.css" />
         <option value="$PROJECT_DIR$/app/Detalle.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProductoController.php" />
         <option value="$PROJECT_DIR$/app/Pedido.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
@@ -155,6 +299,13 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/app/DatosRepartidor.php" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" />
+        <option value="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" />
+        <option value="$PROJECT_DIR$/app/Producto.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php" />
+=======
         <option value="$PROJECT_DIR$/app/Http/Controllers/PedidoApiController.php" />
         <option value="$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/PedidosAuthMiddleware.php" />
@@ -163,6 +314,7 @@
         <option value="$PROJECT_DIR$/resources/views/pedidos/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PedidoController.php" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
       </list>
     </option>
   </component>
@@ -433,14 +585,31 @@
       <workItem from="1474593044232" duration="5801000" />
       <workItem from="1474600553494" duration="9730000" />
       <workItem from="1474835316036" duration="12319000" />
+<<<<<<< HEAD
+      <workItem from="1475195383128" duration="623000" />
+      <workItem from="1476053281521" duration="748000" />
+=======
       <workItem from="1475019883968" duration="8369000" />
+<<<<<<< HEAD
       <workItem from="1475104847690" duration="9844000" />
       <workItem from="1476151077361" duration="6000" />
+=======
+      <workItem from="1475104847690" duration="9757000" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="147923000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="131075000" />
+=======
+    <option name="totallyTimeSpent" value="147830000" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1368" height="744" extended-state="6" />
@@ -705,13 +874,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="65" selection-start-line="13" selection-start-column="65" selection-end-line="13" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/tables.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1316">
@@ -761,6 +923,9 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+=======
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PedidoApiController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1635">
@@ -769,6 +934,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/DatosRepartidor.php">
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
@@ -784,15 +950,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Detalle.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="221">
+=======
         <state relative-caret-position="195">
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
           <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+<<<<<<< HEAD
+=======
+          <folding>
+            <element signature="e#23#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Pedido.php">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="731">
+=======
+        <state relative-caret-position="645">
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+          <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="46" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding />
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="1275">
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="459">
+          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+=======
+        <state relative-caret-position="425">
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
           <caret line="85" column="45" selection-start-line="85" selection-start-column="45" selection-end-line="85" selection-end-column="45" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
           <folding>
             <marker date="1475113632515" expanded="true" signature="14368:17861" ph="..." />
             <marker date="1475113632515" expanded="true" signature="14378:17861" ph="{...}" />
@@ -811,6 +1016,15 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/resources/views/pedidos/detalle.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="81" selection-start-line="49" selection-start-column="81" selection-end-line="49" selection-end-column="81" />
+          <folding>
+            <marker date="1474847548095" expanded="true" signature="16092:16123" ph="..." />
+          </folding>
+=======
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Authenticate.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -838,20 +1052,38 @@
         <state relative-caret-position="15">
           <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
           <folding />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="765">
           <caret line="51" column="14" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
           <folding />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="1887">
+          <caret line="121" column="42" selection-start-line="121" selection-start-column="42" selection-end-line="121" selection-end-column="42" />
+=======
+        <state relative-caret-position="285">
+          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+          <folding>
+            <element signature="e#39#51#0#PHP" expanded="true" />
+          </folding>
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="289">
+=======
         <state relative-caret-position="255">
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
           <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
           <folding />
         </state>
@@ -859,8 +1091,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="555">
           <caret line="46" column="67" selection-start-line="46" selection-start-column="67" selection-end-line="46" selection-end-column="67" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="17">
+          <caret line="115" column="5" selection-start-line="75" selection-start-column="3" selection-end-line="115" selection-end-column="5" />
+=======
+        <state relative-caret-position="321">
+          <caret line="158" column="27" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
           <folding />
         </state>
       </provider>
@@ -875,8 +1116,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Pedido.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="645">
           <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="46" selection-end-column="11" />
+=======
+        <state relative-caret-position="405">
+          <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
+>>>>>>> f36fd5221ea3672ed6295700d6cb1287350e93cd
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Producto.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="17" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductoApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+>>>>>>> 553772c852ee8225aaf56db8c65bc4606f5ec362
           <folding />
         </state>
       </provider>
