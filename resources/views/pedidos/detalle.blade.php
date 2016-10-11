@@ -97,7 +97,7 @@
                                                 <td><img src="{{url('/'.$detalle->producto->imagen)}}" height="50" alt=""></td>
                                                 <td>{{$detalle->cantidad}}</td>
                                                 <td>{{$detalle->producto->nombre}}</td>
-                                                <td>${{number_format($detalle->producto->precio,2)}}</td>
+                                                <td>${{number_format($detalle->producto->precio * $detalle->cantidad,2)}}</td>
                                             </tr>
                                         @endforeach
                                         <tr>

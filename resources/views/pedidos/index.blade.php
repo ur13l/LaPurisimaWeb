@@ -81,7 +81,7 @@
                 list += '<tr>'+
                         '<td>'+d.detalles[i].cantidad+'</td>'+
                         '<td>'+d.detalles[i].producto.nombre+'</td>'+
-                        '<td>$'+ d.detalles[i].producto.precio.toFixed(2)+'</td>'+
+                        '<td>$'+ (d.detalles[i].producto.precio * d.detalles[i].cantidad).toFixed(2)+'</td>'+
                 '</tr>';
             }
 

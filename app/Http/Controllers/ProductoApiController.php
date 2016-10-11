@@ -12,6 +12,7 @@ class ProductoApiController extends Controller
 {
     /**
      * Devuelve un arreglo con la lista de productos disponibles.
+     * @route /producto/get
      * @param Request $request
      * @return array
      */

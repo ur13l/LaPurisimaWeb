@@ -25,7 +25,7 @@ class PedidoApiController extends Controller
         $pedido = Pedido::create($request->except('detalles'));
         $cliente = Auth::guard('api')->user();
         $pedido->cliente_id = $cliente->id;
-        $pedido->fecha = Carbon::now();
+        $pedido->fecha = Carbon::now('America/Mexico_City');
         $pedido->save();
 
         //Se hace una iteración por los detalles para comprobar que hay suficiente stock de todos los productos.
@@ -58,7 +58,7 @@ class PedidoApiController extends Controller
                 $producto = Producto::find($d->producto->id);
                 $producto->stock -= $d->cantidad;
                 $producto->save();
-                $total += $producto->precio;
+                $total += $producto->precio * $d->cantidad;
             }
             $pedido->total = $total;
             $pedido->status = Pedido::SOLICITADO;
