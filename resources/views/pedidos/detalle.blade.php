@@ -14,6 +14,13 @@
                     </div>
 
                     <div class="panel-body">
+                        @if(isset($messages))
+                            <div class="alert alert-danger danger">
+                                @if($messages == 'no.stock')
+                                    El repartidor no cuenta con stock suficiente.
+                                @endif
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <h4>Pedido No. {{$pedido->id}}</h4>
@@ -239,6 +246,12 @@
 
         $(document).ready(function()
         {
+            $(function(){
+                if($('.danger')){
+                    $('.danger').delay(5000).fadeOut();
+                }
+            });
+
             $(".picture").error(function(){
                 console.log("w");
                 $(this).attr('src', '{{url('/img/default.png')}}');

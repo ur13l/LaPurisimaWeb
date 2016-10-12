@@ -89,7 +89,7 @@ class PedidoApiController extends Controller
         if(isset($pedido)){
             if($pedido->status != Pedido::CANCELADO && $pedido->status != Pedido::FAILED && $pedido->status != Pedido::ENTREGADO){
                 $pedido->status = Pedido::CANCELADO;
-                $pedido->total = 0;
+                PedidoController::modificarStockRepartidor($pedido, $pedido->repartidor, 'suma');
                 foreach($pedido->detalles as $detalle){
                     $producto = Producto::find($detalle->producto->id);
                     $producto->stock += $detalle->cantidad;

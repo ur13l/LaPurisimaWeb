@@ -16,6 +16,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/usuario/*',
         '/venta/*',
         '/password/*',
-        '/pedido/*'
+        '/pedido/*',
+        '/repartidor/*'
     ];
 }

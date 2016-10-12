@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DatosRepartidor extends Model
 {
     use SoftDeletes;
+    const ACTIVO = 1;
+    const INACTIVO = 2;
+
     protected $table = "datos_repartidores";
     protected  $fillable =  [
         'id',

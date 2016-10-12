@@ -93,5 +93,14 @@ Route::group(['prefix' => 'producto'], function(){
     Route::get('get', "ProductoApiController@getProductos");
 });
 
+/**
+ * prefijo: repartidor
+ * referencia: RepartidorApiController
+ * Funciones de API para las funcionalidades de los repartidores
+ */
+Route::group(['prefix' => 'repartidor'], function(){
+    Route::post('status', 'RepartidorApiController@cambiarStatusRepartidor');
+});
+
 Route::get('/productos', 'ProductoController@index');
 

@@ -50,10 +50,13 @@ class PedidoController extends Controller
      * @param $pedido_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function detalle($pedido_id){
+    public function detalle($pedido_id, Request $request){
+        $messages = $request->input('messages');
         $pedido = Pedido::find($pedido_id);
-        $repartidores = User::where('tipo_usuario_id', '=', '2')->paginate(100);
-        return view('pedidos.detalle', [ "pedido" =>$pedido, "repartidores" => $repartidores ]);
+        $repartidores = User::where('tipo_usuario_id', '=', '2')->leftJoin('datos_repartidores', 'datos_repartidores.user_id', '=', 'users.id')
+            ->where('datos_repartidores.status','=','1')
+            ->select('users.*')->paginate(100);
+        return view('pedidos.detalle', [ "pedido" =>$pedido, "repartidores" => $repartidores, "messages" => $messages]);
     }
 
     /**
@@ -107,7 +110,7 @@ class PedidoController extends Controller
     public function repartidoresJSON(Request $request){
         $latitude = $request->input('latitud');
         $longitude = $request->input('longitud');
-        $repartidores = DatosRepartidor::where(DB::raw("(POW(69.1 * (latitud - $latitude), 2) + POW(69.1 * ($longitude - longitud) * COS(latitud / 57.3),2))"), '<', DB::raw("SQRT(25)"))->with('user')->get();
+        $repartidores = DatosRepartidor::where('status', '=', DatosRepartidor::ACTIVO)->where(DB::raw("(POW(69.1 * (latitud - $latitude), 2) + POW(69.1 * ($longitude - longitud) * COS(latitud / 57.3),2))"), '<', DB::raw("SQRT(25)"))->with('user')->get();
         return response()->json($repartidores->all());
     }
 
@@ -122,19 +125,25 @@ class PedidoController extends Controller
         $idRepartidor = $request->input('repartidor-definido-id');
         $repartidor = User::find($idRepartidor);
         $idPedido = $request->input('pedido-id');
+        $messages = null;
         if(Auth::user()->tipo_usuario_id == 1) {
             if (isset($repartidor)) {
                 if ($repartidor->tipo_usuario_id == 2) {
-                    ;
                     $pedido = Pedido::find($idPedido);
-                    $pedido->conductor_id = $idRepartidor;
-                    $pedido->status = Pedido::ASIGNADO;
-                    $pedido->save();
+                    if(self::tieneSuficienteStock($pedido, $repartidor)){
+                        self::modificarStockRepartidor($pedido, $repartidor, 'resta');
+                        $pedido->conductor_id = $idRepartidor;
+                        $pedido->status = Pedido::ASIGNADO;
+                        $pedido->save();
+                    }
+                    else{
+                        $messages = 'no.stock';
+                    }
                 }
             }
         }
         //ASIGNADO EL PEDIDO SE LE PUEDE ENVIAR UNA NOTIFICACION AL REPARTIDOR.
-        return redirect()->route('detalle', ['pedido_id' => $idPedido]);
+        return redirect()->route('detalle', ['pedido_id' => $idPedido, 'messages' => $messages]);
 
     }
 
@@ -151,7 +160,7 @@ class PedidoController extends Controller
         if (isset($pedido)) {
             if ($pedido->status != Pedido::CANCELADO && $pedido->status != Pedido::FAILED && $pedido->status != Pedido::ENTREGADO) {
                 $pedido->status = Pedido::CANCELADO;
-                $pedido->total = 0;
+                self::modificarStockRepartidor($pedido, $pedido->repartidor, "suma");
                 foreach ($pedido->detalles as $detalle) {
                     $producto = Producto::find($detalle->producto->id);
                     $producto->stock += $detalle->cantidad;
@@ -219,14 +228,19 @@ class PedidoController extends Controller
      * @param $repartidor
      * @return bool
      */
-    public static function restarStockRepartidor($pedido, $repartidor){
+    public static function modificarStockRepartidor($pedido, $repartidor, $operation){
 
         $detalles = $pedido->detalles;
         $stockRepartidor = $repartidor->datosRepartidor->productos;
         foreach($detalles as $detalle){
             foreach($stockRepartidor as $stock){
                 if($stock->id == $detalle->producto_id){
-                    $stock->pivot->cantidad -= $detalle->cantidad;
+                    if($operation == "suma"){
+                        $stock->pivot->cantidad += $detalle->cantidad;
+                    }
+                    else{
+                        $stock->pivot->cantidad -= $detalle->cantidad;
+                    }
                     $stock->pivot->save();
                 }
             }

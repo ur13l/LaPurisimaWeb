@@ -70,10 +70,10 @@
 
 
 @section ('styles')
-    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="{{url('css/tables.css')}}">
 
 @section ('scripts')
-    <script type="text/javascript" src="js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
     <script type="text/javascript">
         var template = function (d, tipo){
             var list = "";
@@ -184,7 +184,7 @@
                         "orderable":      false,
                         "searchable":     true,
                         "data":           null,
-                        "defaultContent": '<img class="img-'+tipo+'" src="img/arrow-open.png" height="16">'
+                        "defaultContent": '<img class="img-'+tipo+'" src="/img/arrow-open.png" height="16">'
                     },
 
                     {data: 'fecha', name: 'fecha',"className":'details-control-' + tipo,
