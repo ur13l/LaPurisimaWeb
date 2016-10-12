@@ -35,6 +35,8 @@ Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
    Route::post('cancelar', 'PedidoApiController@cancelar');
    Route::post('usuario', 'PedidoApiController@pedidosUsuario');
    Route::post('repartidor', 'PedidoApiController@pedidosRepartidor');
+   Route::post('solicitados', 'PedidoApiController@obtenerPedidos');
+   Route::post('asignar', 'PedidoApiController@asignarRepartidor');
 });
 
 

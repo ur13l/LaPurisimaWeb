@@ -147,4 +147,55 @@ class PedidoApiController extends Controller
             ]);
         }
     }
+
+    /**
+     * Función para devolver una lista de todos los pedidos solicitados para que el conductor elija cuál desea entregar.
+     * @route /pedido/solicitados
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function obtenerPedidos(Request $request){
+        $user = Auth::guard('api')->user();
+        if($user->tipo_usuario_id == 1 || $user->tipo_usuario_id == 2){
+            $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->orderBy('fecha')->get();
+            return $pedidos->toArray();
+        }
+        return response()->json([
+            "success" => false,
+            "error" => ['unauthorized.user']
+        ]);
+    }
+
+
+    /**
+     * Función para asignar repartidor desde la aplicación (API)
+     * @route /pedido/asignar
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function asignarRepartidor(Request $request){
+        $repartidor = Auth::guard('api')->user();
+        $pedido = Pedido::find($request->input('id_pedido'));
+        $errors = [];
+        $success = false;
+        if($repartidor->tipo_usuario_id == 2){
+            if(PedidoController::tieneSuficienteStock($pedido, $repartidor)){
+                PedidoController::modificarStockRepartidor($pedido, $repartidor, 'resta');
+                $pedido->conductor_id = $repartidor->id;
+                $pedido->status = Pedido::ASIGNADO;
+                $success = $pedido->save();
+            }
+            else{
+                $errors[] = 'no.stock';
+            }
+        }
+        else{
+            $errors [] = "unauthorized.user";
+        }
+        return response()->json([
+            "success" => $success,
+            "error" => $errors
+        ]);
+    }
 }
+
