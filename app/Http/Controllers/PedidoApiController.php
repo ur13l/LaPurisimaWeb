@@ -94,7 +94,6 @@ class PedidoApiController extends Controller
                     $producto = Producto::find($detalle->producto->id);
                     $producto->stock += $detalle->cantidad;
                     $producto->save();
-                    $detalle->delete();
                 }
                 $save = $pedido->save();
             }
@@ -180,10 +179,15 @@ class PedidoApiController extends Controller
         $success = false;
         if($repartidor->tipo_usuario_id == 2){
             if(PedidoController::tieneSuficienteStock($pedido, $repartidor)){
-                PedidoController::modificarStockRepartidor($pedido, $repartidor, 'resta');
-                $pedido->conductor_id = $repartidor->id;
-                $pedido->status = Pedido::ASIGNADO;
-                $success = $pedido->save();
+                if($pedido->status = Pedido::SOLICITADO) {
+                    PedidoController::modificarStockRepartidor($pedido, $repartidor, 'resta');
+                    $pedido->conductor_id = $repartidor->id;
+                    $pedido->status = Pedido::ASIGNADO;
+                    $success = $pedido->save();
+                }
+                else{
+                    $error[] = "invalid.state";
+                }
             }
             else{
                 $errors[] = 'no.stock';
@@ -194,6 +198,37 @@ class PedidoApiController extends Controller
         }
         return response()->json([
             "success" => $success,
+            "error" => $errors
+        ]);
+    }
+
+
+    /**
+     * Cambia el status del pedido de EN_CAMINO a ENTREGADO. El conductor es el que lo entrega.
+     * @route /pedido/finalizar
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function finalizarPedido(Request $request){
+        $repartidor = Auth::guard('api')->user();
+        $pedido = Pedido::find($request->input('id_pedido'));
+        $errors = [];
+        $save = false;
+        if(isset($pedido)){
+            if($pedido->status == Pedido::ASIGNADO || $pedido->status == Pedido::EN_CAMINO){
+                $pedido->status = Pedido::ENTREGADO;
+                $save = $pedido->save();
+            }
+            else{
+                $errors[] = "invalid.state";
+            }
+            //Aquí se puede enviar una notificación push al conductor para indicar la cancelación de un envío.
+        }
+        else{
+            $errors[] = "unauthorized.user";
+        }
+        return response()->json([
+            "success"=> $save,
             "error" => $errors
         ]);
     }
