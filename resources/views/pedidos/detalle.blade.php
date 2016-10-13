@@ -64,7 +64,14 @@
                                     @if($pedido->status != 4 && $pedido->status != 5 && $pedido->status != 6)
                                         <tr>
                                             <th>Cancelar Pedido</th>
-                                            <td><a href="{{url("/pedidos/cancelar/".$pedido->id)}}" class="btn btn-danger">Cancelar</a></td>
+                                            <td>
+                                                <form action="{{url('/pedidos/cancelar')}}" method="POST">
+                                                    <input type="hidden" value="{{$pedido->id}}" name="id_pedido">
+                                                    <input type="hidden" value="{{csrf_token()}}" name="_token">
+                                                    <input type="hidden" value="detalle" name="view">
+                                                    <input type="submit" class="btn btn-danger col-xs-12" value="Cancelar">
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endif
                                     </tbody>
@@ -134,7 +141,8 @@
                                             {{Form::hidden('pedido-id', $pedido->id, array('id' => 'pedido-id'))}}
                                             <div class="col-xs-4 col-md-5">
                                                 <p id="repartidor-definido-nombre">Conductor no asignado</p>
-                                                <p id="repartidor-definido-src">Conductor no asignado</p>
+                                                <p id="repartidor-definido-email"></p>
+                                                <p id="repartidor-definido-telefono"></p>
                                             </div>
                                             <div class="col-xs-4">
                                                 <div class="form-group has-feedback">
@@ -172,6 +180,8 @@
                                                         <div class="row">
                                                             <div class=" text-center col-xs-12">
                                                                 <h5 class="repartidor-nombre">{{$repartidor->nombre}}</h5>
+                                                                <input type="hidden" class="repartidor-email" value="{{$repartidor->email}}">
+                                                                <input type="hidden" class="repartidor-telefono" value="{{$repartidor->telefono}}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -289,9 +299,13 @@
 
             $(".repartidor-container").on('click', function(){
                 var nombre = $($(this).find(".repartidor-nombre")).html();
+                var email = $($(this).find(".repartidor-email")).val();
+                var telefono = $($(this).find(".repartidor-telefono")).val();
                 var src = $($(this).find(".repartidor-imagen")).attr('src');
                 var id = $($(this).find(".repartidor-id")).val();
                 $("#repartidor-definido-nombre").html(nombre);
+                $("#repartidor-definido-email").html(email);
+                $("#repartidor-definido-telefono").html(telefono);
                 $(".repartidor-definido-imagen").attr('src', src);
                 $("#repartidor-definido-id").val(id);
             });
@@ -396,7 +410,7 @@
             var i = 0;
             var deltaLat;
             var deltaLng;
-            i = 0;
+            i = 0;text
             deltaLat = (newPosition.lat() - marker.position.lat())/numDeltas;
             deltaLng = (newPosition.lng() - marker.position.lng())/numDeltas;
             moveMarker(marker, i, deltaLat, deltaLng, numDeltas, delay);

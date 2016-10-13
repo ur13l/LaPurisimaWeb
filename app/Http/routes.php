@@ -67,13 +67,13 @@ Route::group(['prefix'=>'password'], function(){
  * Funciones Web para la gestión de pedidos  (No API).
  */
 Route::group(['prefix' => 'pedidos'], function(){
-    Route::get('/', 'PedidoController@pedidos');
+    Route::get('/', 'PedidoController@pedidos')->name('index');
     Route::get('solicitados', 'PedidoController@pedidosSolicitadosTable');
     Route::get('asignados', 'PedidoController@pedidosAsignadosTable');
     Route::get('repartidores', 'PedidoController@repartidores');
     Route::get('repartidores-json', 'PedidoController@repartidoresJSON');
     Route::get('repartidor-pedido-json', 'PedidoController@obtenerRepartidor');
-    Route::get('cancelar/{pedido_id}', 'PedidoController@cancelarPedido');
+    Route::post('cancelar', 'PedidoController@cancelarPedido');
     Route::get('{pedido_id}', 'PedidoController@detalle')->name('detalle');
     Route::post('asignar', 'PedidoController@asignarRepartidor');
 });

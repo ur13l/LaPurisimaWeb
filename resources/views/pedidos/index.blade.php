@@ -104,7 +104,12 @@
                     '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
                     '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
                     '<a href="{{url('/pedidos')}}/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>'+
-                    '<a href="{{url('/pedidos')}}/'+d.id+'" class="btn btn-danger col-xs-12">Cancelar</a>'+
+                    '<form action="{{url('/pedidos/cancelar')}}" method="POST">' +
+                    '<input type="hidden" value="'+d.id+'" name="id_pedido">' +
+                    '<input type="hidden" value="{{csrf_token()}}" name="_token">' +
+                    '<input type="hidden" value="index" name="view">' +
+                    '<input type="submit" class="btn btn-danger col-xs-12" value="Cancelar">'+
+                    '</form>' +
                     '</div>'+
                     '</div>';
         };

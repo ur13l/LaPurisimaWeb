@@ -153,14 +153,17 @@ class PedidoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function cancelarPedido($idPedido){
+    public function cancelarPedido(Request $request){
+        $idPedido = $request->input('id_pedido');
+        $view = $request->input('view');
         $pedido = Pedido::find($idPedido);
         $errors = [];
         $save = false;
         if (isset($pedido)) {
             if ($pedido->status != Pedido::CANCELADO && $pedido->status != Pedido::FAILED && $pedido->status != Pedido::ENTREGADO) {
                 $pedido->status = Pedido::CANCELADO;
-                self::modificarStockRepartidor($pedido, $pedido->repartidor, "suma");
+                if(isset($pedido->repartidor))
+                    self::modificarStockRepartidor($pedido, $pedido->repartidor, "suma");
                 foreach ($pedido->detalles as $detalle) {
                     $producto = Producto::find($detalle->producto->id);
                     $producto->stock += $detalle->cantidad;
@@ -176,7 +179,7 @@ class PedidoController extends Controller
         }
 
         //ASIGNADO EL PEDIDO SE LE PUEDE ENVIAR UNA NOTIFICACION AL REPARTIDOR.
-        return redirect()->route('detalle', ['pedido_id' => $idPedido]);
+        return redirect()->route($view, ['pedido_id' => $idPedido]);
 
     }
 
