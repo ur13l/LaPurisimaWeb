@@ -71,6 +71,14 @@ class PedidoController extends Controller
         return view('layouts.repartidores', ['repartidores' => $repartidores]);
     }
 
+    /**
+    * @route /pedidos/nuevo
+    * @param $request
+    * @return 
+    */
+    public function nuevoRepartidor(Request $request){
+       return view('pedidos.nuevo');
+    }
 
     /****************************************** JSON Data *************************************************/
 
@@ -250,7 +258,6 @@ class PedidoController extends Controller
         }
         return true;
     }
-
 
 
 }

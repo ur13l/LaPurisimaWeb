@@ -76,6 +76,7 @@ Route::group(['prefix' => 'pedidos'], function(){
     Route::post('cancelar', 'PedidoController@cancelarPedido');
     Route::get('{pedido_id}', 'PedidoController@detalle')->name('detalle');
     Route::post('asignar', 'PedidoController@asignarRepartidor');
+    Route::get('nuevo', 'PedidoController@nuevoPedido');
 });
 
 
