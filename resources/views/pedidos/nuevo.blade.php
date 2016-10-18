@@ -14,8 +14,10 @@
                     </div>
 
                     <div class="panel-body">
-                        OSCAR ES JOTO
-                            
+                        <div class="form-group col-xs-12 col-md-4">
+                            {{Form::label('telefono', 'Teléfono')}}
+                            {{Form::text('telefono', null, array('class'=>'form-control input-medium bfh-phone', 'data-country'=>'MX'))}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,9 +29,10 @@
 @endsection
 
 @section('scripts')
-   
+    <script type="text/javascript" src="{{url('/js/bootstrap-formhelpers.js')}}"></script>
       
 @endsection
 
 @section('styles')
+    <link rel="stylesheet" href="{{url('/css/bootstrap-formhelpers.css')}}">
 @endsection

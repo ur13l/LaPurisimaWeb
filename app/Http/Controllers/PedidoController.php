@@ -76,7 +76,7 @@ class PedidoController extends Controller
     * @param $request
     * @return 
     */
-    public function nuevoRepartidor(Request $request){
+    public function nuevoPedido(Request $request){
        return view('pedidos.nuevo');
     }
 

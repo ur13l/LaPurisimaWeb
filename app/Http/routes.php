@@ -72,11 +72,11 @@ Route::group(['prefix' => 'pedidos'], function(){
     Route::get('asignados', 'PedidoController@pedidosAsignadosTable');
     Route::get('repartidores', 'PedidoController@repartidores');
     Route::get('repartidores-json', 'PedidoController@repartidoresJSON');
+    Route::post('asignar', 'PedidoController@asignarRepartidor');
+    Route::get('nuevo', 'PedidoController@nuevoPedido');
     Route::get('repartidor-pedido-json', 'PedidoController@obtenerRepartidor');
     Route::post('cancelar', 'PedidoController@cancelarPedido');
     Route::get('{pedido_id}', 'PedidoController@detalle')->name('detalle');
-    Route::post('asignar', 'PedidoController@asignarRepartidor');
-    Route::get('nuevo', 'PedidoController@nuevoPedido');
 });
 
 
