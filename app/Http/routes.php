@@ -49,6 +49,7 @@ Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
 Route::group(['prefix'=>'usuario'], function(){
     Route::post('authenticate', "UserController@authenticate");
     Route::post('create', "UserController@create");
+    Route::post('by_phone', "UserController@getUserByPhone");
 });
 
 /**

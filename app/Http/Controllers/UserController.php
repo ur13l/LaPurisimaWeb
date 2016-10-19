@@ -113,5 +113,11 @@ class UserController extends Controller
     ]);
   }
 
+  public function getUserByPhone(Request $request){
+      $phone = $request->input('telefono');
+      $user = User::where('telefono', '=', $phone)->select('nombre', 'telefono', 'email', 'calle', 'colonia')->first();
+      return response()->json($user);
+  }
+
 
 }
