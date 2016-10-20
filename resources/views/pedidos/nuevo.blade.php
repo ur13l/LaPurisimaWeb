@@ -68,12 +68,31 @@
                         <div id="map" style="height:400px"></div>
 
                         <h4>Seleccione los Productos</h4>
-                        <select class="selectpicker" data-live-search="true">
-                            <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                            <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                            <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                        </select>
+                        <div class="form-group">
+                            <div class="col-xs-5 selectContainer">
+                                <select class="form-control" name="size">
+                                    <option value="">Escriba el nombre del producto</option>
+                                    @foreach($productos as $producto)
+                                        <option value="{{$producto->id}}">{{$producto->nombre}} - ${{number_format($producto->precio,2)}}</option>
+                                    @endforeach
+                                </select>
+                                @foreach($productos as $producto)
+                                    <input type="hidden" id="{{$producto->id}}_nombre" value="{{$producto->nombre}}">
+                                    <input type="hidden" id="{{$producto->id}}_precio" value="{{$producto->precio}}">
+                                @endforeach
+                            </div>
+                        </div>
 
+                        <table class="table" id="table-productos">
+                            <tr id="header">
+                                <th></th>
+                                <th>Cantidad</th>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Importe</th>
+                            </tr>
+
+                        </table>
                     </div>
                 </div>
             </div>
@@ -85,12 +104,8 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="{{url('/js/bootstrap-formhelpers.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/bootstrap-combobox.js')}}"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
-
-    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js"></script>
 
     <script>
         var map;
@@ -120,7 +135,15 @@
     <script>
         var xhr;
         var xhr2;
+        var productos = [];
         $(function(){
+            $("select").combobox();
+
+            $("select").on('change', function(){
+                addProduct(this.value);
+            });
+
+
             $("#telefono").on('change keydown pase', function(){
                 //Se cancela la búsqueda si hay una activa.
                 if(xhr){
@@ -157,12 +180,32 @@
                     }
                 });
             });
-        })
+        });
+
+        function addProduct(id){
+            console.log($("#table-productos").find("#"+id).length);
+                if($("#table-productos").find("#"+id).length != 0){
+                    //SHOW SNACKBAR
+                }
+                else{
+                    productos.push({
+                        cantidad: 1,
+                        id: id,
+                    });
+                    $("#table-productos").append('<tr id="'+id+'">'+
+                        '<th class="danger">X</th>'+
+                        '<th><input class="form-control" id="'+id+'_cantidad" type="number" value=1 min=1></th>'+
+                        '<th>'+$("#"+id+"_nombre").val()+'</th>'+
+                        '<th>$'+$("#"+id+"_precio").val()+'</th>'+
+                        '<th>$00</th>'+
+                        '</tr>'
+                    )
+                }
+        }
     </script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{url('/css/bootstrap-formhelpers.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="{{url('/css/bootstrap-combobox.css')}}">
 
 @endsection

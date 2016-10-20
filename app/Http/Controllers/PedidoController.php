@@ -77,7 +77,8 @@ class PedidoController extends Controller
     * @return 
     */
     public function nuevoPedido(Request $request){
-       return view('pedidos.nuevo');
+        $productos = Producto::all();
+       return view('pedidos.nuevo', ['productos' => $productos]);
     }
 
     /****************************************** JSON Data *************************************************/
