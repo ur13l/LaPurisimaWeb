@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Pedido;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
@@ -115,8 +116,17 @@ class UserController extends Controller
 
   public function getUserByPhone(Request $request){
       $phone = $request->input('telefono');
-      $user = User::where('telefono', '=', $phone)->select('nombre', 'telefono', 'email', 'calle', 'colonia')->first();
-      return response()->json($user);
+      $user = User::where('telefono', '=', $phone)->select('id', 'nombre', 'telefono', 'email', 'calle', 'colonia', 'referencia', 'imagen_usuario')->first();
+      if(isset($user)){
+          $ultPedido = Pedido::where("cliente_id", "=", $user->id)->orderBy('fecha','desc')->select('direccion','latitud', 'longitud')->first();
+
+          return response()->json(array(
+              "user"=>$user,
+              "ultimo_pedido" => $ultPedido
+          ));
+      }
+
+      return response()->json();
   }
 
 

@@ -78,6 +78,7 @@ Route::group(['prefix' => 'pedidos'], function(){
     Route::get('repartidor-pedido-json', 'PedidoController@obtenerRepartidor');
     Route::post('cancelar', 'PedidoController@cancelarPedido');
     Route::get('{pedido_id}', 'PedidoController@detalle')->name('detalle');
+    Route::post('generar', 'PedidoController@generarNuevoPedido');
 });
 
 

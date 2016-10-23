@@ -81,6 +81,10 @@ class PedidoController extends Controller
        return view('pedidos.nuevo', ['productos' => $productos]);
     }
 
+    public function generarNuevoPedido(Request $request){
+        return response()->json($request);
+    }
+
     /****************************************** JSON Data *************************************************/
 
     /**

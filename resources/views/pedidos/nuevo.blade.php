@@ -1,4 +1,4 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -30,7 +30,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center" colspan="2">
-                                    <img height="100" src="{{url('/img/default.png')}}" alt="">
+                                    <img id="imagen_usuario" height="100" src="{{url('/img/default.png')}}" alt="">
                                 </td>
                             </tr>
                             <tr>
@@ -55,12 +55,15 @@
                                     </div>
                                 </td>
                             </tr>
-
-                            <tr class="text-right">
+                            <tr>
                                 <td colspan="2">
-                                    <button class="btn btn-default">Guardar datos de usuario</button>
+                                    <div class="form-group">
+                                        {{Form::label('referencia', 'Referencias')}}
+                                        {{Form::textarea('referencia', null, array('rows'=>'2', 'class'=>'form-control input-medium bfh-phone', 'data-country'=>'MX'))}}
+                                    </div>
                                 </td>
                             </tr>
+
 
                         </table>
 
@@ -94,6 +97,9 @@
 
                         </table>
                     </div>
+                    <div class="panel-footer text-right">
+                        <button id="generar_pedido" class="btn btn-primary">Continuar</button>
+                    </div>
                 </div>
             </div>
 
@@ -111,10 +117,10 @@
         var map;
         function initMap() {
             var myLatLng = {
-                lat: Number("0"),
-                lng: Number("0")
+                lat: 26.909069,
+                lng: -101.421252
             };
-
+            getLocation();
             // Create a map object and specify the DOM element for display.
             map = new google.maps.Map(document.getElementById('map'), {
                 center: myLatLng,
@@ -122,12 +128,33 @@
                 zoom: 14
             });
 
-            marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!'
-            });
+            $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
+            //do something onclick
+                    .click(function(){
+                        var that=$(this);
+                        if(!that.data('win')){
+                            that.data('win',new google.maps.InfoWindow({content:'this is the center'}));
+
+                        }
+                    });
+
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+
+            } else {
+            }
         }
+
+        function showPosition(position) {
+
+            console.log("SHWQOH");
+            console.log( position.coords.latitude)
+            console.log( position.coords.longitude);
+        }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm7WFeq4Oa1M9sL6HQ9NZbIxdibgSEEOE&callback=initMap"
             async defer></script>
@@ -144,7 +171,8 @@
             });
 
 
-            $("#telefono").on('change keydown pase', function(){
+            $("#telefono").on('change keyup pase', function(){
+
                 //Se cancela la búsqueda si hay una activa.
                 if(xhr){
                     xhr.abort();
@@ -156,14 +184,40 @@
                     },
                     method:"post",
                     success: function (data) {
-                        $("#nombre").val(data.nombre);
-                        $("#email").val(data.email);
-                        $("#direccion").val(data.calle +", "+ data.colonia);
+                        console.log(data);
+                        if(data.user) {
+                            console.log("SHWIOT")
+                            //IMAGEN
+                            $("#nombre").val(data.user.nombre).prop("disabled", true);
+                            $("#email").val(data.user.email).prop("disabled", true);
+                            $("#referencia").val(data.user.referencia)
+                            if(data.ultimo_pedido)
+                                $("#direccion").val(data.ultimo_pedido.direccion).change();
+                            else
+                                $("#direccion").val(data.user.calle + ", " + data.user.colonia).change();
+
+                            if(data.user.imagen_usuario)
+                                $("#imagen_usuario").attr("src","{{url("/")}}" + data.user.imagen_usuario).change();
+                            else
+                                $("#imagen_usuario").attr("src","{{url('/img/default.png')}}");
+                        }
+                        else{
+                            console.log("WOWOWOW0");
+                            $("#nombre").val("").prop("disabled", false);
+                            $("#email").val("").prop("disabled", false).change();
+                            $("#direccion").val("");
+                            $("#referencia").val("");
+                            $("#imagen_usuario").attr("src","{{url('/img/default.png')}}");
+                            map.panTo({
+                                lat: 26.909069,
+                                lng: -101.421252
+                            });
+                        }
                     }
                 });
             });
 
-            $("#direccion").on('change paste keydown', function(){
+            $("#direccion").on('change paste keyup', function(){
                 //Se cancela la búsqueda si hay una activa.
                 if(xhr2){
                     xhr2.abort();
@@ -175,15 +229,42 @@
                     },
                     method:"get",
                     success: function (data) {
-                        console.log(data.results[0].geometry.location);
-                        map.panTo(data.results[0].geometry.location)
+                        if(data.results[0]) {
+                            map.panTo(data.results[0].geometry.location)
+                        }
+                        else{
+                            map.panTo({
+                                lat: 26.909069,
+                                lng: -101.421252
+                            });
+                        }
                     }
                 });
             });
+
+            $("#generar_pedido").on('click', function(){
+                $.ajax({
+                    url: "{{url('/pedidos/generar')}}",
+                    data: {
+                        telefono: $("#telefono").val(),
+                        nombre: $("#nombre").val(),
+                        email: $("#email").val(),
+                        referencia: $("#referencia").val(),
+                        lat: map.getCenter().lat(),
+                        lng: map.getCenter().lng(),
+                        direccion: $("#direccion").val(),
+                        productos: productos
+                    },
+                    method:"post",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            })
+
         });
 
         function addProduct(id){
-            console.log($("#table-productos").find("#"+id).length);
                 if($("#table-productos").find("#"+id).length != 0){
                     //SHOW SNACKBAR
                 }
@@ -192,14 +273,22 @@
                         cantidad: 1,
                         id: id,
                     });
+
                     $("#table-productos").append('<tr id="'+id+'">'+
-                        '<th class="danger">X</th>'+
-                        '<th><input class="form-control" id="'+id+'_cantidad" type="number" value=1 min=1></th>'+
-                        '<th>'+$("#"+id+"_nombre").val()+'</th>'+
-                        '<th>$'+$("#"+id+"_precio").val()+'</th>'+
-                        '<th>$00</th>'+
+                        '<td class="col-xs-1"><a href="" class="btn btn-danger">X</a></td>'+
+                        '<td class="col-xs-1"><input class="form-control" id="'+id+'_cantidad" type="number" value=1 min=1></td>'+
+                        '<td class="col-xs-6">'+$("#"+id+"_nombre").val()+'</td>'+
+                        '<td class="col-xs-2">$'+$("#"+id+"_precio").val()+'</td>'+
+                        '<td class="col-xs-2" id="'+id+'_total"></td>'+
                         '</tr>'
-                    )
+                    );
+                    var importe = Number($('#'+id+'_cantidad').val()) * Number($("#"+id+"_precio").val());
+                    $('#'+id+'_total').html("$"+ importe.toFixed())
+                    $("#"+id+"_cantidad").on('change keyup paste', function(){
+                        var importe = Number($('#'+id+'_cantidad').val()) * Number($("#"+id+"_precio").val());
+                        $('#'+id+'_total').html("$"+ importe.toFixed());
+                    });
+
                 }
         }
     </script>
@@ -207,5 +296,6 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{url('/css/bootstrap-combobox.css')}}">
+    <link rel="stylesheet" href="{{url('/css/marker.css')}}">
 
 @endsection
