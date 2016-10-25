@@ -82,7 +82,33 @@ class PedidoController extends Controller
     }
 
     public function generarNuevoPedido(Request $request){
+        $this->validate($request, [
+            'telefono' => 'required',
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'productos' => 'required'
+        ]);
+
+        $productos =$request->input('productos');
+
+        //Se hace una iteración por los detalles para comprobar que hay suficiente stock de todos los productos.
+        $insufficientStock = '';
+
+        return var_dump($productos);
+        /*
+        foreach($productos  as $detalle){
+            $producto = Producto::find($detalle['id']);
+            if($producto->stock < $detalle['cantidad']){
+                $insufficientStock += $producto->nombre . " ";
+            }
+        }
+
+        if($insufficientStock != ''){
+            return redirect()->action("PedidoController@nuevoPedido")->withErrors(["No hay suficiente stock para los siguientes productos: [" . $insufficientStock . "]"]);
+        }
+
         return response()->json($request);
+        */
     }
 
     /****************************************** JSON Data *************************************************/

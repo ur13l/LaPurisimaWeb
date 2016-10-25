@@ -14,6 +14,15 @@
                     </div>
 
                     <div class="panel-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <table class="table table-responsive">
                             <tr>
                                 <th colspan="2">
@@ -168,6 +177,7 @@
 
             $("select").on('change', function(){
                 addProduct(this.value);
+                $("select").val(0);
             });
 
 
@@ -243,23 +253,18 @@
             });
 
             $("#generar_pedido").on('click', function(){
-                $.ajax({
-                    url: "{{url('/pedidos/generar')}}",
-                    data: {
-                        telefono: $("#telefono").val(),
-                        nombre: $("#nombre").val(),
-                        email: $("#email").val(),
-                        referencia: $("#referencia").val(),
-                        lat: map.getCenter().lat(),
-                        lng: map.getCenter().lng(),
-                        direccion: $("#direccion").val(),
-                        productos: productos
-                    },
-                    method:"post",
-                    success: function (data) {
-                        console.log(data);
-                    }
-                });
+                data = {
+                    telefono: $("#telefono").val(),
+                    nombre: $("#nombre").val(),
+                    email: $("#email").val(),
+                    referencia: $("#referencia").val(),
+                    lat: map.getCenter().lat(),
+                    lng: map.getCenter().lng(),
+                    direccion: $("#direccion").val(),
+                    productos: productos
+                };
+
+                post("{{url('/pedidos/generar')}}", data, 'post');
             })
 
         });
@@ -275,21 +280,70 @@
                     });
 
                     $("#table-productos").append('<tr id="'+id+'">'+
-                        '<td class="col-xs-1"><a href="" class="btn btn-danger">X</a></td>'+
+                        '<td class="col-xs-1"><button id="'+id+'_eliminar" class="btn btn-danger">x</button></td>'+
                         '<td class="col-xs-1"><input class="form-control" id="'+id+'_cantidad" type="number" value=1 min=1></td>'+
                         '<td class="col-xs-6">'+$("#"+id+"_nombre").val()+'</td>'+
                         '<td class="col-xs-2">$'+$("#"+id+"_precio").val()+'</td>'+
                         '<td class="col-xs-2" id="'+id+'_total"></td>'+
                         '</tr>'
                     );
+
+                    $('#'+id+'_eliminar').on('click', function(){
+                        $("#"+id).remove();
+                        productos.removeById(id);
+                    });
                     var importe = Number($('#'+id+'_cantidad').val()) * Number($("#"+id+"_precio").val());
                     $('#'+id+'_total').html("$"+ importe.toFixed())
                     $("#"+id+"_cantidad").on('change keyup paste', function(){
                         var importe = Number($('#'+id+'_cantidad').val()) * Number($("#"+id+"_precio").val());
                         $('#'+id+'_total').html("$"+ importe.toFixed());
+                        productos.cambiarCantidad(id, $('#'+id+'_cantidad').val());
                     });
 
                 }
+        }
+
+        function post(path, params, method) {
+            method = method || "post"; // Set method to post by default if not specified.
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        Array.prototype.removeById = function(id){
+            for(var i = 0 ; i < this.length; i++){
+                if(id == this[i].id) {
+                    this.splice(i, 1);
+                    return;
+                }
+            }
+        }
+
+        Array.prototype.cambiarCantidad = function(id, cantidad){
+            for(var i = 0 ; i < this.length; i++){
+                if(id == this[i].id) {
+                    this[i].cantidad = cantidad;
+                    return;
+                }
+            }
+            return null;
         }
     </script>
 @endsection
