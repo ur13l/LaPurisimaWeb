@@ -82,24 +82,17 @@ class PedidoController extends Controller
     }
 
     public function generarNuevoPedido(Request $request){
-        $this->validate($request, [
-            'telefono' => 'required',
-            'nombre' => 'required',
-            'direccion' => 'required',
-            'productos' => 'required'
-        ]);
+        validate($request);
 
-        $productos =$request->input('productos');
+        $productos = json_decode($request->input('productos'));
 
         //Se hace una iteración por los detalles para comprobar que hay suficiente stock de todos los productos.
         $insufficientStock = '';
 
-        return var_dump($productos);
-        /*
         foreach($productos  as $detalle){
-            $producto = Producto::find($detalle['id']);
-            if($producto->stock < $detalle['cantidad']){
-                $insufficientStock += $producto->nombre . " ";
+            $producto = Producto::find($detalle->id);
+            if($producto->stock < $detalle->cantidad){
+                $insufficientStock .= $producto->nombre . " ";
             }
         }
 
@@ -107,9 +100,47 @@ class PedidoController extends Controller
             return redirect()->action("PedidoController@nuevoPedido")->withErrors(["No hay suficiente stock para los siguientes productos: [" . $insufficientStock . "]"]);
         }
 
-        return response()->json($request);
-        */
+        $user = User::where('telefono', '=', $request->input('telefono'))->first();
+        if(!isset($user)){
+            $user = new User();
+            $user->telefono = $request->input('telefono');
+            $user->email = $user->telefono . "@lapurisima.dev";
+            $user->nombre = $request->input('nombre');
+            $user->save();
+        }
+
+
+
+        //Se crea el pedido y se definen datos como fecha y usuario que lo solicitó.
+        $pedido = Pedido::create(array(
+            //LLENAR
+        ));
+        $pedido->cliente_id = $user->id;
+        $pedido->fecha = Carbon::now('America/Mexico_City');
+        $pedido->save();
+
+
+        $total = 0;
+        foreach( $productos as $detalle) {
+            $det = array(
+                "pedido_id" => $pedido->id,
+                "producto_id" => $detalle->id,
+                "cantidad" => $detalle->cantidad,
+            );
+            $d = Detalle::create($det);
+            $producto = Producto::find($d->producto->id);
+            $producto->stock -= $d->cantidad;
+            $producto->save();
+            $total += $producto->precio * $d->cantidad;
+        }
+        $pedido->total = $total;
+        $pedido->status = Pedido::SOLICITADO;
+        $pedido->save();
+
+        return ; // LOQUE VA A REGRESAR
+
     }
+
 
     /****************************************** JSON Data *************************************************/
 

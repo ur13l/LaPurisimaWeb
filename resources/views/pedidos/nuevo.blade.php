@@ -261,7 +261,7 @@
                     lat: map.getCenter().lat(),
                     lng: map.getCenter().lng(),
                     direccion: $("#direccion").val(),
-                    productos: productos
+                    productos: JSON.stringify(productos)
                 };
 
                 post("{{url('/pedidos/generar')}}", data, 'post');
