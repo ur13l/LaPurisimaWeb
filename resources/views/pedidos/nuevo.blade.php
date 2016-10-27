@@ -34,6 +34,7 @@
                                     <div class="form-group">
                                         {{Form::label('telefono', 'Teléfono')}}
                                         {{Form::number('telefono', null, array('class'=>'form-control'))}}
+                                        <span class="help-inline text-danger hidden"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -47,12 +48,14 @@
                                     <div class="form-group">
                                         {{Form::label('nombre', 'Nombre')}}
                                         {{Form::text('nombre', null, array('class'=>'form-control'))}}
+                                        <span class="help-inline text-danger hidden"></span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
                                         {{Form::label('email', 'Email')}}
                                         {{Form::text('email', null, array('class'=>'form-control'))}}
+                                        <span class="help-inline text-danger hidden"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -61,6 +64,7 @@
                                     <div class="form-group">
                                         {{Form::label('direccion', 'Dirección')}}
                                         {{Form::text('direccion', null, array('class'=>'form-control input-medium bfh-phone', 'data-country'=>'MX'))}}
+                                        <span class="help-inline text-danger hidden"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -69,6 +73,7 @@
                                     <div class="form-group">
                                         {{Form::label('referencia', 'Referencias')}}
                                         {{Form::textarea('referencia', null, array('rows'=>'2', 'class'=>'form-control input-medium bfh-phone', 'data-country'=>'MX'))}}
+                                        <span class="help-inline text-danger hidden"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -104,6 +109,12 @@
                                 <th>Importe</th>
                             </tr>
 
+                            <tr id="no_products">
+                                <td colspan="5" class="text-center" style="height:90px; line-height:90px">
+                                    No hay productos seleccionados
+                                </td>
+                            </tr>
+
                         </table>
                     </div>
                     <div class="panel-footer text-right">
@@ -115,7 +126,7 @@
         </div>
     </div>
 
-
+    <div id="snackbar">Some text some message..</div>
 @endsection
 
 @section('scripts')
@@ -253,18 +264,78 @@
             });
 
             $("#generar_pedido").on('click', function(){
-                data = {
-                    telefono: $("#telefono").val(),
-                    nombre: $("#nombre").val(),
-                    email: $("#email").val(),
-                    referencia: $("#referencia").val(),
-                    lat: map.getCenter().lat(),
-                    lng: map.getCenter().lng(),
-                    direccion: $("#direccion").val(),
-                    productos: JSON.stringify(productos)
-                };
+                var telefonoValido = false;
+                var nombreValido =false;
+                var direccionValida = false;
+                var productosValido = false;
 
-                post("{{url('/pedidos/generar')}}", data, 'post');
+                if($("#telefono").val().trim() != ""){
+                    telefonoValido = true;
+                    $("#telefono").parent().removeClass("has-error");
+                    $("#telefono").siblings('span').addClass("hidden");
+                }else{
+                    $("#telefono").parent().addClass("has-error");
+                    $("#telefono").siblings('span').removeClass("hidden").html("Este campo es obligatorio");
+                }
+
+                if($("#nombre").val().trim() != ""){
+                    nombreValido = true;
+                    $("#nombre").parent().removeClass("has-error");
+                    $("#nombre").siblings('span').addClass("hidden");
+                }else{
+                    $("#nombre").parent().addClass("has-error");
+                    $("#nombre").siblings('span').removeClass("hidden").html("Este campo es obligatorio");
+                }
+
+                if($("#direccion").val().trim() != ""){
+                    direccionValida = true;
+                    $("#direccion").parent().removeClass("has-error");
+                    $("#direccion").siblings('span').addClass("hidden");
+                }else{
+                    $("#direccion").parent().addClass("has-error");
+                    $("#direccion").siblings('span').removeClass("hidden").html("Este campo es obligatorio");
+                }
+
+                if(productos.length == 0){
+                    showSnackbar("Debes seleccionar al menos un producto");
+                } else{
+                    productosValido = true;
+                }
+
+
+                if(productosValido && nombreValido && direccionValida && telefonoValido) {
+                    $.ajax({
+                        url: "{{url('/producto/disponibilidad')}}",
+                        data: {
+                            productos: JSON.stringify(productos)
+                        },
+                        method: 'post',
+                        success: function (response) {
+                            if (response.success == true) {
+                                data = {
+                                    telefono: $("#telefono").val(),
+                                    nombre: $("#nombre").val(),
+                                    email: $("#email").val(),
+                                    referencia: $("#referencia").val(),
+                                    latitud: map.getCenter().lat(),
+                                    longitud: map.getCenter().lng(),
+                                    direccion: $("#direccion").val(),
+                                    productos: JSON.stringify(productos)
+                                };
+
+                                post("{{url('/pedidos/generar')}}", data, 'post');
+                            }
+                            else {
+                                var cad = "No hay suficiente stock para los siguientes productos: <br>";
+                                for(var i = 0 ; i < response.productos.length; i++){
+                                    cad += response.productos[i] +"<br>";
+                                }
+                                showSnackbar(cad);
+                            }
+                        }
+                    });
+                }
+
             })
 
         });
@@ -291,6 +362,9 @@
                     $('#'+id+'_eliminar').on('click', function(){
                         $("#"+id).remove();
                         productos.removeById(id);
+                        if(productos.length == 0){
+                            $("#no_products").show();
+                        }
                     });
                     var importe = Number($('#'+id+'_cantidad').val()) * Number($("#"+id+"_precio").val());
                     $('#'+id+'_total').html("$"+ importe.toFixed())
@@ -299,6 +373,8 @@
                         $('#'+id+'_total').html("$"+ importe.toFixed());
                         productos.cambiarCantidad(id, $('#'+id+'_cantidad').val());
                     });
+
+                    $("#no_products").hide();
 
                 }
         }
@@ -327,6 +403,17 @@
             form.submit();
         }
 
+        function showSnackbar(message){
+            var x = document.getElementById("snackbar")
+
+            // Add the "show" class to DIV
+            x.className = "show";
+            x.innerHTML = message;
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+
         Array.prototype.removeById = function(id){
             for(var i = 0 ; i < this.length; i++){
                 if(id == this[i].id) {
@@ -345,11 +432,14 @@
             }
             return null;
         }
+
+
     </script>
 @endsection
 
 @section('styles')
     <link rel="stylesheet" href="{{url('/css/bootstrap-combobox.css')}}">
     <link rel="stylesheet" href="{{url('/css/marker.css')}}">
+    <link rel="stylesheet" href="{{url('/css/snackbar.css')}}">
 
 @endsection

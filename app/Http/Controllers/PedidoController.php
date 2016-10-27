@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
 
 class PedidoController extends Controller
 {
@@ -82,7 +83,12 @@ class PedidoController extends Controller
     }
 
     public function generarNuevoPedido(Request $request){
-        validate($request);
+        $this->validate($request, [
+            'telefono' => 'required',
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'productos' => 'required'
+        ]);
 
         $productos = json_decode($request->input('productos'));
 
@@ -106,21 +112,26 @@ class PedidoController extends Controller
             $user->telefono = $request->input('telefono');
             $user->email = $user->telefono . "@lapurisima.dev";
             $user->nombre = $request->input('nombre');
-            $user->save();
+            $user->tipo_usuario_id = "3";
         }
 
-
+        $user->referencia = $request->input('referencia');
+        $user->save();
 
         //Se crea el pedido y se definen datos como fecha y usuario que lo solicitó.
         $pedido = Pedido::create(array(
-            //LLENAR
+            "cliente_id" => $user->id,
+            "latitud" => $request->input('latitud'),
+            "longitud" => $request->input('longitud'),
+            "direccion" => $request->input('direccion'),
+            "status" => Pedido::SOLICITADO
         ));
+
         $pedido->cliente_id = $user->id;
         $pedido->fecha = Carbon::now('America/Mexico_City');
         $pedido->save();
-
-
         $total = 0;
+
         foreach( $productos as $detalle) {
             $det = array(
                 "pedido_id" => $pedido->id,
@@ -137,7 +148,7 @@ class PedidoController extends Controller
         $pedido->status = Pedido::SOLICITADO;
         $pedido->save();
 
-        return ; // LOQUE VA A REGRESAR
+        return redirect()->route('detalle', ['pedido_id' => $pedido->id]);
 
     }
 

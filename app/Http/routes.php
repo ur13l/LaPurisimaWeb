@@ -97,6 +97,7 @@ Route::group(['prefix' => 'producto'], function(){
     Route::post('create', "ProductoController@create");
     Route::post('update', "ProductoController@update");
     Route::get('get', "ProductoApiController@getProductos");
+    Route::post('disponibilidad', "ProductoApiController@disponibilidad");
 });
 
 /**
