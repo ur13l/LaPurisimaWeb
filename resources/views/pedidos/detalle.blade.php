@@ -268,7 +268,10 @@
             });
 
             $("#right-repartidor").on('click',function(){
-                if(firstPosition >= 0) {
+
+                var lastPosition = $(".repartidores-container").children().length - 1;
+
+                if(firstPosition >= 0 && firstPosition < lastPosition-3) {
                     $("#repartidor" + firstPosition).addClass('hide-slide');
                     $("#repartidor" + (firstPosition + 1)).addClass('hide-slide');
                     $("#repartidor" + (firstPosition + 2)).addClass('hide-slide');
@@ -283,7 +286,7 @@
             });
 
             $("#left-repartidor").on('click',function(){
-                if(firstPosition < 96) {
+                if(firstPosition < lastPosition-3 && firstPosition > 3) {
                     $("#repartidor" + firstPosition).addClass('hide-slide');
                     $("#repartidor" + (firstPosition + 1)).addClass('hide-slide');
                     $("#repartidor" + (firstPosition + 2)).addClass('hide-slide');
@@ -410,7 +413,7 @@
             var i = 0;
             var deltaLat;
             var deltaLng;
-            i = 0;text
+            i = 0;
             deltaLat = (newPosition.lat() - marker.position.lat())/numDeltas;
             deltaLng = (newPosition.lng() - marker.position.lng())/numDeltas;
             moveMarker(marker, i, deltaLat, deltaLng, numDeltas, delay);

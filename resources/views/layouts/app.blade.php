@@ -58,6 +58,9 @@
                       @if (Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)
                           <li><a href="{{ url('/pedidos') }}">Pedidos</a></li>
                       @endif
+                      @if (Auth::user()->tipo_usuario_id == 1)
+                          <li><a href="{{ url('/usuarios') }}">Usuarios</a></li>
+                      @endif
                     @endif
                 </ul>
 

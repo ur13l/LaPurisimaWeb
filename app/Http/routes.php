@@ -47,9 +47,9 @@ Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
  * Funciones de API para el usuario. Inicio de sesión, etc.
  */
 Route::group(['prefix'=>'usuario'], function(){
-    Route::post('authenticate', "UserController@authenticate");
-    Route::post('create', "UserController@create");
-    Route::post('by_phone', "UserController@getUserByPhone");
+    Route::post('authenticate', "UserApiController@authenticate");
+    Route::post('create', "UserApiController@create");
+    Route::post('by_phone', "UserApiController@getUserByPhone");
 });
 
 /**
@@ -98,6 +98,15 @@ Route::group(['prefix' => 'producto'], function(){
     Route::post('update', "ProductoController@update");
     Route::get('get', "ProductoApiController@getProductos");
     Route::post('disponibilidad', "ProductoApiController@disponibilidad");
+});
+
+/**
+ * prefijo: usuarios
+ * referencia: UserController
+ * Funciones web para la gestión de usuarios (NO API).
+ */
+Route::group(['prefix' => 'usuarios'], function(){
+    Route::get('/', 'UserController@index');
 });
 
 /**

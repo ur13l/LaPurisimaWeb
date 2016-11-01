@@ -51,6 +51,11 @@
                   </div>
               </div>
               <div class="form-group col-xs-12">
+                  {{Form::label('descripcion', 'Descripción')}}
+                  {{Form::textarea('descripcion', null, array('class'=>'form-control', 'rows' => '2'))}}
+              </div>
+
+              <div class="form-group col-xs-12">
                 <div class="marco-imagen col-xs-12 text-center">
                   @if($action == 'update')
                     <img src="/{{$producto->imagen}}" id="imagen-view" height="200"/>
