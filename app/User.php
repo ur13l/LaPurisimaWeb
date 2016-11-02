@@ -6,6 +6,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable 
 {
+    const ADMINISTRADOR = 1;
+    const REPARTIDOR = 2;
+    const CLIENTE = 3;
+
   protected $fillable = [
     'nombre',
     'email',

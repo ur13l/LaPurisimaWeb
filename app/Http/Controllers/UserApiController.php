@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Mail;
 use Validator;
 
-class UserController extends Controller
+class UserApiController extends Controller
 {
   /**
    * Método para crear a un usuario. Recibe una petición con todos
@@ -35,7 +35,7 @@ class UserController extends Controller
         $user->save();
         $data = $request->input('imagen_usuario');
         if(isset($data)) {
-            $route = "storage/perfil/";
+            $route = "/storage/perfil/";
             $user->imagen_usuario = ImageController::saveImage($data, $route, $user->id);
             $success = $user->save();
         }
@@ -59,7 +59,7 @@ class UserController extends Controller
       if(base64_decode($request->input('imagen_usuario'))){
         $usuario->update($request->except('imagen_usuario'));
         $data = $request->input('imagen_usuario');
-        $route = "storage/perfil/";
+        $route = "/storage/perfil/";
         $usuario->imagen_usuario = ImageController::saveImage($data, $route, $usuario->id);
       }
       else{

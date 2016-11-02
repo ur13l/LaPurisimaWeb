@@ -21,7 +21,20 @@ Route::auth();
 
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth:api'], function () {
-  Route::post('update', "UserController@update");
+  Route::post('update', "UserApiController@update");
+});
+
+/**
+ * prefijo: usuarios
+ * referencia: UserController
+ * Funciones web para la gestión de usuarios (NO API).
+ */
+Route::group(['prefix' => 'usuarios'], function(){
+    Route::get('/', 'UserController@index');
+    Route::post('/repartidores', 'UserController@repartidores');
+    Route::post('/clientes', 'UserController@clientes');
+    Route::post('/administradores', 'UserController@administradores');
+    Route::get('/{id_user}', 'UserController@detalle');
 });
 
 /**
@@ -100,14 +113,7 @@ Route::group(['prefix' => 'producto'], function(){
     Route::post('disponibilidad', "ProductoApiController@disponibilidad");
 });
 
-/**
- * prefijo: usuarios
- * referencia: UserController
- * Funciones web para la gestión de usuarios (NO API).
- */
-Route::group(['prefix' => 'usuarios'], function(){
-    Route::get('/', 'UserController@index');
-});
+
 
 /**
  * prefijo: repartidor
