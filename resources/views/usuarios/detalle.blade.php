@@ -12,7 +12,7 @@
                             </div>
                         </div>
                     </div>
-
+                    {{Form::hidden('id', $user->id, array('id'=>'_id'))}}
                     <div class="panel-body">
                         @if(isset($messages))
                             <div class="alert alert-danger danger">
@@ -89,27 +89,35 @@
                             <div class="col-xs-12">
                                 <h4>Historial de pedidos</h4>
 
-                                    <table class="table table-striped">
+                                    <table class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%" id="table-historial-pedidos">
                                         <thead>
-                                        <th>Imagen</th>
-                                        <th>Cant.</th>
-                                        <th>Producto</th>
-                                        <th>Precio</th>
+                                            <th></th>
+                                            <th>Fecha</th>
+                                            <th>Status</th>
+                                            <th>Usuario</th>
+                                            <th>Dirección</th>
+                                            <th>Total</th>
                                         </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
                             </div>
 
-                            <div class="col-xs-12">
+                            @if($user->tipo_usuario_id == 2)
+                                <div class="col-xs-12">
+                            @else
+                                <div class="col-xs-12" style="display:none">
+                            @endif
                                 <h4>Historial de envíos</h4>
 
-                                <table class="table table-striped">
+                                <table class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%" id="table-historial-envios">
                                     <thead>
-                                    <th>Imagen</th>
-                                    <th>Cant.</th>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
+                                    <th></th>
+                                    <th>Fecha</th>
+                                    <th>Status</th>
+                                    <th>Usuario</th>
+                                    <th>Dirección</th>
+                                    <th>Total</th>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -118,15 +126,6 @@
 
                         </div>
                     </div>
-                    <div class="row col-xs-12">
-                        <h4 >Ubicación</h4>
-                        <div class="text-center">
-
-
-
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -137,8 +136,13 @@
 
 @endsection
 
+@section('scripts')
+    <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/tablasDetalleUsuario.js')}}"></script>
+@endsection
 
 
 @section('styles')
-
+    <link rel="stylesheet" href="{{url('css/tables.css')}}">
 @endsection

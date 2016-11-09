@@ -7,6 +7,8 @@ $(function(){
 
 //TABLA DE ASIGNADOS
     var tableAsignados = $('#table-asignados').DataTable(generarTablaPedidos('asignados'));
-    addTableEvents($('#table-asignados tbody'), tableAsignados, 'asignados')
+    addTableEvents($('#table-asignados tbody'), tableAsignados, 'asignados');
+
+
 
 });

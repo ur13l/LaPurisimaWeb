@@ -29,6 +29,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Fecha</th>
+                                    <th>Status</th>
                                     <th>Usuario</th>
                                     <th>Direccion</th>
                                     <th>Total</th>
@@ -58,6 +59,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Fecha</th>
+                                    <th>Status</th>
                                     <th>Usuario</th>
                                     <th>Direccion</th>
                                     <th>Total</th>

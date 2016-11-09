@@ -7,7 +7,7 @@ var template = function (d, tipo){
             '<td>$'+ (d.detalles[i].producto.precio * d.detalles[i].cantidad).toFixed(2)+'</td>'+
             '</tr>';
     }
-
+    console.log(d);
     return '<div class="row slider '+tipo+'">'+
         '<div class="col-xs-12 col-md-8" >'+
         '<h4>Detalle de pedido</h4>' +
@@ -26,12 +26,12 @@ var template = function (d, tipo){
         '<span><b>Total:</b> $'+d.total+'</span><br>'+
         '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
         '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
-        '<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>'+
+        ((d.status==1)?'<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>':'<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Ver detalles</a><br><br>') +
         '<form action="/pedidos/cancelar" method="POST">' +
         '<input type="hidden" value="'+d.id+'" name="id_pedido">' +
         '<input type="hidden" value="'+$("#csrf_token").val()+'" name="_token">' +
         '<input type="hidden" value="index" name="view">' +
-        '<input type="submit" class="btn btn-danger col-xs-12" value="Cancelar">'+
+        ((d.status!=4 && d.status!=5 && d.status!=6)?'<input type="submit" class="btn btn-danger col-xs-12" value="Cancelar">':'')+
         '</form>' +
         '</div>'+
         '</div>';
@@ -89,10 +89,16 @@ function addTableEvents(elemTable, table, tipo){
 }
 
 function generarTablaPedidos(tipo){
+    console.log(tipo)
     return {
         processing: true,
         serverSide: true,
-        ajax: "/pedidos/" + tipo,
+        ajax: {
+            url: "/pedidos/" + tipo,
+            data: {
+                "id": $("#_id").val()
+            }
+        },
         language: {
             "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
         },
@@ -116,6 +122,30 @@ function generarTablaPedidos(tipo){
                         return fecha;
                     else
                         return "-";
+                }},
+            {data: 'status', name: 'status',"className":'details-control-' + tipo,
+                "orderable":      false,
+                "searchable":     true,
+                "defaultContent": '-',
+                "render": function ( data, type, full, meta ) {
+                    if(data == 1){
+                        return '<span class="label label-default">Solicitado</span>';
+                    }
+                    else if(data == 2){
+                        return '<span class="label label-primary">Asignado</span>';
+                    }
+                    else if(data == 3){
+                        return '<span class="label label-info">En camino</span>';
+                    }
+                    else if(data == 4){
+                        return '<span class="label label-success">Entregado</span>';
+                    }
+                    else if(data == 5){
+                        return '<span class="label label-danger">Cancelado</span>';
+                    }
+                    else if(data == 6){
+                        return '<span class="label label-warning">Fallido</span>';
+                    }
                 }},
             {data: 'cliente.nombre', name: 'cliente.nombre',"className":'details-control-' + tipo,
                 "orderable":      false,

@@ -182,6 +182,31 @@ class PedidoController extends Controller
         return Datatables::of($pedidos)->make(true);
     }
 
+
+    /**
+     * Función para devolver el historial de pedidos hechos por un usuario en forma de tabla.
+     * @route /pedidos/historial-pedidos
+     * @param Request $request
+     * @return mixed
+     */
+    public function historialPedidosTable(Request $request){
+        $pedidos = Pedido::where('cliente_id', '=', $request->input('id'))->with('cliente')->with('detalles')
+            ->with('detalles.producto')->get();
+        return Datatables::of($pedidos)->make(true);
+    }
+
+    /**
+     * Función para devolver el historial de envíos de un repartidor en forma de tabla.
+     * @route /pedidos/historial-envios
+     * @param Request $request
+     * @return mixed
+     */
+    public function historialEnviosTable(Request $request){
+        $pedidos = Pedido::where('conductor_id', '=', $request->input('id'))->with('cliente')->with('detalles')
+            ->with('detalles.producto')->get();
+        return Datatables::of($pedidos)->make(true);
+    }
+
     /**
      * Lista de repartidores cercanos (15km) de un punto determinado
      * @route /pedidos/repartidores-json

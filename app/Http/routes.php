@@ -84,6 +84,8 @@ Route::group(['prefix' => 'pedidos'], function(){
     Route::get('/', 'PedidoController@pedidos')->name('index');
     Route::get('solicitados', 'PedidoController@pedidosSolicitadosTable');
     Route::get('asignados', 'PedidoController@pedidosAsignadosTable');
+    Route::get('historial-pedidos', 'PedidoController@historialPedidosTable');
+    Route::get('historial-envios', 'PedidoController@historialEnviosTable');
     Route::get('repartidores', 'PedidoController@repartidores');
     Route::get('repartidores-json', 'PedidoController@repartidoresJSON');
     Route::post('asignar', 'PedidoController@asignarRepartidor');
