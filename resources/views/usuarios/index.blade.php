@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         {{Form::hidden('csrf_token', csrf_token(), array('id' => 'csrf_token'))}}
+        {{Form::hidden('_url', url("/"), array('id' => '_url'))}}
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">

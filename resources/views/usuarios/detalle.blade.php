@@ -13,6 +13,7 @@
                         </div>
                     </div>
                     {{Form::hidden('id', $user->id, array('id'=>'_id'))}}
+                    {{Form::hidden('_url', url("/"), array('id' => '_url'))}}
                     <div class="panel-body">
                         @if(isset($messages))
                             <div class="alert alert-danger danger">
