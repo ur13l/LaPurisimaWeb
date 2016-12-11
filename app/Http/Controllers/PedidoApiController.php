@@ -83,9 +83,10 @@ class PedidoApiController extends Controller
         $pedido = Pedido::where([
             ['id', '=', $request->input('id')],
             ['cliente_id', '=', $user->id]
-        ])
-            ->orWhere(['id', '=', $request->input('id')],
-                ['conductor_id', '=', $user->id])
+        ])->orWhere(function($query) use ($request , $user){
+            $query->where('id', '=', $request->input('id'))
+                ->where('conductor_id', '=', $user->id);
+            })
             ->first();
         $errors = [];
         $save = false;
