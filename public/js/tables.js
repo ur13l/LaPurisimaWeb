@@ -94,7 +94,7 @@ function generarTablaPedidos(tipo){
         processing: true,
         serverSide: true,
         ajax: {
-            url: "/pedidos/" + tipo,
+            url: $("#_url").val() + "/pedidos/" + tipo,
             data: {
                 "id": $("#_id").val()
             }
@@ -211,7 +211,7 @@ function generarTablaUsuario(tipo){
         processing: true,
         serverSide: true,
         ajax: {
-            'url': "/usuarios/" + tipo,
+            'url': $("#_url").val() + "/usuarios/" + tipo,
             'type': 'POST',
             'headers': {
                 'X-CSRF-TOKEN':  $("#csrf_token").val()

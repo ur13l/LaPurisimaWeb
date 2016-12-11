@@ -35,6 +35,7 @@ Route::group(['prefix' => 'usuarios'], function(){
     Route::post('/clientes', 'UserController@clientes');
     Route::post('/administradores', 'UserController@administradores');
     Route::get('/{id_user}', 'UserController@detalle');
+    Route::get('/editar/{id_user}', 'UserController@editar');
 });
 
 /**

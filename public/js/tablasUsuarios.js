@@ -19,6 +19,6 @@ $(function(){
 function addEvents(table, tableDOM){
     tableDOM.on('click', 'tr', function () {
         var data = table.row( this ).data();
-        window.location.href = "/usuarios/" + data.id;
+        window.location.href = "usuarios/" + data.id;
     } );
 }

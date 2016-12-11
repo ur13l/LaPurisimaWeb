@@ -31,9 +31,20 @@ class UserController extends Controller
         return view('usuarios.index');
     }
 
+    /**
+     * Se abre el detalle del usuario
+     * @param $id_user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function detalle($id_user){
         $user = User::find($id_user);
         return view('usuarios.detalle', ["user" => $user]);
+    }
+
+    public function editar($id_user){
+        $user = User::find($id_user);
+        return view("usuarios.editar", ["user" => $user]);
+
     }
 
     /**
