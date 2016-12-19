@@ -31,10 +31,15 @@
                                 {{Form::hidden('id', $user->id)}}
                                 {{Form::label('nombre', 'Nombre')}}
                                 {{Form::text('nombre', null, array('class'=>'form-control'))}}
+
                             </div>
                             <div class="form-group col-xs-12  col-md-6">
                                 {{Form::label('telefono', 'Teléfono')}}
-                                {{Form::text('telefono', null, array('class'=>'form-control'))}}
+                                @if ($action == "create")
+                                    {{Form::text('telefono', null, array('class'=>'form-control'))}}
+                                @else
+                                    {{Form::text('telefono', null, array('class'=>'form-control', 'disabled'=>'disabled'))}}
+                                @endif
                             </div>
 
                             <div class="form-group col-xs-12 col-md-6">
@@ -46,7 +51,11 @@
                             </div>
                             <div class="form-group col-xs-12">
                                 {{Form::label('email', 'Email')}}
-                                {{Form::email('email', null, array('class'=>'form-control'))}}
+                                @if($action == "create")
+                                    {{Form::text('email', null, array('class'=>'form-control'))}}
+                                @else
+                                    {{Form::text('email', null, array('class'=>'form-control', 'disabled'=>'disabled'))}}
+                                @endif
                             </div>
 
                             @if($action == "create")
@@ -60,13 +69,17 @@
                                     {{Form::password('password_confirmation', array('class'=>'form-control'))}}
                                 </div>
                             @endif
-                            <div class="form-group col-xs-12 col-md-6">
+                            <div class="form-group col-xs-12">
                                 {{Form::label('calle', 'Calle')}}
                                 {{Form::text('calle', null, array('class'=>'form-control'))}}
                             </div>
                             <div class="form-group col-xs-12 col-md-6">
                                 {{Form::label('colonia', 'Colonia')}}
                                 {{Form::text('colonia', null, array('class'=>'form-control'))}}
+                            </div>
+                            <div class="form-group col-xs-6">
+                                {{Form::label('codigo_postal', 'Código Postal')}}
+                                {{Form::number('codigo_postal', null, array('class'=>'form-control'))}}
                             </div>
                             <div class="form-group col-xs-12">
                                 {{Form::label('referencia', 'Referencias')}}
@@ -76,7 +89,7 @@
                             <div class="form-group col-xs-12">
                                 <div class="marco-imagen col-xs-12 text-center">
                                     @if(isset($user->imagen_usuario) || $user->imagen_usuario !="")
-                                        <img src="{{$user->imagen_usuario}}" id="imagen-view" height="200"/>
+                                        <img src="{{url($user->imagen_usuario)}}" id="imagen-view" height="200"/>
                                     @else
                                         <img src="{{url('img/default.png')}}" height="200" id="imagen-view" />
                                     @endif

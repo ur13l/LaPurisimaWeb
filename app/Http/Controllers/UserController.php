@@ -133,7 +133,7 @@ class UserController extends Controller
         if ($request->hasFile('imagen')) {
             if($request->file('imagen')->isValid()){
                 $extension = $request->file('imagen')->getClientOriginalExtension();
-                $path = "storage/usuarios/";
+                $path = "storage/perfil/";
                 $filename= $user->id . "." . $extension;
                 $request->file('imagen')->move($path ,  $filename);
                 $user->imagen_usuario = $path.$filename;
@@ -151,24 +151,24 @@ class UserController extends Controller
      * @return [string] [JSON con success, puede ser true o false]
      */
     public function update(Request $request){
-        $usuario = Auth::guard('api')->user();
-        $saved = false;
-        if($usuario->exists()){
-            if(base64_decode($request->input('imagen_usuario'))){
-                $usuario->update($request->except('imagen_usuario'));
-                $data = $request->input('imagen_usuario');
-                $route = "/storage/perfil/";
-                $usuario->imagen_usuario = ImageController::saveImage($data, $route, $usuario->id);
-            }
-            else{
-                $usuario->update($request->all());
-            }
-
-            $saved = $usuario->save();
-        }
-        return response()->json([
-            "success" => $saved
+        $this->validate($request, [
+            'nombre' => 'required',
+            'tipo_usuario_id' => 'required',
         ]);
+        $usuario = User::find($request->input('id'));
+        $usuario->update($request->except(['telefono', 'email', 'id']));
+        if ($request->hasFile('imagen')) {
+            if($request->file('imagen')->isValid()){
+                $extension = $request->file('imagen')->getClientOriginalExtension();
+                $path = "storage/perfil/";
+                $filename= $usuario->id . "." . $extension;
+                $request->file('imagen')->move($path ,  $filename);
+                $usuario->imagen_usuario = $path.$filename;
+            }
+        }
+
+
+        return redirect()->action('UserController@index',['message' => $usuario->imagen_usuario] );
     }
 
 }

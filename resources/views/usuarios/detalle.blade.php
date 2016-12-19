@@ -53,7 +53,7 @@
                                                 @if($user->datosRepartidor->status == 1)
                                                     <td><span class="label label-success">Activo</span></td>
                                                 @else
-                                                    <span class="label label-default">Inactivo</span>
+                                                    <td><span class="label label-default">Inactivo</span></td>
                                                 @endif
 
                                             </tr>
