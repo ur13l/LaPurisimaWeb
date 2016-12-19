@@ -15,54 +15,85 @@
                     {{Form::hidden('id', $user->id, array('id'=>'_id'))}}
                     {{Form::hidden('_url', url("/"), array('id' => '_url'))}}
                     <div class="panel-body">
-                        {{ Form::model($user, array('url' => '/producto/' . $action, 'files'=>true, $producto->id)) }}
-                        <div class="form-group col-xs-12">
-                            {{Form::hidden('id', $producto->id)}}
-                            {{Form::label('nombre', 'Nombre')}}
-                            {{Form::text('nombre', null, array('class'=>'form-control', 'required'=>'required'))}}
-                        </div>
-                        <div class="form-group col-xs-12 col-md-4">
-                            {{Form::label('stock', 'Stock')}}
-                            {{Form::number('stock', null, array('class'=>'form-control', 'required'=>'required', 'min'=>'0', 'max'=>'1000000'))}}
-                        </div>
-                        <div class="form-group col-xs-12 col-md-4">
-                            {{Form::label('contenido', 'Contenido')}}
-                            <div class="input-group">
-                                {{Form::number('contenido', null, array('class'=>'form-control', 'required'=>'required', 'min'=>'0', 'max'=>'1000000'))}}
-                                <span class="input-group-addon">ml</span>
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
-                        <div class="form-group col-xs-12 col-md-4">
-                            {{Form::label('precio', 'Precio')}}
-                            <div class="input-group">
-                                <span class="input-group-addon">$</span>
-                                {{Form::number('precio', null, array('class'=>'form-control currency', 'required'=>'required', 'min'=>'0', 'max'=>'1000000', 'step'=>'0.10'))}}
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            {{Form::label('descripcion', 'Descripción')}}
-                            {{Form::textarea('descripcion', null, array('class'=>'form-control', 'rows' => '2'))}}
-                        </div>
+                        @endif
+                        <div class="col-xs-10 col-xs-offset-1">
+                            {{ Form::model($user, array('url' => '/usuarios/' . $action, 'id'=>'form-usuario', 'files'=>true, $user->id)) }}
 
-                        <div class="form-group col-xs-12">
-                            <div class="marco-imagen col-xs-12 text-center">
+                            <div class="form-group col-xs-12">
+                                {{Form::hidden('id', $user->id)}}
+                                {{Form::label('nombre', 'Nombre')}}
+                                {{Form::text('nombre', null, array('class'=>'form-control'))}}
+                            </div>
+                            <div class="form-group col-xs-12  col-md-6">
+                                {{Form::label('telefono', 'Teléfono')}}
+                                {{Form::text('telefono', null, array('class'=>'form-control'))}}
+                            </div>
+
+                            <div class="form-group col-xs-12 col-md-6">
+                                {{Form::label('tipo_usuario_id', 'Tipo')}}
+                                {{Form::select('tipo_usuario_id', array(
+                                    '1' => "Administrador",
+                                    '2' => "Repartidor",
+                                    '3' => "Usuario"), $tipo_usuario_id, array('class'=>'form-control'))}}
+                            </div>
+                            <div class="form-group col-xs-12">
+                                {{Form::label('email', 'Email')}}
+                                {{Form::email('email', null, array('class'=>'form-control'))}}
+                            </div>
+
+                            @if($action == "create")
+                                <div class="form-group col-xs-12 col-md-6">
+                                    {{Form::label('password', 'Contraseña')}}
+                                    {{Form::password('password', array('class'=>'form-control'))}}
+                                </div>
+
+                                <div class="form-group col-xs-12 col-md-6">
+                                    {{Form::label('password_confirmation', 'Confirmar contraseña')}}
+                                    {{Form::password('password_confirmation', array('class'=>'form-control'))}}
+                                </div>
+                            @endif
+                            <div class="form-group col-xs-12 col-md-6">
+                                {{Form::label('calle', 'Calle')}}
+                                {{Form::text('calle', null, array('class'=>'form-control'))}}
+                            </div>
+                            <div class="form-group col-xs-12 col-md-6">
+                                {{Form::label('colonia', 'Colonia')}}
+                                {{Form::text('colonia', null, array('class'=>'form-control'))}}
+                            </div>
+                            <div class="form-group col-xs-12">
+                                {{Form::label('referencia', 'Referencias')}}
+                                {{Form::textarea('referencia', null, array('class'=>'form-control', 'rows' => '2'))}}
+                            </div>
+
+                            <div class="form-group col-xs-12">
+                                <div class="marco-imagen col-xs-12 text-center">
+                                    @if(isset($user->imagen_usuario) || $user->imagen_usuario !="")
+                                        <img src="{{$user->imagen_usuario}}" id="imagen-view" height="200"/>
+                                    @else
+                                        <img src="{{url('img/default.png')}}" height="200" id="imagen-view" />
+                                    @endif
+                                </div>
+                                {{Form::label('imagen', 'Imagen')}}
+                                {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
+                            </div>
+
+                            <div class="form-group col-xs-12 col-md-12">
                                 @if($action == 'update')
-                                    <img src="/{{$producto->imagen}}" id="imagen-view" height="200"/>
+                                    {{Form::submit('Actualizar', array('class'=>'btn-primary btn'))}}
                                 @else
-                                    <img src="" id="imagen-view" />
+                                    {{Form::submit('Crear', array('class'=>'btn-primary btn'))}}
                                 @endif
                             </div>
-                            {{Form::label('imagen', 'Imagen')}}
-                            {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
+                            {{ Form::close() }}
                         </div>
-                        <div class="form-group col-xs-12 col-md-12">
-                            @if($action == 'update')
-                                {{Form::submit('Actualizar', array('class'=>'btn-primary btn'))}}
-                            @else
-                                {{Form::submit('Crear', array('class'=>'btn-primary btn'))}}
-                            @endif
-                        </div>
-                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
@@ -73,13 +104,13 @@
 
 @endsection
 
-@section('scripts')
-    <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
-    <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
-    <script type="text/javascript" src="{{url('js/tablasDetalleUsuario.js')}}"></script>
+@section('styles')
+    <link rel="stylesheet" href="{{url('/css/fileinput.css')}}">
+
 @endsection
 
-
-@section('styles')
-    <link rel="stylesheet" href="{{url('css/tables.css')}}">
+@section('scripts')
+    <script type="text/javascript" src="{{url("/js/fileinput.js")}}"></script>
+    <script type="text/javascript" src="{{url("/js/dynamicImage.js")}}"></script>
+    <script type="text/javascript" src="{{url("/js/userValidations.js")}}"></script>
 @endsection

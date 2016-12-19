@@ -34,6 +34,9 @@ Route::group(['prefix' => 'usuarios'], function(){
     Route::post('/repartidores', 'UserController@repartidores');
     Route::post('/clientes', 'UserController@clientes');
     Route::post('/administradores', 'UserController@administradores');
+    Route::get('/nuevo/{tipo_usuario_id}', 'UserController@nuevo');
+    Route::post('/create', 'UserController@create');
+    Route::post('/update', 'UserController@update');
     Route::get('/{id_user}', 'UserController@detalle');
     Route::get('/editar/{id_user}', 'UserController@editar');
 });
@@ -57,7 +60,7 @@ Route::group(['prefix'=>'pedido', 'middleware' => 'auth:api'], function(){
 
 /**
  * prefijo: usuario
- * referencia: UserController
+ * referencia: UserApiController
  * Funciones de API para el usuario. Inicio de sesión, etc.
  */
 Route::group(['prefix'=>'usuario'], function(){

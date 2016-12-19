@@ -18,7 +18,7 @@
                         @if(isset($messages))
                             <div class="alert alert-danger danger">
                                 @if($messages == 'no.stock')
-                                    El repartidor no cuenta con stock suficiente.
+
                                 @endif
                             </div>
                         @endif
@@ -68,7 +68,11 @@
                                     <tbody>
                                         <tr>
                                             <th class="text-center">
-                                                <img src="{{url($user->imagen_usuario)}}"  height="130" alt="">
+                                                @if(isset($user->imagen_usuario))
+                                                    <img src="{{url($user->imagen_usuario)}}"  height="130" alt="">
+                                                @else
+                                                    <img src="{{url("/img/default.png")}}"  height="130" alt="">
+                                                @endif
                                             </th>
                                         </tr>
                                         @if($user->tipo_usuario_id == 2)
@@ -81,7 +85,7 @@
                                         @endif
                                         <tr>
                                             <th class="text-center">
-                                                <a href="" class="btn btn-primary">Editar perfil</a>
+                                                <a href="{{url("/usuarios/editar/$user->id")}}" class="btn btn-primary">Editar perfil</a>
                                             </th>
                                         </tr>
                                     </tbody>

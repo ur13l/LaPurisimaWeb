@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DatosRepartidor;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -41,10 +42,24 @@ class UserController extends Controller
         return view('usuarios.detalle', ["user" => $user]);
     }
 
+    /**
+     * Función que devuelve la vista para editar los datos de un usuario.
+     * @param $id_user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editar($id_user){
         $user = User::find($id_user);
-        return view("usuarios.editar", ["user" => $user]);
+        return view("usuarios.editar", ["user" => $user,  "tipo_usuario_id"=>$user->tipo_usuario_id, "action" => "update"]);
 
+    }
+
+    /**
+     * Método para devolver la vista de formulario de edición de un nuevo usuario.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function nuevo($tipo_usuario_id){
+        $user = new User();
+        return view("usuarios.editar", ["user" => $user, "tipo_usuario_id"=>$tipo_usuario_id, "action" => "create"]);
     }
 
     /**
@@ -87,5 +102,73 @@ class UserController extends Controller
         return Datatables::of($clientes)->make(true);
     }
 
+
+    /**
+     * Método para crear a un usuario. Recibe una petición con todos
+     * los datos a registrar del usuario.
+     * @param  Request $request
+     * @return
+     */
+    public function create(Request $request){
+        $this->validate($request, [
+            'nombre' => 'required',
+            'email' => 'required|unique:users',
+            'telefono' => 'required|unique:users',
+            'tipo_usuario_id' => 'required',
+            'password' => 'confirmed'
+        ]);
+        $user = User::create($request->except('imagen_usuario'));
+        //$user->tipo_usuario_id = 3;
+
+        //Se tienen que generar los datos de conductor cuando se registra un repartidor.
+        if($user->tipo_usuario_id == 2){
+            DatosRepartidor::create(array(
+                'user_id' => $user->id,
+                'latitud' => 0,
+                'longitud' => 0,
+                'estatus' => DatosRepartidor::INACTIVO
+            ));
+        }
+
+        if ($request->hasFile('imagen')) {
+            if($request->file('imagen')->isValid()){
+                $extension = $request->file('imagen')->getClientOriginalExtension();
+                $path = "storage/usuarios/";
+                $filename= $user->id . "." . $extension;
+                $request->file('imagen')->move($path ,  $filename);
+                $user->imagen_usuario = $path.$filename;
+                $user->save();
+            }
+        }
+
+        return redirect()->action('UserController@index',['message' => 'create'] );
+    }
+
+    /**
+     * Función para actualizar a un usuario ya existente, se le envía como parámetro
+     * un JSON con todos los campos actualizados.
+     * @param  Request $request [JSON que contiene los valores de users]
+     * @return [string] [JSON con success, puede ser true o false]
+     */
+    public function update(Request $request){
+        $usuario = Auth::guard('api')->user();
+        $saved = false;
+        if($usuario->exists()){
+            if(base64_decode($request->input('imagen_usuario'))){
+                $usuario->update($request->except('imagen_usuario'));
+                $data = $request->input('imagen_usuario');
+                $route = "/storage/perfil/";
+                $usuario->imagen_usuario = ImageController::saveImage($data, $route, $usuario->id);
+            }
+            else{
+                $usuario->update($request->all());
+            }
+
+            $saved = $usuario->save();
+        }
+        return response()->json([
+            "success" => $saved
+        ]);
+    }
 
 }

@@ -29,7 +29,7 @@
 
                                     <div class="panel panel-default text-center" style="padding-bottom:15px">
                                         <div class="panel-body ">Registra un nuevo repartidor</div>
-                                        <a href="{{url('/pedidos/nuevo')}}" class="btn btn-primary">Nuevo</a>
+                                        <a href="{{url('/usuarios/nuevo/2')}}" class="btn btn-primary">Nuevo</a>
                                     </div>
 
                                     <table id="table-repartidores" class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
@@ -50,8 +50,8 @@
                                 <div class="col-xs-12">
 
                                     <div class="panel panel-default text-center" style="padding-bottom:15px">
-                                        <div class="panel-body ">Registra un nuevo usuarior</div>
-                                        <a href="{{url('/pedidos/nuevo')}}" class="btn btn-primary">Nuevo</a>
+                                        <div class="panel-body ">Registra un nuevo usuario</div>
+                                        <a href="{{url('/usuarios/nuevo/3')}}" class="btn btn-primary">Nuevo</a>
                                     </div>
 
                                     <table id="table-clientes" class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
@@ -71,8 +71,8 @@
                                 <div class="col-xs-12">
 
                                     <div class="panel panel-default text-center" style="padding-bottom:15px">
-                                        <div class="panel-body ">Registra un nuevo usuarior</div>
-                                        <a href="{{url('/pedidos/nuevo')}}" class="btn btn-primary">Nuevo</a>
+                                        <div class="panel-body ">Registra un nuevo administrador</div>
+                                        <a href="{{url('/usuarios/nuevo/1')}}" class="btn btn-primary">Nuevo</a>
                                     </div>
 
                                     <table id="table-administradores" class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
