@@ -61,6 +61,9 @@
                       @if (Auth::user()->tipo_usuario_id == 1)
                           <li><a href="{{ url('/usuarios') }}">Usuarios</a></li>
                       @endif
+                      @if (Auth::user()->tipo_usuario_id == 1)
+                          <li><a href="{{ url('/promociones') }}">Promociones</a></li>
+                      @endif
                     @endif
                 </ul>
 

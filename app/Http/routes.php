@@ -130,5 +130,15 @@ Route::group(['prefix' => 'repartidor'], function(){
     Route::post('status', 'RepartidorApiController@cambiarStatusRepartidor');
 });
 
+
+/**
+ * prefijo: promociones
+ * referencia: PromocionesController
+ * Funciones web para la gestión de promociones de usuarios
+ */
+Route::group(['prefix' => 'promociones'], function(){
+    Route::get('/', 'PromocionesController@index');
+});
+
 Route::get('/productos', 'ProductoController@index');
 
