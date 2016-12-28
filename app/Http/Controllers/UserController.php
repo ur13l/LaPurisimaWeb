@@ -171,9 +171,22 @@ class UserController extends Controller
         }
 
 
-        return redirect()->action('UserController@index',['message' => $usuario->imagen_usuario] );
+        return redirect()->action('UserController@index',['message' => 'update'] );
     }
 
+    /**
+     * Función para eliminar a un usuario.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function eliminar($id){
+        //Se busca el id del usuario. Antes de eliminar se deben quitar sus referencias.
+        $usuario = User::find($id);
 
+       
+
+        $usuario->delete();
+        return redirect()->action('UserController@index',['message' => 'deleted'] );
+    }
 
 }

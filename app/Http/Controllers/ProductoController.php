@@ -80,8 +80,7 @@ class ProductoController extends Controller
        'nombre' => 'required',
        'stock' => 'required|numeric|min:0|max:100000000',
        'contenido' => 'required|numeric|min:0|max:10000000',
-       'precio' => 'required|numeric|min:0.01|max:10000000',
-       'imagen' => 'required'
+       'precio' => 'required|numeric|min:0.01|max:10000000'
    ]);
 
       if(Auth::user()->tipo_usuario_id == 1){
@@ -95,6 +94,10 @@ class ProductoController extends Controller
             $producto->imagen = $path.$filename;
             $producto->save();
           }
+        }
+        else if($request->has('url-input')){
+            $producto->imagen = $request->input('url-input');
+            $producto->save();
         }
       }
     return redirect()->action('ProductoController@index',['message' => 'create'] );
@@ -128,6 +131,10 @@ class ProductoController extends Controller
             $producto->imagen = $path.$filename;
             $producto->save();
           }
+        }
+        if($request->has('url-input')){
+            $producto->imagen = $request->input('url-input');
+            $producto->save();
         }
         $producto->save();
       }

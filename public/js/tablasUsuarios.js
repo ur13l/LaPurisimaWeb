@@ -17,7 +17,7 @@ $(function(){
  * @param table
  */
 function addEvents(table, tableDOM){
-    tableDOM.on('click', 'tr', function () {
+    tableDOM.on('click', 'td:not(.no)', function () {
         var data = table.row( this ).data();
         window.location.href = "usuarios/" + data.id;
     } );

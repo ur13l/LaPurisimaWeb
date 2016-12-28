@@ -98,6 +98,7 @@
             </div>
         </div>
     </div>
+    @include("layouts.modal.eliminar")
 @endsection
 
 
@@ -109,4 +110,5 @@
     <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
     <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
     <script type="text/javascript" src="{{url('js/tablasUsuarios.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/usuarios.js')}}"></script>
 @endsection

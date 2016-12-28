@@ -63,8 +63,22 @@
                     <img src="" id="imagen-view" />
                   @endif
                 </div>
-                {{Form::label('imagen', 'Imagen')}}
-                {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
+
+                  {{Form::label('imagen', 'Imagen')}}
+                <ul class="nav nav-tabs">
+                    <li><a data-toggle="tab" id="tab-url" href="#url">Desde URL</a></li>
+                    <li><a data-toggle="tab" id="tab-archivo" href="#archivo">Desde archivo</a></li>
+                </ul>
+
+                  <div class="tab-content">
+                      <div id="url" class="tab-pane fade in active">
+                            {{Form::text('url-input', url($producto->imagen), array('class'=>'form-control', 'id'=>'url-input'))}}
+                      </div>
+                      <div id="archivo" class="tab-pane fade">
+                          {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
+                      </div>
+                  </div>
+
               </div>
               <div class="form-group col-xs-12 col-md-12">
                 @if($action == 'update')

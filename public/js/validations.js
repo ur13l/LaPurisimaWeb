@@ -70,6 +70,7 @@ function confirmPassword(elem1, elem2){
     return true;
 }
 
+
 /**
  * Método para declarar un error en un elemento de bootstrap.
  * @param elem

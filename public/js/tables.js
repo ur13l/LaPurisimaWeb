@@ -180,7 +180,7 @@ function generarTablaUsuario(tipo){
         },
 
         {
-            data: 'nombre', name: 'nombre', "className": 'details-control-' + tipo,
+            data: 'nombre', name: 'nombre', "className": 'nombre details-control-' + tipo,
             "orderable": false,
             "searchable": true,
             "defaultContent": '-'
@@ -208,11 +208,13 @@ function generarTablaUsuario(tipo){
     }
 
     columnas.push(
-        {data: 'id', name: 'elim',"className":'details-control-' + tipo,
+        {data: 'id', name: 'elim',"className":'no',
             "orderable":      false,
             "searchable":     true,
             "render": function(data){
-                return `<a style="float:left;" href="usuario/eliminar/${data}" class="close text-center center-block">&times</a></td>`
+                return `<a style="float:left;" 
+                    class="close text-center center-block btn-eliminar"
+                    data-id="${data}">&times</a></td>`
             }
         }
     )

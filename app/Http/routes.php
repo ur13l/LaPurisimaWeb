@@ -39,6 +39,7 @@ Route::group(['prefix' => 'usuarios'], function(){
     Route::post('/update', 'UserController@update');
     Route::get('/{id_user}', 'UserController@detalle');
     Route::get('/editar/{id_user}', 'UserController@editar');
+    Route::get('/eliminar/{id_user}', 'UserController@eliminar');
 });
 
 /**

@@ -8,5 +8,7 @@ $(function(){
         if(nombreVal && stockVal && contenidoVal && precioVal)
             return true;
         return false;
-    })
+    });
+
+
 });
