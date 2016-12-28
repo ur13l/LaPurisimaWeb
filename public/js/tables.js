@@ -207,6 +207,16 @@ function generarTablaUsuario(tipo){
             }});
     }
 
+    columnas.push(
+        {data: 'id', name: 'elim',"className":'details-control-' + tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render": function(data){
+                return `<a style="float:left;" href="usuario/eliminar/${data}" class="close text-center center-block">&times</a></td>`
+            }
+        }
+    )
+
     return {
         processing: true,
         serverSide: true,
@@ -225,6 +235,70 @@ function generarTablaUsuario(tipo){
         order: []
     }
 }
+
+
+
+function generarTablaProductos(tipo){
+    var columnas = [
+        {
+            data: 'imagen', name: 'imagen', "className": 'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render": function(data, type, full, meta) {
+                return '<img class="imagen" src="'+data+'" height="48" width="48">'
+            },
+            "defaultContent": '<img class="imagen" src="/img/arrow-open.png" height="16">'
+        },
+
+        {
+            data: 'nombre', name: 'nombre', "className": 'details-control-'+ tipo,
+            "orderable": false,
+            "searchable": true,
+            "defaultContent": '-'
+        },
+        {data: 'stock', name: 'stock',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true},
+        {data: 'contenido', name: 'contenido',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true},
+        {data: 'precio', name: 'precio',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true},
+        {data: 'id', name: 'editar',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render" : function(data){
+                return `<a style="float:left;" href="producto/editar/${data}"}}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a></td>`
+            }
+        },
+        {data: 'id', name: 'elim',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render" : function(data){
+                return `<a style="float:left;" href="producto/eliminar/${data}" class="close text-center center-block">&times</a></td>`
+            }
+        }
+    ];
+
+
+    return {
+        processing: true,
+        serverSide: true,
+        ajax: {
+            'url': $("#_url").val() + "/producto/table"
+        },
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+        },
+        bLengthChange: false,
+        columns: columnas,
+        order: []
+    }
+}
+
 
 
 

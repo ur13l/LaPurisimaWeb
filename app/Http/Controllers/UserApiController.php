@@ -36,7 +36,7 @@ class UserApiController extends Controller
         $data = $request->input('imagen_usuario');
         if(isset($data)) {
             $route = "/storage/perfil/";
-            $user->imagen_usuario = ImageController::saveImage($data, $route, $user->id);
+            $user->imagen_usuario = ImageController::saveImage($data, $route, uniqid("usuario_"));
             $success = $user->save();
         }
     }
@@ -60,7 +60,9 @@ class UserApiController extends Controller
         $usuario->update($request->except('imagen_usuario'));
         $data = $request->input('imagen_usuario');
         $route = "/storage/perfil/";
-        $usuario->imagen_usuario = ImageController::saveImage($data, $route, $usuario->id);
+        if(file_exists($usuario->imagen_usuario))
+            unlink($usuario->imagen_usuario);
+        $usuario->imagen_usuario = ImageController::saveImage($data, $route, uniqid("usuario_"));
       }
       else{
         $usuario->update($request->all());

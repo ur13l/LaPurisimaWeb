@@ -111,8 +111,9 @@ Route::get('/home', 'HomeController@index');
  */
 Route::group(['prefix' => 'producto'], function(){
     Route::get('nuevo', 'ProductoController@nuevo');
-    Route::get('editar', 'ProductoController@editar');
-    Route::get('eliminar', 'ProductoController@eliminar');
+    Route::get('editar/{id}', 'ProductoController@editar');
+    Route::get('eliminar/{id}', 'ProductoController@eliminar');
+    Route::get('table', 'ProductoController@table');
     Route::post('create', "ProductoController@create");
     Route::post('update', "ProductoController@update");
     Route::get('get', "ProductoApiController@getProductos");

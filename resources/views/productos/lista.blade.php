@@ -11,6 +11,7 @@
               Productos
             </div>
             <div class="col-md-6 text-right">
+              {{Form::hidden('_url', url("/"), ['id' => '_url'])}}
               <a href="{{url('/producto/nuevo')}}"><button type="button" class="btn btn-primary">Nuevo</button></a></div>
             </div>
           </div>
@@ -27,39 +28,19 @@
               @endif
             </div>
           @endif
-          <table class="table table-striped">
+          <table id="table-productos" class="table table-striped table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
             <thead>
               <tr>
+                <th></th>
                 <th>Nombre</th>
                 <th>Stock</th>
                 <th>Contenido</th>
                 <th>Precio</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
-            <tbody>
-              @foreach ($productos as $producto)
-                <tr>
-                  <td>{{$producto->nombre}}</td>
-                  <td>{{$producto->stock}}</td>
-                  <td>
-                    @if ($producto->contenido >= 1000)
-                      {{$producto->contenido / 1000}} L
-                    @else
-                      {{$producto->contenido}} ml
-                    @endif
-                  </td>
-                  <td> $ {{number_format($producto->precio, 2)}}</td>
-                  <td> <a href="{{url('/producto/editar?id='. $producto->id)}}">Editar</a></td>
-                  <td> <a href="{{url('/producto/eliminar?id='. $producto->id)}}">Eliminar</a></td>
-                </tr>
-              @endforeach
-            </tbody>
           </table>
-              <div class="text-right">
-                  {{$productos->links()}}
-              </div>
         </div>
       </div>
     </div>
@@ -75,4 +56,7 @@
       }
     });
   </script>
+
+  <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
+  <script src="{{url('/js/tablaProductos.js')}}"></script>
 @endsection

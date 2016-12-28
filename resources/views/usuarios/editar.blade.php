@@ -125,5 +125,6 @@
 @section('scripts')
     <script type="text/javascript" src="{{url("/js/fileinput.js")}}"></script>
     <script type="text/javascript" src="{{url("/js/dynamicImage.js")}}"></script>
+    <script type="text/javascript" src="{{url("/js/v    alidations.js")}}"></script>
     <script type="text/javascript" src="{{url("/js/userValidations.js")}}"></script>
 @endsection

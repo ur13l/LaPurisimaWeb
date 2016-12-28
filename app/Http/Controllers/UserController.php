@@ -134,7 +134,7 @@ class UserController extends Controller
             if($request->file('imagen')->isValid()){
                 $extension = $request->file('imagen')->getClientOriginalExtension();
                 $path = "storage/perfil/";
-                $filename= $user->id . "." . $extension;
+                $filename= uniqid("usuario_") . "." . $extension;
                 $request->file('imagen')->move($path ,  $filename);
                 $user->imagen_usuario = $path.$filename;
                 $user->save();
@@ -156,19 +156,24 @@ class UserController extends Controller
             'tipo_usuario_id' => 'required',
         ]);
         $usuario = User::find($request->input('id'));
-        $usuario->update($request->except(['telefono', 'email', 'id']));
+        $usuario->update($request->except(['telefono', 'email', 'id', 'imagen_usuario']));
         if ($request->hasFile('imagen')) {
             if($request->file('imagen')->isValid()){
+                if(file_exists($usuario->imagen_usuario))
+                    unlink($usuario->imagen_usuario);
                 $extension = $request->file('imagen')->getClientOriginalExtension();
                 $path = "storage/perfil/";
-                $filename= $usuario->id . "." . $extension;
+                $filename= uniqid("usuario_") . "." . $extension;
                 $request->file('imagen')->move($path ,  $filename);
                 $usuario->imagen_usuario = $path.$filename;
+                $usuario->save();
             }
         }
 
 
         return redirect()->action('UserController@index',['message' => $usuario->imagen_usuario] );
     }
+
+
 
 }

@@ -40,6 +40,7 @@
                                             <th>Email</th>
                                             <th>Teléfono</th>
                                             <th>Estatus</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -61,6 +62,8 @@
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Teléfono</th>
+                                            <th></th>
+
                                         </tr>
                                         </thead>
                                     </table>
@@ -82,6 +85,8 @@
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Teléfono</th>
+                                            <th></th>
+
                                         </tr>
                                         </thead>
                                     </table>
