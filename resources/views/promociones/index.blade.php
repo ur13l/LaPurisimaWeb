@@ -20,32 +20,9 @@
                             <li class="active"><a data-toggle="tab" href="#tab-nueva">Nueva Promoción</a></li>
                             <li><a data-toggle="tab" href="#tab-activas">Promociones Activas</a></li>
                         </ul>
-
                         <div class="tab-content">
-                            <div id="tab-nueva" class="tab-pane fade in active">
-                                <h4 class="col-xs-12">Selecciona el tipo de promoción que deseas.</h4>
-                                <div class="clearfix"></div>
-                                <br>
-                                <div class="row">
-                                    <ul class="nav nav-pills col-xs-12 col-xs-offset-1 col-md-offset-3 ">
-                                        <li class="col-xs-3 col-md-2 text-center"><a href="">Por usuario</a></li>
-                                        <li class="col-xs-3 col-md-2 text-center"><a href="">Por producto</a></li>
-                                        <li class="col-xs-3 col-md-2 text-center"><a href="">General</a></li>
-                                    </ul>
-                                </div>
 
-                                {{Form::open(array('id'=>'form-promo'))}}
-
-                                    <div class="form-group col-xs-12" id="form-group-usuario">
-                                        {{Form::label('usuario', 'Usuario')}}
-                                        {{Form::text('usuario', '', array('id'=>'usuario', 'class' => 'form-control'))}}
-                                    </div>
-                                    <div class="form-group col-xs-12 col-md-6" id="form-group-fecha">
-                                        {{Form::label('fecha', 'Fecha de vencimiento')}}
-                                        {{Form::text('fecha', '', array('id'=>'fecha', 'class' => 'form-control'))}}
-                                    </div>
-                                {{Form::close()}}
-                            </div>
+                            @include('promociones.nueva')
                             <div id="tab-activas" class="tab-pane fade">
                                 <h3 class="col-xs-12">Promociones activas</h3>
                                 <div class="col-xs-12">
