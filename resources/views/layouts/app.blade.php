@@ -64,6 +64,12 @@
                       @if (Auth::user()->tipo_usuario_id == 1)
                           <li><a href="{{ url('/promociones') }}">Promociones</a></li>
                       @endif
+                      @if (Auth::user()->tipo_usuario_id == 1)
+                          <li><a href="{{ url('/reportes') }}">Reportes</a></li>
+                      @endif
+                      @if (Auth::user()->tipo_usuario_id == 1)
+                          <li><a href="{{ url('/graficas') }}">Gráficas</a></li>
+                      @endif
                     @endif
                 </ul>
 

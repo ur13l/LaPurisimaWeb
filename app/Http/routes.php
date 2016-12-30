@@ -142,5 +142,17 @@ Route::group(['prefix' => 'promociones'], function(){
     Route::get('/', 'PromocionesController@index');
 });
 
+
+/**
+ * prefijo: reportes
+ * referencia: ReportesController
+ * Funciones Web para las funcionalidades de los reportes
+ */
+Route::group(['prefix' => 'reportes'], function(){
+    Route::get('/', 'ReportesController@index');
+    Route::get('generar', 'ReportesController@generaExcel');
+});
+
 Route::get('/productos', 'ProductoController@index');
 
+Route::get('/graficas', 'GraficaController@index');
