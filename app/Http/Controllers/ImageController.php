@@ -19,4 +19,13 @@ class ImageController extends Controller
       return $filePath;
     }
 
+
+    public static function eliminarImagen($url){
+        $spl = explode("/", $url);
+        if(count($spl) > 3) {
+            $path = $spl[count($spl) - 3] . "/" . $spl[count($spl) - 2] . "/" . $spl[count($spl) - 1];
+            if (file_exists($path))
+                unlink($path);
+        }
+    }
 }

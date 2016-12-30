@@ -12,11 +12,16 @@
             </div>
             <div class="col-md-6 text-right">
               {{Form::hidden('_url', url("/"), ['id' => '_url'])}}
-              <a href="{{url('/producto/nuevo')}}"><button type="button" class="btn btn-primary">Nuevo</button></a></div>
+
             </div>
+          </div>
           </div>
 
         <div class="panel-body">
+          <div class="panel panel-default text-center" style="padding-bottom:15px">
+            <div class="panel-body ">Registra un nuevo producto</div>
+            <a href="{{url('/producto/nuevo')}}" class="btn btn-primary">Nuevo</a>
+          </div>
           @if(isset($message))
             <div class="alert alert-info info">
               @if($message == 'create')
@@ -46,6 +51,10 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('styles')
+  <link rel="stylesheet" href="{{url('css/circlecrop.css')}}">
 @endsection
 
 @section ('scripts')

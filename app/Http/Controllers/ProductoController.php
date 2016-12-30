@@ -62,6 +62,7 @@ class ProductoController extends Controller
     public function eliminar($id){
             if(Auth::user()->tipo_usuario_id == 1){
                 $producto = Producto::find($id);
+                ImageController::eliminarImagen($producto->imagen);
                 $producto->delete();
             }
         return redirect()->action('ProductoController@index', ['message' => 'delete']);
@@ -91,11 +92,12 @@ class ProductoController extends Controller
             $path = "storage/productos/";
             $filename= uniqid("producto_") . "." . $extension;
             $request->file('imagen')->move($path ,  $filename);
-            $producto->imagen = $path.$filename;
+            $producto->imagen = url($path.$filename);
             $producto->save();
           }
         }
-        else if($request->has('url-input')){
+        if($request->has('url-input')){
+
             $producto->imagen = $request->input('url-input');
             $producto->save();
         }
@@ -121,18 +123,18 @@ class ProductoController extends Controller
         $producto = Producto::find($request->input('id'));
         $producto->update($request->except('imagen'));
         if ($request->hasFile('imagen')) {
-            if(file_exists($producto->imagen))
-                unlink($producto->imagen);
+            ImageController::eliminarImagen($producto->imagen);
           if($request->file('imagen')->isValid()){
             $extension = $request->file('imagen')->getClientOriginalExtension();
             $path = "storage/productos/";
             $filename= uniqid("producto_") . "." . $extension;
             $request->file('imagen')->move($path ,  $filename);
-            $producto->imagen = $path.$filename;
+            $producto->imagen = url($path.$filename);
             $producto->save();
           }
         }
         if($request->has('url-input')){
+            ImageController::eliminarImagen($producto->imagen);
             $producto->imagen = $request->input('url-input');
             $producto->save();
         }

@@ -58,7 +58,7 @@
               <div class="form-group col-xs-12">
                 <div class="marco-imagen col-xs-12 text-center">
                   @if($action == 'update')
-                    <img src="{{url("/$producto->imagen")}}" id="imagen-view" height="200"/>
+                    <img src="{{$producto->imagen}}" id="imagen-view" height="200"/>
                   @else
                     <img src="" id="imagen-view" />
                   @endif
@@ -72,7 +72,7 @@
 
                   <div class="tab-content">
                       <div id="url" class="tab-pane fade in active">
-                            {{Form::text('url-input', url($producto->imagen), array('class'=>'form-control', 'id'=>'url-input'))}}
+                            {{Form::text('url-input', $producto->imagen, array('class'=>'form-control', 'id'=>'url-input'))}}
                       </div>
                       <div id="archivo" class="tab-pane fade">
                           {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
@@ -97,8 +97,8 @@
 @endsection
 
 @section('styles')
-  <link rel="stylesheet" href="{{url('/css/fileinput.css')}}">
-
+  <link rel="stylesheet" href="{{url('css/fileinput.css')}}">
+  <link rel="stylesheet" href="{{url('css/circlecrop.css')}}">
 @endsection
 
 @section('scripts')

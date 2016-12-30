@@ -26,7 +26,7 @@ var template = function (d, tipo){
         '<span><b>Total:</b> $'+d.total+'</span><br>'+
         '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
         '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
-        ((d.status==1)?'<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>':'<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Ver detalles</a><br><br>') +
+        ((d.status==1)?'<a href="pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>':'<a href="pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Ver detalles</a><br><br>') +
         '<form action="/pedidos/cancelar" method="POST">' +
         '<input type="hidden" value="'+d.id+'" name="id_pedido">' +
         '<input type="hidden" value="'+$("#csrf_token").val()+'" name="_token">' +
@@ -89,7 +89,7 @@ function addTableEvents(elemTable, table, tipo){
 }
 
 function generarTablaPedidos(tipo){
-    console.log(tipo)
+    console.log($("#_url").val() + "/pedidos/" + tipo)
     return {
         processing: true,
         serverSide: true,
@@ -109,7 +109,7 @@ function generarTablaPedidos(tipo){
                 "orderable":      false,
                 "searchable":     true,
                 "data":           null,
-                "defaultContent": '<img class="img-'+tipo+'" src="/img/arrow-open.png" height="16">'
+                "defaultContent": '<img class="img-'+tipo+'" src="img/arrow-open.png" height="16">'
             },
 
             {data: 'fecha', name: 'fecha',"className":'details-control-' + tipo,
@@ -174,9 +174,9 @@ function generarTablaUsuario(tipo){
             "orderable":      false,
             "searchable":     true,
             "render": function(data, type, full, meta) {
-              return '<img class="img-'+tipo+'" src="'+data+'" height="48" width="48">'
+              return '<img class="img-'+tipo+' img-circle" src="'+data+'" height="50" width="50" >'
             },
-            "defaultContent": '<img class="img-'+tipo+'" src="/img/arrow-open.png" height="16">'
+            "defaultContent": '<img class="img-'+tipo+' img-circle" src="img/default.png" height="48">'
         },
 
         {
@@ -207,18 +207,6 @@ function generarTablaUsuario(tipo){
             }});
     }
 
-    columnas.push(
-        {data: 'id', name: 'elim',"className":'no',
-            "orderable":      false,
-            "searchable":     true,
-            "render": function(data){
-                return `<a style="float:left;" 
-                    class="close text-center center-block btn-eliminar"
-                    data-id="${data}">&times</a></td>`
-            }
-        }
-    )
-
     return {
         processing: true,
         serverSide: true,
@@ -247,9 +235,9 @@ function generarTablaProductos(tipo){
             "orderable":      false,
             "searchable":     true,
             "render": function(data, type, full, meta) {
-                return '<img class="imagen" src="'+data+'" height="48" width="48">'
+                return '<img class="imagen img-circle" src="'+data+'" height="50" width="50">'
             },
-            "defaultContent": '<img class="imagen" src="/img/arrow-open.png" height="16">'
+            "defaultContent": '<img class="imagen" src="img/arrow-open.png" height="16">'
         },
 
         {

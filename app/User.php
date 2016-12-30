@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable 
 {
-    use SoftDeletes;
     const ADMINISTRADOR = 1;
     const REPARTIDOR = 2;
     const CLIENTE = 3;

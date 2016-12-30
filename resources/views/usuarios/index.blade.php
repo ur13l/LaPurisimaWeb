@@ -40,7 +40,6 @@
                                             <th>Email</th>
                                             <th>Teléfono</th>
                                             <th>Estatus</th>
-                                            <th></th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -62,7 +61,6 @@
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Teléfono</th>
-                                            <th></th>
 
                                         </tr>
                                         </thead>
@@ -85,8 +83,6 @@
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Teléfono</th>
-                                            <th></th>
-
                                         </tr>
                                         </thead>
                                     </table>
@@ -105,6 +101,7 @@
 
 @section ('styles')
     <link rel="stylesheet" href="{{url('css/tables.css')}}">
+    <link rel="stylesheet" href="{{url('css/circlecrop.css')}}">
 
 @section ('scripts')
     <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>

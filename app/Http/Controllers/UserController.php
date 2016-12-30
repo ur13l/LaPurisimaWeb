@@ -136,9 +136,14 @@ class UserController extends Controller
                 $path = "storage/perfil/";
                 $filename= uniqid("usuario_") . "." . $extension;
                 $request->file('imagen')->move($path ,  $filename);
-                $user->imagen_usuario = $path.$filename;
+                $user->imagen_usuario = url($path.$filename);
                 $user->save();
             }
+        }
+
+        if($request->has('url_usuario')){
+            $user->imagen_usuario = $request->input('url_usuario');
+            $user->save();
         }
 
         return redirect()->action('UserController@index',['message' => 'create'] );
@@ -159,17 +164,22 @@ class UserController extends Controller
         $usuario->update($request->except(['telefono', 'email', 'id', 'imagen_usuario']));
         if ($request->hasFile('imagen')) {
             if($request->file('imagen')->isValid()){
-                if(file_exists($usuario->imagen_usuario))
-                    unlink($usuario->imagen_usuario);
+                ImageController::eliminarImagen($usuario->imagen_usuario);
                 $extension = $request->file('imagen')->getClientOriginalExtension();
                 $path = "storage/perfil/";
                 $filename= uniqid("usuario_") . "." . $extension;
                 $request->file('imagen')->move($path ,  $filename);
-                $usuario->imagen_usuario = $path.$filename;
+                $usuario->imagen_usuario = url($path.$filename);
                 $usuario->save();
             }
         }
 
+        if($request->has('url_usuario')){
+            ImageController::eliminarImagen($usuario->imagen_usuario);
+
+            $usuario->imagen_usuario = $request->input('url_usuario');
+            $usuario->save();
+        }
 
         return redirect()->action('UserController@index',['message' => 'update'] );
     }
@@ -183,7 +193,7 @@ class UserController extends Controller
         //Se busca el id del usuario. Antes de eliminar se deben quitar sus referencias.
         $usuario = User::find($id);
 
-       
+        ImageController::eliminarImagen($usuario->imagen_usuario);
 
         $usuario->delete();
         return redirect()->action('UserController@index',['message' => 'deleted'] );
