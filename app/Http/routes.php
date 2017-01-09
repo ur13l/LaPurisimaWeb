@@ -68,6 +68,7 @@ Route::group(['prefix'=>'usuario'], function(){
     Route::post('authenticate', "UserApiController@authenticate");
     Route::post('create', "UserApiController@create");
     Route::post('by_phone', "UserApiController@getUserByPhone");
+    Route::get('search', 'UserApiController@search');
 });
 
 /**
@@ -119,6 +120,7 @@ Route::group(['prefix' => 'producto'], function(){
     Route::post('update', "ProductoController@update");
     Route::get('get', "ProductoApiController@getProductos");
     Route::post('disponibilidad', "ProductoApiController@disponibilidad");
+    Route::get('search', "ProductoApiController@search");
 });
 
 
@@ -140,6 +142,7 @@ Route::group(['prefix' => 'repartidor'], function(){
  */
 Route::group(['prefix' => 'promociones'], function(){
     Route::get('/', 'PromocionesController@index');
+    Route::post('usuario', 'PromocionesController@usuario');
 });
 
 

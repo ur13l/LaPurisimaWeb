@@ -199,4 +199,6 @@ class UserController extends Controller
         return redirect()->action('UserController@index',['message' => 'deleted'] );
     }
 
+
+
 }

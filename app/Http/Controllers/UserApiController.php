@@ -140,5 +140,18 @@ class UserApiController extends Controller
       return response()->json();
   }
 
+    /**
+     * Método para devolver el contenido de una búsqueda de usuarios
+     * @param Request $request
+     */
+    public function search(Request $request){
+        $q = $request->q;
+        $page = $request->page;
+        $usuarios = User::where("nombre", 'like', "%$q%")
+            ->orWhere("telefono", "like", "%$q%")
+            ->orWhere('email', "like", "%$q%")
+            ->paginate($page);
+        return $usuarios;
+    }
 
 }

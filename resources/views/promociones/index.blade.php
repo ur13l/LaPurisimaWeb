@@ -52,8 +52,17 @@
 
 @section ('styles')
     <link rel="stylesheet" href="{{url('css/tables.css')}}">
+    <link rel="stylesheet" href="{{url('css/circlecrop.css')}}">
+    <link rel="stylesheet" href="{{url('css/bootstrap-datepicker.min.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
 @section ('scripts')
     <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
     <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{{url('js/selects.js')}}"></script>
+    <script src="{{url('js/promociones.js')}}"></script>
+    <script src="{{url('js/validations.js')}}"></script>
+    <script src="{{url('js/promoValidations.js')}}"></script>
 @endsection

@@ -22,7 +22,11 @@ class ProductoApiController extends Controller
     }
 
 
-
+    /**
+     * Método que verifica la disponibilidad de un producto.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function disponibilidad(Request $request){
         $productos = \GuzzleHttp\json_decode($request->input('productos'));
         //Se hace una iteración por los detalles para comprobar que hay suficiente stock de todos los productos.
@@ -41,5 +45,17 @@ class ProductoApiController extends Controller
            "success" => $success,
             "productos" => $insufficientStock
         ));
+    }
+
+    /**
+     * Método para devolver el contenido de una búsqueda de usuarios
+     * @param Request $request
+     */
+    public function search(Request $request){
+        $q = $request->q;
+        $page = $request->page;
+        $productos = Producto::where("nombre", 'like', "%$q%")
+            ->paginate($page);
+        return $productos;
     }
 }

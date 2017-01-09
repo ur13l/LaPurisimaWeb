@@ -12,6 +12,19 @@ function esInputVacio(elem){
 }
 
 /**
+ * Función que nos devuelve si un campo tiene un valor mayor a x y menor y
+ * @param elem
+ * @returns {boolean}
+ */
+function numeroEntre(elem, min, max){
+    if(elem.val() < min || elem.val() > max){
+        setError(elem, "El valor debe ser mayor a " + min + (max?"y menor o igual a "+ max:""));
+        return false;
+    }
+    return true;
+}
+
+/**
  * Función para comprobar la validez del campo de teléfono
  * @param elem
  * @returns {boolean}
