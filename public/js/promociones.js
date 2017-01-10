@@ -11,21 +11,18 @@ $(function(){
         }
     });
 
-    $('input[type=radio][name=descuentoRadio]').change(function(){
+    $('input[type=radio][name^=descuentoRadio]').change(function(){
 
-        if(this.value == 'descuentoPrecio'){
-            $("#form-group-descuento-precio").removeClass("hide");
-            $("#form-group-descuento-porcentaje").addClass("hide");
+        if(this.value == 'descuentoPrecio' && this.value == 'descuentoPrecio1'){
+            $(".form-group-descuento-precio").removeClass("hide");
+            $(".form-group-descuento-porcentaje").addClass("hide");
         }
         else{
-            $("#form-group-descuento-porcentaje").removeClass("hide");
-            $("#form-group-descuento-precio").addClass("hide");
+            $(".form-group-descuento-porcentaje").removeClass("hide");
+            $(".form-group-descuento-precio").addClass("hide");
         }
         //$(this).val("");
     });
 
 
-    $("#form-promo-usuario").submit(function(){
-
-    });
 })

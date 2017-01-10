@@ -49,14 +49,14 @@
                                 {{Form::radio('descuentoRadio', 'descuentoPorcentaje')}}
                                 {{Form::label('descuentoPorcentaje', 'Descuento por porcentaje')}}
                             </div>
-                            <div class="form-group col-xs-12 col-md-8 col-md-offset-2" id="form-group-descuento-precio">
+                            <div class="form-group col-xs-12 col-md-8 col-md-offset-2 form-group-descuento-precio" id="form-group-descuento-precio">
                                <div class="input-group">
 
                                    <span class="input-group-addon">$</span>
                                     {{Form::number('descuentoPrecioInput', 0, array('class'=>'form-control', 'id'=>'u_descuentoPrecioInput', 'min'=>'0', 'max'=>'1000000'))}}
                                 </div>
                             </div>
-                            <div class="form-group col-xs-12 col-md-8 hide" id="form-group-descuento-porcentaje">
+                            <div class="form-group col-xs-12 col-md-8 hide form-group-descuento-porcentaje" id="form-group-descuento-porcentaje">
                                 <div class="input-group">
 
                                     {{Form::number('descuentoPorcInput', 0, array('class'=>'form-control', 'id'=>'u_descuentoPorcInput','min'=>'0', 'max'=>'100'))}}
@@ -86,14 +86,14 @@
                                             {{Form::radio('descuentoRadio1', 'descuentoPorcentaje1')}}
                                             {{Form::label('descuentoPorcentaje1', 'Descuento por porcentaje')}}
                                         </div>
-                                        <div class="form-group col-xs-12 col-md-8" id="form-group-descuento-precio">
+                                        <div class="form-group col-xs-12 col-md-8 form-group-descuento-precio" id="form-group-descuento-precio">
                                             <div class="input-group">
 
                                                 <span class="input-group-addon">$</span>
                                                 {{Form::number('descuentoPrecioInput1', 0, array('class'=>'form-control', 'id'=>'u_descuentoPrecioInput1', 'min'=>'0', 'max'=>'1000000'))}}
                                             </div>
                                         </div>
-                                        <div class="form-group col-xs-12 col-md-8 hide" id="form-group-descuento-porcentaje">
+                                        <div class="form-group col-xs-12 col-md-8 hide form-group-descuento-porcentaje" id="form-group-descuento-porcentaje">
                                             <div class="input-group">
 
                                                 {{Form::number('descuentoPorcInput1', 0, array('class'=>'form-control', 'id'=>'u_descuentoPorcInput1', 'min'=>'0', 'max'=>'100'))}}
