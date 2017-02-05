@@ -148,6 +148,12 @@ class PedidoController extends Controller
         $pedido->status = Pedido::SOLICITADO;
         $pedido->save();
 
+        PromocionesController::aplicarPromociones($user->id, $productos, $pedido);
+
+
+
+
+
         return redirect()->route('detalle', ['pedido_id' => $pedido->id]);
 
     }

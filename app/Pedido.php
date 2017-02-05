@@ -47,5 +47,9 @@ class Pedido extends Model
         ));
     }
 
+    public function detallesDescuento(){
+        return $this->hasMany('App\DetalleDescuento', 'pedido_id');
+    }
+
     protected $dates = ['fecha','deleted_at'];
 }

@@ -63,6 +63,8 @@ class PedidoApiController extends Controller
             $pedido->total = $total;
             $pedido->status = Pedido::SOLICITADO;
             $pedido->save();
+
+            PromocionesController::aplicarPromociones($cliente->id,$request->input('detalles'), $pedido);
             return response()->json([
                 "id" => $pedido->id,
                 "success"=> true,

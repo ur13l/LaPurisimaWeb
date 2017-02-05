@@ -23,22 +23,7 @@
                         <div class="tab-content">
 
                             @include('promociones.nueva')
-                            <div id="tab-activas" class="tab-pane fade">
-                                <h3 class="col-xs-12">Promociones activas</h3>
-                                <div class="col-xs-12">
-
-                                    <table id="table-clientes" class="table table-striped  table-hover  dt-responsive nowrap " cellspacing="0" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Nombre</th>
-                                            <th>Email</th>
-                                            <th>Teléfono</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
+                            @include('promociones.activas')
 
                         </div>
                     </div>
@@ -59,6 +44,7 @@
 @section ('scripts')
     <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
     <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/tablasPromociones.js')}}"></script>
     <script type="text/javascript" src="{{url('js/bootstrap-datepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="{{url('js/selects.js')}}"></script>

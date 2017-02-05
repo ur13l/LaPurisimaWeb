@@ -143,6 +143,10 @@ Route::group(['prefix' => 'repartidor'], function(){
 Route::group(['prefix' => 'promociones'], function(){
     Route::get('/', 'PromocionesController@index');
     Route::post('usuario', 'PromocionesController@usuario');
+    Route::post('producto', 'PromocionesController@producto');
+    Route::post('general', 'PromocionesController@general');
+    Route::get('eliminar/{id}', 'PromocionesController@eliminar');
+    Route::get('table', 'PromocionesController@table');
 });
 
 

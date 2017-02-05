@@ -107,6 +107,7 @@ $(function(){
     });
 
     $(".fecha").datepicker({
-        startDate: new Date().toDateString()
+        startDate: new Date().toDateString(),
+        format: 'dd/mm/yyyy'
     })
 })
