@@ -17,10 +17,16 @@ class RepartidorApiController extends Controller
     public function cambiarStatusRepartidor(Request $request){
         $repartidor = Auth::guard('api')->user();
         $nuevoStatus = $request->input('status');
+        $nuevaLat = $request->input('latitud');
+        $nuevaLang = $request->input('longitud');
         $save = false;
         $errors = [];
         if(isset($repartidor->datosRepartidor)) {
             $repartidor->datosRepartidor->status = $nuevoStatus;
+            if(isset($nuevaLat))
+                $repartidor->datosRepartidor->latitud = $nuevaLat;
+            if(isset($nuevaLang))
+                $repartidor->datosRepartidor->longitud = $nuevaLang;
             $save = $repartidor->datosRepartidor->save();
         }
         else {
@@ -31,4 +37,6 @@ class RepartidorApiController extends Controller
             "errors" => $errors
         ]);
     }
+
+
 }
