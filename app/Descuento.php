@@ -19,4 +19,14 @@ class Descuento extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function producto(){
+        return $this->belongsTo("App\Producto", "producto_id");
+    }
+
+    public function user(){
+        return $this->belongsTo("App\User")->select(array(
+            'id','nombre', 'email', 'imagen_usuario'
+        ));
+    }
 }

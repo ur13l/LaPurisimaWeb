@@ -12,8 +12,8 @@ $(function(){
     });
 
     $('input[type=radio][name^=descuentoRadio]').change(function(){
-
-        if(this.value == 'descuentoPrecio' && this.value == 'descuentoPrecio1'){
+        console.log(this.value);
+        if(this.value == 'descuentoPrecio' || this.value == 'descuentoPrecio1'){
             $(".form-group-descuento-precio").removeClass("hide");
             $(".form-group-descuento-porcentaje").addClass("hide");
         }
