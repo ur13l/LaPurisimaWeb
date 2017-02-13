@@ -209,7 +209,16 @@ class PromocionesController extends Controller
         //Se genera un detalle de cada descuento
         foreach($descuentos as $descuento){
             $desc = 0;
+            $n = 1;
             if(isset($descuento->producto)) {
+                
+                foreach ($productos as $p) {
+                   if($p['producto_id'] == $descuento->producto->id){
+                        $n = $p['cantidad'];
+                   }
+                }
+
+
                 if (isset($descuento->descuento) && $descuento->descuento != 0) {
                     $desc += $descuento->descuento;
                 } else {
@@ -223,11 +232,20 @@ class PromocionesController extends Controller
                     $desc += $pedido->total * ($descuento->descuento_porcentaje / 100);
                 }
             }
-            DetalleDescuento::create([
-                'pedido_id'=>$pedido->id,
-                'descuento_id'=>$descuento->id,
-                'descuento' => $desc
-            ]);
+            
+            if($descuento->usos_restantes >= 1){
+
+                if(isset($descuento->usos_restantes)){
+                    $descuento->usos_restantes = $descuento->usos_restantes - 1;
+                    $descuento->save();
+                }
+
+                DetalleDescuento::create([
+                    'pedido_id'=>$pedido->id,
+                    'descuento_id'=>$descuento->id,
+                    'descuento' => $desc //($desc * $n) ?
+                ]);
+            }
         }
         return null;
     }
