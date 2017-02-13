@@ -233,7 +233,7 @@ class PromocionesController extends Controller
                 }
             }
             
-            if($descuento->usos_restantes >= 1){
+            if($descuento->usos_restantes >= 1 || !isset($descuento->usos_restantes)){
 
                 if(isset($descuento->usos_restantes)){
                     $descuento->usos_restantes = $descuento->usos_restantes - 1;
