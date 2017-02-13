@@ -36,8 +36,13 @@ class UserApiController extends Controller
         $data = $request->input('imagen_usuario');
         if(isset($data)) {
             $route = "/storage/perfil/";
-            $user->imagen_usuario = ImageController::saveImage($data, $route, $user->id);
+
+            $user->imagen_usuario = url(ImageController::saveImage($data, $route, uniqid("usuario_")));
             $success = $user->save();
+        }
+        if($request->has('url_usuario')){
+            $user->imagen_usuario = $request->input('url_usuario');
+            $user->save();
         }
     }
     return response()->json([
@@ -60,9 +65,15 @@ class UserApiController extends Controller
         $usuario->update($request->except('imagen_usuario'));
         $data = $request->input('imagen_usuario');
         $route = "/storage/perfil/";
-        $usuario->imagen_usuario = ImageController::saveImage($data, $route, $usuario->id);
+          ImageController::eliminarImagen($usuario->imagen_usuario);
+
+          $usuario->imagen_usuario = url(ImageController::saveImage($data, $route, uniqid("usuario_")));
       }
       else{
+
+        if($request->has('url_usuario')){
+            $usuario->imagen_usuario = $request->input('url_usuario');
+        }
         $usuario->update($request->all());
       }
 
@@ -129,5 +140,18 @@ class UserApiController extends Controller
       return response()->json();
   }
 
+    /**
+     * Método para devolver el contenido de una búsqueda de usuarios
+     * @param Request $request
+     */
+    public function search(Request $request){
+        $q = $request->q;
+        $page = $request->page;
+        $usuarios = User::where("nombre", 'like', "%$q%")
+            ->orWhere("telefono", "like", "%$q%")
+            ->orWhere('email', "like", "%$q%")
+            ->paginate($page);
+        return $usuarios;
+    }
 
 }

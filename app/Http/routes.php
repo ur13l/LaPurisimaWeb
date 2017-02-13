@@ -39,6 +39,7 @@ Route::group(['prefix' => 'usuarios'], function(){
     Route::post('/update', 'UserController@update');
     Route::get('/{id_user}', 'UserController@detalle');
     Route::get('/editar/{id_user}', 'UserController@editar');
+    Route::get('/eliminar/{id_user}', 'UserController@eliminar');
 });
 
 /**
@@ -67,6 +68,7 @@ Route::group(['prefix'=>'usuario'], function(){
     Route::post('authenticate', "UserApiController@authenticate");
     Route::post('create', "UserApiController@create");
     Route::post('by_phone', "UserApiController@getUserByPhone");
+    Route::get('search', 'UserApiController@search');
 });
 
 /**
@@ -111,12 +113,14 @@ Route::get('/home', 'HomeController@index');
  */
 Route::group(['prefix' => 'producto'], function(){
     Route::get('nuevo', 'ProductoController@nuevo');
-    Route::get('editar', 'ProductoController@editar');
-    Route::get('eliminar', 'ProductoController@eliminar');
+    Route::get('editar/{id}', 'ProductoController@editar');
+    Route::get('eliminar/{id}', 'ProductoController@eliminar');
+    Route::get('table', 'ProductoController@table');
     Route::post('create', "ProductoController@create");
     Route::post('update', "ProductoController@update");
     Route::get('get', "ProductoApiController@getProductos");
     Route::post('disponibilidad', "ProductoApiController@disponibilidad");
+    Route::get('search', "ProductoApiController@search");
 });
 
 
@@ -138,7 +142,24 @@ Route::group(['prefix' => 'repartidor'], function(){
  */
 Route::group(['prefix' => 'promociones'], function(){
     Route::get('/', 'PromocionesController@index');
+    Route::post('usuario', 'PromocionesController@usuario');
+    Route::post('producto', 'PromocionesController@producto');
+    Route::post('general', 'PromocionesController@general');
+    Route::get('eliminar/{id}', 'PromocionesController@eliminar');
+    Route::get('table', 'PromocionesController@table');
+});
+
+
+/**
+ * prefijo: reportes
+ * referencia: ReportesController
+ * Funciones Web para las funcionalidades de los reportes
+ */
+Route::group(['prefix' => 'reportes'], function(){
+    Route::get('/', 'ReportesController@index');
+    Route::get('generar', 'ReportesController@generaExcel');
 });
 
 Route::get('/productos', 'ProductoController@index');
 
+Route::get('/graficas', 'GraficaController@index');

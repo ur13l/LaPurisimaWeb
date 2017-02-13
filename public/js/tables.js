@@ -1,3 +1,15 @@
+/**
+ * Uriel Infante
+ * Archivo en el que se muestra el código para generar las tablas utilizando Datatables en las interfaces de
+ * usuarios, productos, pedidos y promociones.
+ */
+
+/**
+ * Función que genera el template que se ve en el detalle de pedidos.
+ * @param d
+ * @param tipo
+ * @returns {string}
+ */
 var template = function (d, tipo){
     var list = "";
     for(var i = 0 ; i < d.detalles.length; i++){
@@ -26,7 +38,7 @@ var template = function (d, tipo){
         '<span><b>Total:</b> $'+d.total+'</span><br>'+
         '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
         '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
-        ((d.status==1)?'<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>':'<a href="/pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Ver detalles</a><br><br>') +
+        ((d.status==1)?'<a href="pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>':'<a href="pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Ver detalles</a><br><br>') +
         '<form action="/pedidos/cancelar" method="POST">' +
         '<input type="hidden" value="'+d.id+'" name="id_pedido">' +
         '<input type="hidden" value="'+$("#csrf_token").val()+'" name="_token">' +
@@ -37,7 +49,12 @@ var template = function (d, tipo){
         '</div>';
 };
 
-
+/**
+ * Función auxiliar para generar la animación al desplegar el detalle de un pedido.
+ * @param $elem
+ * @param from
+ * @param to
+ */
 function rotateArrow($elem, from, to){
     $({deg: from}).animate({deg: to}, {
         duration: 200,
@@ -49,6 +66,12 @@ function rotateArrow($elem, from, to){
     });
 }
 
+/**
+ * Se agregan los eventos necesarios en la generación de tabla de pedidos.
+ * @param elemTable
+ * @param table
+ * @param tipo
+ */
 function addTableEvents(elemTable, table, tipo){
     // Add event listener for opening and closing details
     elemTable.on('click', 'td.details-control-' + tipo, function () {
@@ -88,8 +111,13 @@ function addTableEvents(elemTable, table, tipo){
     });
 }
 
+/**
+ * Tabla generada para la codificación de una tabla en pedidos.
+ * @param tipo
+ * @returns {{processing: boolean, serverSide: boolean, ajax: {url: string, data: {id: (*|jQuery)}}, language: {url: string}, bLengthChange: boolean, columns: *[], order: Array}}
+ */
 function generarTablaPedidos(tipo){
-    console.log(tipo)
+    console.log($("#_url").val() + "/pedidos/" + tipo)
     return {
         processing: true,
         serverSide: true,
@@ -109,7 +137,7 @@ function generarTablaPedidos(tipo){
                 "orderable":      false,
                 "searchable":     true,
                 "data":           null,
-                "defaultContent": '<img class="img-'+tipo+'" src="/img/arrow-open.png" height="16">'
+                "defaultContent": '<img class="img-'+tipo+'" src="img/arrow-open.png" height="16">'
             },
 
             {data: 'fecha', name: 'fecha',"className":'details-control-' + tipo,
@@ -166,7 +194,11 @@ function generarTablaPedidos(tipo){
     }
 }
 
-
+/**
+ * Generación de tabla de usuarios
+ * @param tipo
+ * @returns {{processing: boolean, serverSide: boolean, ajax: {url: string, type: string, headers: {X-CSRF-TOKEN: (*|jQuery)}}, language: {url: string}, bLengthChange: boolean, columns: *[], order: Array}}
+ */
 function generarTablaUsuario(tipo){
     var columnas = [
         {
@@ -174,13 +206,13 @@ function generarTablaUsuario(tipo){
             "orderable":      false,
             "searchable":     true,
             "render": function(data, type, full, meta) {
-              return '<img class="img-'+tipo+'" src="'+data+'" height="48" width="48">'
+              return '<img class="img-'+tipo+' img-circle" src="'+data+'" height="50" width="50" >'
             },
-            "defaultContent": '<img class="img-'+tipo+'" src="/img/arrow-open.png" height="16">'
+            "defaultContent": '<img class="img-'+tipo+' img-circle" src="img/default.png" height="48">'
         },
 
         {
-            data: 'nombre', name: 'nombre', "className": 'details-control-' + tipo,
+            data: 'nombre', name: 'nombre', "className": 'nombre details-control-' + tipo,
             "orderable": false,
             "searchable": true,
             "defaultContent": '-'
@@ -225,6 +257,156 @@ function generarTablaUsuario(tipo){
         order: []
     }
 }
+
+
+/**
+ * Generación de la tabla de productos
+ * @param tipo
+ * @returns {{processing: boolean, serverSide: boolean, ajax: {url: string}, language: {url: string}, bLengthChange: boolean, columns: *[], order: Array}}
+ */
+function generarTablaProductos(tipo){
+    var columnas = [
+        {
+            data: 'imagen', name: 'imagen', "className": 'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render": function(data, type, full, meta) {
+                return '<img class="imagen img-circle" src="'+data+'" height="50" width="50">'
+            },
+            "defaultContent": '<img class="imagen" src="img/arrow-open.png" height="16">'
+        },
+
+        {
+            data: 'nombre', name: 'nombre', "className": 'details-control-'+ tipo,
+            "orderable": false,
+            "searchable": true,
+            "defaultContent": '-'
+        },
+        {data: 'stock', name: 'stock',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true},
+        {data: 'contenido', name: 'contenido',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true},
+        {data: 'precio', name: 'precio',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true},
+        {data: 'id', name: 'editar',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render" : function(data){
+                return `<a style="float:left;" href="producto/editar/${data}"}}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a></td>`
+            }
+        },
+        {data: 'id', name: 'elim',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render" : function(data){
+                return `<a style="float:left;" href="producto/eliminar/${data}" class="close text-center center-block">&times</a></td>`
+            }
+        }
+    ];
+
+
+    return {
+        processing: true,
+        serverSide: true,
+        ajax: {
+            'url': $("#_url").val() + "/producto/table"
+        },
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+        },
+        bLengthChange: false,
+        columns: columnas,
+        order: []
+    }
+}
+
+
+/**
+ * Generación de tabl de promociones.
+ * @param tipo
+ * @returns {{processing: boolean, serverSide: boolean, ajax: {url: string}, language: {url: string}, bLengthChange: boolean, columns: *[], order: Array}}
+ */
+function generarTablaPromociones(tipo){
+    var columnas = [
+        {
+            data: 'user.nombre', name: 'user.nombre', "className": 'details-control-'+ tipo,
+            "orderable": false,
+            "searchable": true,
+            "defaultContent": '<span class="label label-default">General</span>'
+        },
+        {data: 'producto.nombre', name: 'producto.nombre',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "defaultContent": '<span class="label label-default">General</span>'
+        },
+        {data: 'descuento', name: 'descuento',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render": data => {
+                if(data == 0){
+                    return '<span class="label label-primary">No aplica</span>'
+                }
+                return `$${data}`;
+            }
+        },
+        {data: 'descuento_porcentaje', name: 'descuento_porcentaje',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render": data => {
+                if(data == 0){
+                    return '<span class="label label-primary">No aplica</span>'
+                }
+                return `${data}%`;
+            }
+        },
+        {data: 'fecha_vencimiento', name: 'fecha_vencimiento',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render": data => {
+                var f = moment(data).format('DD/MM/YYYY');
+                if(f == "Invalid date"){
+                    return '<span class="label label-success">Sin fecha límite</span>';
+                }
+                return f;
+            }
+        },
+        {data: 'usos_restantes', name: 'usos_restantes',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "defaultContent": '<span class="label label-success">Sin límite</span>'
+        },
+        {data: 'id', name: 'editar',"className":'details-control-'+ tipo,
+            "orderable":      false,
+            "searchable":     true,
+            "render" : function(data){
+                return `<a style="float:left;" href="${$('#_url').val()}/promociones/eliminar/${data}" class="close text-center center-block">&times</a></td>`
+
+            }
+        },
+
+    ];
+
+
+    return {
+        processing: true,
+        serverSide: true,
+        ajax: {
+            'url': $("#_url").val() + "/promociones/table"
+        },
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+        },
+        bLengthChange: false,
+        columns: columnas,
+        order: []
+    }
+}
+
 
 
 

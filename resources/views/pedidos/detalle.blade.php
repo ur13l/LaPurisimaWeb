@@ -108,15 +108,26 @@
                                     <tbody>
                                         @foreach($pedido->detalles as $detalle)
                                             <tr>
-                                                <td><img src="{{url('/'.$detalle->producto->imagen)}}" height="50" alt=""></td>
+                                                <td><img src="{{$detalle->producto->imagen}}" height="50" alt=""></td>
                                                 <td>{{$detalle->cantidad}}</td>
                                                 <td>{{$detalle->producto->nombre}}</td>
                                                 <td>${{number_format($detalle->producto->precio * $detalle->cantidad,2)}}</td>
                                             </tr>
                                         @endforeach
+                                        <?php $des = 0?>
+                                        @foreach($pedido->detallesDescuento as $detalle)
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Descuento aplicado</td>
+                                                <td>${{number_format($detalle->descuento)}}</td>
+                                            </tr>
+
+                                            <?php $des += $detalle->descuento?>
+                                        @endforeach
                                         <tr>
                                             <th colspan="3">Total</th>
-                                            <td>${{number_format($pedido->total,2)}}</td>
+                                            <td>${{number_format($pedido->total - $des,2)}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

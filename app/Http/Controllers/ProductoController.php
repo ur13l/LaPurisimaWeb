@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Producto;
 use Auth;
+use Yajra\Datatables\Facades\Datatables;
 
 class ProductoController extends Controller
 {
@@ -44,9 +45,12 @@ class ProductoController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-  public function editar(Request $request){
-        if(Auth::user()->tipo_usuario_id == 1)
-            return view('productos.form', ['action' => 'update', 'producto' => Producto::find($request->input('id'))]);
+  public function editar($id){
+        if(Auth::user()->tipo_usuario_id == 1){
+            $producto = Producto::find($id);
+            if(isset($producto))
+                return view('productos.form', ['action' => 'update', 'producto' => $producto]);
+        }
     return redirect()->action('HomeController@index');
   }
 
@@ -55,9 +59,10 @@ class ProductoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function eliminar(Request $request){
+    public function eliminar($id){
             if(Auth::user()->tipo_usuario_id == 1){
-                $producto = Producto::find($request->input('id'));
+                $producto = Producto::find($id);
+                ImageController::eliminarImagen($producto->imagen);
                 $producto->delete();
             }
         return redirect()->action('ProductoController@index', ['message' => 'delete']);
@@ -76,8 +81,7 @@ class ProductoController extends Controller
        'nombre' => 'required',
        'stock' => 'required|numeric|min:0|max:100000000',
        'contenido' => 'required|numeric|min:0|max:10000000',
-       'precio' => 'required|numeric|min:0.01|max:10000000',
-       'imagen' => 'required'
+       'precio' => 'required|numeric|min:0.01|max:10000000'
    ]);
 
       if(Auth::user()->tipo_usuario_id == 1){
@@ -86,11 +90,16 @@ class ProductoController extends Controller
           if($request->file('imagen')->isValid()){
             $extension = $request->file('imagen')->getClientOriginalExtension();
             $path = "storage/productos/";
-            $filename= $producto->id . "." . $extension;
+            $filename= uniqid("producto_") . "." . $extension;
             $request->file('imagen')->move($path ,  $filename);
-            $producto->imagen = $path.$filename;
+            $producto->imagen = url($path.$filename);
             $producto->save();
           }
+        }
+        if($request->has('url-input')){
+
+            $producto->imagen = $request->input('url-input');
+            $producto->save();
         }
       }
     return redirect()->action('ProductoController@index',['message' => 'create'] );
@@ -114,18 +123,37 @@ class ProductoController extends Controller
         $producto = Producto::find($request->input('id'));
         $producto->update($request->except('imagen'));
         if ($request->hasFile('imagen')) {
+            ImageController::eliminarImagen($producto->imagen);
           if($request->file('imagen')->isValid()){
             $extension = $request->file('imagen')->getClientOriginalExtension();
             $path = "storage/productos/";
-            $filename= $producto->id . "." . $extension;
+            $filename= uniqid("producto_") . "." . $extension;
             $request->file('imagen')->move($path ,  $filename);
-            $producto->imagen = $path.$filename;
+            $producto->imagen = url($path.$filename);
             $producto->save();
           }
+        }
+        if($request->has('url-input')){
+            ImageController::eliminarImagen($producto->imagen);
+            $producto->imagen = $request->input('url-input');
+            $producto->save();
         }
         $producto->save();
       }
     return redirect()->action('ProductoController@index', ['message' => 'update']);
   }
+
+    /**
+     * Servicio que devuelve la tabla de los productos
+     * @route /productos/table
+     * @return mixed
+     */
+    public function table()
+    {
+        $productos = Producto::all();
+
+        return Datatables::of($productos)->make(true);
+    }
+
 
 }

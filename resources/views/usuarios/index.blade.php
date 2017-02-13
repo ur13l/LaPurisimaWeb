@@ -61,6 +61,7 @@
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Teléfono</th>
+
                                         </tr>
                                         </thead>
                                     </table>
@@ -93,15 +94,18 @@
             </div>
         </div>
     </div>
+    @include("layouts.modal.eliminar")
 @endsection
 
 
 
 @section ('styles')
     <link rel="stylesheet" href="{{url('css/tables.css')}}">
+    <link rel="stylesheet" href="{{url('css/circlecrop.css')}}">
 
 @section ('scripts')
     <script type="text/javascript" src="{{url('js/moment-with-locales.js')}}"></script>
     <script type="text/javascript" src="{{url('js/tables.js')}}"></script>
     <script type="text/javascript" src="{{url('js/tablasUsuarios.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/usuarios.js')}}"></script>
 @endsection

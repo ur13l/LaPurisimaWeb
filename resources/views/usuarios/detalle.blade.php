@@ -69,7 +69,7 @@
                                         <tr>
                                             <th class="text-center">
                                                 @if(isset($user->imagen_usuario))
-                                                    <img src="{{url($user->imagen_usuario)}}"  height="130" alt="">
+                                                    <img src="{{$user->imagen_usuario}}"  height="130" alt="">
                                                 @else
                                                     <img src="{{url("/img/default.png")}}"  height="130" alt="">
                                                 @endif

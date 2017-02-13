@@ -89,13 +89,25 @@
                             <div class="form-group col-xs-12">
                                 <div class="marco-imagen col-xs-12 text-center">
                                     @if(isset($user->imagen_usuario) || $user->imagen_usuario !="")
-                                        <img src="{{url($user->imagen_usuario)}}" id="imagen-view" height="200"/>
+                                        <img src="{{$user->imagen_usuario}}" id="imagen-view" height="200"/>
                                     @else
                                         <img src="{{url('img/default.png')}}" height="200" id="imagen-view" />
                                     @endif
                                 </div>
                                 {{Form::label('imagen', 'Imagen')}}
-                                {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
+                                <ul class="nav nav-tabs">
+                                    <li><a data-toggle="tab" id="tab-url" href="#url">Desde URL</a></li>
+                                    <li><a data-toggle="tab" id="tab-archivo" href="#archivo">Desde archivo</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div id="url" class="tab-pane fade in active">
+                                        {{Form::text('url_usuario', $user->imagen_usuario, array('class'=>'form-control', 'id'=>'url-input'))}}
+                                    </div>
+                                    <div id="archivo" class="tab-pane fade">
+                                        {{Form::file('imagen', array('class'=>'file', 'data-show-upload'=>'false', 'data-show-caption'=>'true', 'data-show-preview' => 'false'))}}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group col-xs-12 col-md-12">
@@ -125,5 +137,6 @@
 @section('scripts')
     <script type="text/javascript" src="{{url("/js/fileinput.js")}}"></script>
     <script type="text/javascript" src="{{url("/js/dynamicImage.js")}}"></script>
+    <script type="text/javascript" src="{{url("/js/v    alidations.js")}}"></script>
     <script type="text/javascript" src="{{url("/js/userValidations.js")}}"></script>
 @endsection
