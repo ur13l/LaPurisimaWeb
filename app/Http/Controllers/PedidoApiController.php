@@ -130,7 +130,7 @@ class PedidoApiController extends Controller
     public function pedidosUsuario(Request $request){
         $user = Auth::guard('api')->user();
         $pedidos = Pedido::where('cliente_id', '=', $user->id)->with('detalles')->with('detalles.producto')->
-            with('repartidor')->with('detallesDescuento')->get()->toArray();
+            with('repartidor')->with('detallesDescuento')->with('detallesDescuento.descuento')->get()->toArray();
         return $pedidos;
     }
 
@@ -144,7 +144,7 @@ class PedidoApiController extends Controller
         $user = Auth::guard('api')->user();
         if($user->tipo_usuario_id == 2) {
             $pedidos = Pedido::where('conductor_id', '=', $user->id)->with('detalles')->with('detalles.producto')->with('cliente')
-                ->with('detallesDescuento')->get();
+                ->with('detallesDescuento')->with('detallesDescuento.descuento')->get();
             return $pedidos->toArray();
         }
         else {
