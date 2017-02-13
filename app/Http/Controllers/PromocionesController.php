@@ -169,7 +169,7 @@ class PromocionesController extends Controller
                 //Se verifican descuento de usuario por producto
                 foreach ($productos as $producto) {
                     $promo = Descuento::where('user_id', $id_user)
-                        ->where('producto_id', $producto->id)
+                        ->where('producto_id', $producto['producto_id'])
                         ->where(function ($q) {
                             $q->where('fecha_vencimiento', '>=', Carbon::now())
                                 ->orWhere('fecha_vencimiento', null);
@@ -187,7 +187,7 @@ class PromocionesController extends Controller
                 if(count($descuentos) == 0) {
                     foreach ($productos as $producto) {
                         $promo = Descuento::where('user_id', null)
-                            ->where('producto_id', $producto->id)
+                            ->where('producto_id', $producto['producto_id'])
                             ->where(function ($q) {
                                 $q->where('fecha_vencimiento', '>=', Carbon::now())
                                     ->orWhere('fecha_vencimiento', null);
