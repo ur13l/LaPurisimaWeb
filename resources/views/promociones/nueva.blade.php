@@ -34,12 +34,12 @@
                 {{Form::label('','Tipo de descuento')}}
             </div>
 
-            <ul class="nav nav-pills nav-stacked col-xs-4">
+            <ul class="nav nav-pills nav-stacked col-xs-12 col-md-4">
                 <li class="active"><a data-toggle="tab" href="#tab-promo-venta">Descuento por venta</a></li>
                 <li><a data-toggle="tab" href="#tab-promo-producto">Descuento por producto</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane fade in active col-xs-8" id="tab-promo-venta">
+                <div class="tab-pane fade in active col-xs-12 col-md-8" id="tab-promo-venta">
                     <div class="panel panel-default col-xs-12">
                         <div class="panel-body text-center">
                             <h4>Descuento por venta</h4>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade in col-xs-8" id="tab-promo-producto">
+                <div class="tab-pane fade in col-xs-12 col-md-8" id="tab-promo-producto">
                     <div class="panel panel-default col-xs-12">
                         <div class="panel-body">
                             <h4>Descuento por producto</h4>
