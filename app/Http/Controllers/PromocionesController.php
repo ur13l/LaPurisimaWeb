@@ -227,9 +227,18 @@ class PromocionesController extends Controller
                         }
 
                         if($descuento->usos_restantes >= 1 || !isset($descuento->usos_restantes)) {
-
+                            $cantidad = 0;
                             if (isset($descuento->usos_restantes)) {
-                                $descuento->usos_restantes = $descuento->usos_restantes - 1;
+
+                                if($producto->cantidad >= $descuento->usos_restantes) {
+                                    $cantidad = $producto->cantidad;
+                                    $descuento->usos_restantes = $descuento->usos_restantes - $cantidad;
+
+                                }
+                                else{
+                                    $cantidad = $producto->usos_restantes - $producto->cantidad;
+                                    $descuento->usos_restantes = 0;
+                                }
                                 $descuento->save();
                             }
 
@@ -238,7 +247,7 @@ class PromocionesController extends Controller
                                 'pedido_id' => $pedido->id,
                                 'descuento_id' => $descuento->id,
                                 'descuento' => $desc,
-                                'cantidad' => $producto['cantidad']
+                                'cantidad' => $cantidad
                             ]);
                         }
                     }
