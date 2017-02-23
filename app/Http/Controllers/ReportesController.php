@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DatosRepartidor;
 use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,8 +20,8 @@ class ReportesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('auth.admin');
+       // $this->middleware('auth');
+        // $this->middleware('auth.admin');
     }
 
 
@@ -43,6 +44,26 @@ class ReportesController extends Controller
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       */
      public function generaExcel(Request $request){
+         $id = $request->input('user_id');
+
+         $repartidores = DatosRepartidor::all();
+
+         $html = '';
+         foreach($repartidores as $repartidor){
+             $html.="<h1>".$repartidor->user->nombre."</h1>";
+             $html.="<h2>".$repartidor->user->correo."</h2>";
+             foreach($repartidor->productos as $producto){
+                 $html .= "<p>".$producto->nombre."</p>";
+                 $html .= "<p>".$producto->pivot->cantidad."</p><hr>";
+             }
+
+         }
+
+
+         return $html;
+
+
+         /**
           $productos = DB::table('productos')->get();
             $output = "";
             $output .= '<table class="table" bordered="1"><tr>          ';
@@ -62,6 +83,7 @@ class ReportesController extends Controller
             header("Content-Type: application/xls");
             header("Content-Disposition: attachment; filename=reportes.xls");
               echo $output;
+          * */
 }
 
 }
