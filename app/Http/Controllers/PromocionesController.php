@@ -225,13 +225,22 @@ class PromocionesController extends Controller
                         } else {
                             $desc += $descuento->producto->precio * (floatval($descuento->descuento_porcentaje / 100));
                         }
-                        //Se genera un detalle por producto.
-                        DetalleDescuento::create([
-                            'pedido_id'=>$pedido->id,
-                            'descuento_id'=>$descuento->id,
-                            'descuento' => $desc,
-                            'cantidad' => $producto['cantidad']
-                        ]);
+
+                        if($descuento->usos_restantes >= 1 || !isset($descuento->usos_restantes)) {
+
+                            if (isset($descuento->usos_restantes)) {
+                                $descuento->usos_restantes = $descuento->usos_restantes - 1;
+                                $descuento->save();
+                            }
+
+                            //Se genera un detalle por producto.
+                            DetalleDescuento::create([
+                                'pedido_id' => $pedido->id,
+                                'descuento_id' => $descuento->id,
+                                'descuento' => $desc,
+                                'cantidad' => $producto['cantidad']
+                            ]);
+                        }
                     }
 
 /**
@@ -260,21 +269,24 @@ class PromocionesController extends Controller
                 } else {
                     $desc += $pedido->total * ($descuento->descuento_porcentaje / 100);
                 }
-                //Se genera un solo detalle para todo el descuento.
-                DetalleDescuento::create([
-                    'pedido_id'=>$pedido->id,
-                    'descuento_id'=>$descuento->id,
-                    'descuento' => $desc
-                ]);
+
+                if($descuento->usos_restantes >= 1 || !isset($descuento->usos_restantes)){
+
+                    if(isset($descuento->usos_restantes)){
+                        $descuento->usos_restantes = $descuento->usos_restantes - 1;
+                        $descuento->save();
+                    }
+                    //Se genera un solo detalle para todo el descuento.
+                    DetalleDescuento::create([
+                        'pedido_id'=>$pedido->id,
+                        'descuento_id'=>$descuento->id,
+                        'descuento' => $desc
+                    ]);
+                }
+
             }
             
-            if($descuento->usos_restantes >= 1 || !isset($descuento->usos_restantes)){
 
-                if(isset($descuento->usos_restantes)){
-                    $descuento->usos_restantes = $descuento->usos_restantes - 1;
-                    $descuento->save();
-                }
-            }
         }
         return null;
     }

@@ -12,7 +12,6 @@
  */
 var template = function (d, tipo){
 
-    console.log(d);
     var list = "",
         descuento = 0;
     for(var i = d.detalles.length -1  ; i >= 0 ; i--){
@@ -25,6 +24,11 @@ var template = function (d, tipo){
 
     for (var i = d.detallesDescuento.length - 1 ; i >= 0; i--){
         descuento += d.detallesDescuento[i].descuento;
+        list += '<tr>'+
+            '<td></td>'+
+            '<td>'+"Descuento"+'</td>'+
+            '<td>$'+ d.detallesDescuento[i].cantidad *d.detallesDescuento[i].descuento+'</td>'+
+            '</tr>';
     }
 
 
