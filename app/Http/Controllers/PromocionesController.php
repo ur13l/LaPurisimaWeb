@@ -169,7 +169,7 @@ class PromocionesController extends Controller
                 //Se verifican descuento de usuario por producto
                 foreach ($productos as $producto) {
                     $promo = Descuento::where('user_id', $id_user)
-                        ->where('producto_id', $producto->id)
+                        ->where('producto_id', $producto['producto_id'])
                         ->where(function ($q) {
                             $q->where('fecha_vencimiento', '>=', Carbon::now())
                                 ->orWhere('fecha_vencimiento', null);
@@ -187,7 +187,7 @@ class PromocionesController extends Controller
                 if(count($descuentos) == 0) {
                     foreach ($productos as $producto) {
                         $promo = Descuento::where('user_id', null)
-                            ->where('producto_id', $producto->id)
+                            ->where('producto_id', $producto['producto_id'])
                             ->where(function ($q) {
                                 $q->where('fecha_vencimiento', '>=', Carbon::now())
                                     ->orWhere('fecha_vencimiento', null);
@@ -228,6 +228,24 @@ class PromocionesController extends Controller
                         ]);
                     }
 
+/**
+=======
+            $n = 1;
+            if(isset($descuento->producto)) {
+                
+                foreach ($productos as $p) {
+                   if($p['producto_id'] == $descuento->producto->id){
+                        $n = $p['cantidad'];
+                   }
+                }
+
+
+                if (isset($descuento->descuento) && $descuento->descuento != 0) {
+                    $desc += $descuento->descuento;
+                } else {
+                    $desc += $descuento->producto->precio * (floatval($descuento->descuento_porcentaje / 100));
+>>>>>>> 0857b2adcdef3821cf596244aa889bd6bcd1b4c4
+**/
                 }
             }
             else{
@@ -243,7 +261,14 @@ class PromocionesController extends Controller
                     'descuento' => $desc
                 ]);
             }
+            
+            if($descuento->usos_restantes >= 1 || !isset($descuento->usos_restantes)){
 
+                if(isset($descuento->usos_restantes)){
+                    $descuento->usos_restantes = $descuento->usos_restantes - 1;
+                    $descuento->save();
+                }
+            }
         }
         return null;
     }
