@@ -20,6 +20,11 @@
                 </select>
                 {{Form::hidden('user_id', '', array('id'=>'user_id'))}}
             </div>
+            <div class="form-group col-xs-12" id="form-group-usuario">
+                {{Form::label('descripcion', 'Descripcion')}}
+                {{Form::text('descripcion', '', array('class'=>'form-control descripcion','id'=>'u_descripcion'))}}
+
+            </div>
             <div class="form-group col-xs-12 col-md-6" id="form-group-fecha">
                 {{Form::label('fecha', 'Fecha de vencimiento')}}
                 {{Form::text('fecha', '', array('id'=>'u_fecha', 'class' => 'form-control fecha'))}}
@@ -28,7 +33,7 @@
             <div class="form-group col-xs-12 col-md-6" id="form-grouplimite">
                 {{Form::checkbox('limiteChk', '1', false, array('class'=>'limiteChk', 'id'=>'u_limiteChk'))}}
                 {{Form::label('Límite de usos')}}
-                {{Form::number('limiteNum', '', array('class'=>'form-control limiteNum','id'=>'u_limiteNum', 'disabled'=>'disabled'))}}
+                {{Form::number('limiteNum', '', array('class'=>'form-control limiteNum','id'=>'u_limiteNum'))}}
             </div>
             <div class="form-group col-xs-12" id="form-grouplimite">
                 {{Form::label('','Tipo de descuento')}}
@@ -121,6 +126,13 @@
         <!--Tab de producto -->
         <div id="tab-producto" class="tab-pane fade in">
             {{Form::open(array('id'=>'form-promo-producto', 'url'=>url('/promociones/producto')))}}
+
+            <div class="form-group col-xs-12" id="form-group-usuario">
+                {{Form::label('descripcion', 'Descripcion')}}
+                {{Form::text('descripcion', '', array('class'=>'form-control descripcion','id'=>'p_descripcion'))}}
+
+            </div>
+
             <div class="form-group col-xs-12" id="form-group-producto">
                 {{Form::label('producto', 'Producto')}}
                 <select id="p_select-producto" class="select-producto" name="select-producto[]" style="width: 100%" multiple>
@@ -168,6 +180,12 @@
         <!--Tab general -->
         <div id="tab-general" class="tab-pane fade in">
             {{Form::open(array('id'=>'form-promo-general', 'url'=>url('promociones/general')))}}
+
+            <div class="form-group col-xs-12" id="form-group-usuario">
+                {{Form::label('descripcion', 'Descripcion')}}
+                {{Form::text('descripcion', '', array('class'=>'form-control descripcion','id'=>'g_descripcion'))}}
+
+            </div>
 
             <div class="form-group col-xs-12 col-md-6" id="form-group-fecha">
                 {{Form::label('fecha', 'Fecha de vencimiento')}}
