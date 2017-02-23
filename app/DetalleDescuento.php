@@ -21,4 +21,8 @@ class DetalleDescuento extends Model
     public function descuento(){
         return $this->belongsTo('App\Descuento', 'descuento_id');
     }
+
+    public function desc(){
+        return $this->belongsTo('App\Descuento', 'descuento_id');
+    }
 }

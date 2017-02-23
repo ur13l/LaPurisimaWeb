@@ -230,8 +230,8 @@ class PromocionesController extends Controller
                             $cantidad = 0;
                             if (isset($descuento->usos_restantes)) {
 
-                                if($producto['cantidad'] >= $descuento->usos_restantes) {
-                                    $cantidad = $producto['cantidad'] - $descuento->usos_restantes;
+                                if($producto['cantidad'] > $descuento->usos_restantes) {
+                                    $cantidad =  $descuento->usos_restantes;
                                     $descuento->usos_restantes = 0;
                                 }
                                 else{

@@ -27,7 +27,7 @@ var template = function (d, tipo){
             descuento += d.detalles_descuento[i].descuento;
             list += `<tr style="background:palegreen">
                 <td></td>
-                <td>Promocion aplicada</td>
+                <td>${d.detalles_descuento[i].desc.descripcion}</td>
                 <td>- $${d.detalles_descuento[i].descuento}</td>
                 </tr>`;
         }
