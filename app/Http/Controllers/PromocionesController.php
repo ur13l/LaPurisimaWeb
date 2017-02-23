@@ -168,6 +168,8 @@ class PromocionesController extends Controller
 
                 //Se verifican descuento de usuario por producto
                 foreach ($productos as $producto) {
+                    //TODO:OTRO HARDCODE
+                    $producto = (array)$producto;
                     $promo = Descuento::where('user_id', $id_user)
                         ->where('producto_id', $producto['producto_id'])
                         ->where(function ($q) {
@@ -186,6 +188,8 @@ class PromocionesController extends Controller
 
                 if(count($descuentos) == 0) {
                     foreach ($productos as $producto) {
+                        //TODO:OTRO HARDCODE
+                        $producto = (array)$producto;
                         $promo = Descuento::where('user_id', null)
                             ->where('producto_id', $producto['producto_id'])
                             ->where(function ($q) {
@@ -213,7 +217,9 @@ class PromocionesController extends Controller
             if(isset($descuento->producto)) {
                 //Se verifican los productos en la lista para conocer sus cantidades.
                 foreach ($productos as $producto) {
-                    if($producto->id == $descuento->producto->id){
+                    //TODO:OTRO HARDCODE
+                    $producto = (array)$producto;
+                    if($producto['producto_id'] == $descuento->producto->id){
                         if (isset($descuento->descuento) && $descuento->descuento != 0) {
                             $desc += $descuento->descuento;
                         } else {
@@ -224,7 +230,7 @@ class PromocionesController extends Controller
                             'pedido_id'=>$pedido->id,
                             'descuento_id'=>$descuento->id,
                             'descuento' => $desc,
-                            'cantidad' => $producto->cantidad
+                            'cantidad' => $producto['cantidad']
                         ]);
                     }
 

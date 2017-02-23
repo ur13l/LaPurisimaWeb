@@ -133,6 +133,9 @@ class PedidoController extends Controller
         $total = 0;
 
         foreach( $productos as $detalle) {
+            //TODO: Quitar este jarcoud
+            $detalle->producto_id = $detalle->id;
+            //---------------------------------------
             $det = array(
                 "pedido_id" => $pedido->id,
                 "producto_id" => $detalle->id,
@@ -149,10 +152,6 @@ class PedidoController extends Controller
         $pedido->save();
 
         PromocionesController::aplicarPromociones($user->id, $productos, $pedido);
-
-
-
-
 
         return redirect()->route('detalle', ['pedido_id' => $pedido->id]);
 
