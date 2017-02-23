@@ -168,7 +168,9 @@ class PedidoController extends Controller
      */
     public function pedidosSolicitadosTable()
     {
-        $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->orderBy('fecha', 'desc')->with('cliente')->with('detalles')
+        $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->orderBy('fecha', 'desc')->with('cliente')
+            ->with('detalles')
+            ->with('detallesDescuento')
             ->with('detalles.producto')->get();
 
         return Datatables::of($pedidos)->make(true);

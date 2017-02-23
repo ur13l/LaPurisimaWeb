@@ -52,7 +52,8 @@ class PedidoApiController extends Controller
         //En caso contrario, se registran todos los detalles del pedido de manera normal, restando al stock.
         else {
             $total = 0;
-            foreach( $request->input('detalles') as $detalle) {
+            $detalles = $request->input('detalles');
+            foreach( $detalles as $detalle) {
                 $detalle['pedido_id'] = $pedido->id;
                 $d = Detalle::create($detalle);
                 $producto = Producto::find($d->producto->id);
@@ -64,7 +65,7 @@ class PedidoApiController extends Controller
             $pedido->status = Pedido::SOLICITADO;
             $pedido->save();
 
-            PromocionesController::aplicarPromociones($cliente->id,$request->input('detalles'), $pedido);
+            PromocionesController::aplicarPromociones($cliente->id,$detalles, $pedido);
             return response()->json([
                 "id" => $pedido->id,
                 "success"=> true,

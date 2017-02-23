@@ -9,7 +9,8 @@ class DetalleDescuento extends Model
     protected $fillable = [
             'pedido_id',
             'descuento_id',
-            'descuento'
+            'descuento',
+            'cantidad'
         ];
 
 

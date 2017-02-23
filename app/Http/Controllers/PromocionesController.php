@@ -209,11 +209,25 @@ class PromocionesController extends Controller
         //Se genera un detalle de cada descuento
         foreach($descuentos as $descuento){
             $desc = 0;
+            //Si el descuento se aplica a un producto (o varios)
             if(isset($descuento->producto)) {
-                if (isset($descuento->descuento) && $descuento->descuento != 0) {
-                    $desc += $descuento->descuento;
-                } else {
-                    $desc += $descuento->producto->precio * (floatval($descuento->descuento_porcentaje / 100));
+                //Se verifican los productos en la lista para conocer sus cantidades.
+                foreach ($productos as $producto) {
+                    if($producto->id == $descuento->producto->id){
+                        if (isset($descuento->descuento) && $descuento->descuento != 0) {
+                            $desc += $descuento->descuento;
+                        } else {
+                            $desc += $descuento->producto->precio * (floatval($descuento->descuento_porcentaje / 100));
+                        }
+                        //Se genera un detalle por producto.
+                        DetalleDescuento::create([
+                            'pedido_id'=>$pedido->id,
+                            'descuento_id'=>$descuento->id,
+                            'descuento' => $desc,
+                            'cantidad' => $producto->cantidad
+                        ]);
+                    }
+
                 }
             }
             else{
@@ -222,12 +236,14 @@ class PromocionesController extends Controller
                 } else {
                     $desc += $pedido->total * ($descuento->descuento_porcentaje / 100);
                 }
+                //Se genera un solo detalle para todo el descuento.
+                DetalleDescuento::create([
+                    'pedido_id'=>$pedido->id,
+                    'descuento_id'=>$descuento->id,
+                    'descuento' => $desc
+                ]);
             }
-            DetalleDescuento::create([
-                'pedido_id'=>$pedido->id,
-                'descuento_id'=>$descuento->id,
-                'descuento' => $desc
-            ]);
+
         }
         return null;
     }

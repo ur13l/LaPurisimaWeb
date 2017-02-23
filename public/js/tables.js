@@ -11,14 +11,23 @@
  * @returns {string}
  */
 var template = function (d, tipo){
-    var list = "";
-    for(var i = 0 ; i < d.detalles.length; i++){
+
+    console.log(d);
+    var list = "",
+        descuento = 0;
+    for(var i = d.detalles.length -1  ; i >= 0 ; i--){
         list += '<tr>'+
             '<td>'+d.detalles[i].cantidad+'</td>'+
             '<td>'+d.detalles[i].producto.nombre+'</td>'+
             '<td>$'+ (d.detalles[i].producto.precio * d.detalles[i].cantidad).toFixed(2)+'</td>'+
             '</tr>';
     }
+
+    for (var i = d.detallesDescuento.length - 1 ; i >= 0; i--){
+        descuento += d.detallesDescuento[i].descuento;
+    }
+
+
     console.log(d);
     return '<div class="row slider '+tipo+'">'+
         '<div class="col-xs-12 col-md-8" >'+
