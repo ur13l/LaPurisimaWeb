@@ -40,7 +40,11 @@
                                     </tr>
                                     <tr>
                                         <th>Total</th>
-                                        <td>${{number_format($pedido->total, 2)}}</td>
+                                        <?php $des1 = 0?>
+                                    @foreach($pedido->detallesDescuento as $detalle)
+                                        <?php $des1 += $detalle->descuento * $detalle->cantidad?>
+                                    @endforeach
+                                        <td>${{number_format($pedido->total - $des1, 2)}}</td>
                                     </tr>
                                     <tr>
                                         <th>Estatus del pedido</th>
@@ -116,14 +120,17 @@
                                         @endforeach
                                         <?php $des = 0?>
                                         @foreach($pedido->detallesDescuento as $detalle)
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td>Descuento aplicado</td>
-                                                <td>${{number_format($detalle->descuento)}}</td>
-                                            </tr>
 
-                                            <?php $des += $detalle->descuento?>
+                                            @for($i = 0 ; $i < $detalle->cantidad; $i++)
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{$detalle->desc->descripcion}}</td>
+                                                    <td style="color:green">- ${{number_format($detalle->descuento)}}</td>
+                                                </tr>
+                                            @endfor
+
+                                            <?php $des += $detalle->descuento * $detalle->cantidad?>
                                         @endforeach
                                         <tr>
                                             <th colspan="3">Total</th>

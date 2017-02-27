@@ -11,14 +11,29 @@
  * @returns {string}
  */
 var template = function (d, tipo){
-    var list = "";
-    for(var i = 0 ; i < d.detalles.length; i++){
+
+    var list = "",
+        descuento = 0;
+    for(var i = d.detalles.length -1  ; i >= 0 ; i--){
         list += '<tr>'+
             '<td>'+d.detalles[i].cantidad+'</td>'+
             '<td>'+d.detalles[i].producto.nombre+'</td>'+
             '<td>$'+ (d.detalles[i].producto.precio * d.detalles[i].cantidad).toFixed(2)+'</td>'+
             '</tr>';
     }
+
+    for (var i = d.detalles_descuento.length - 1 ; i >= 0; i--){
+        for(var j = d.detalles_descuento[i].cantidad -1; j>= 0; j--) {
+            descuento += d.detalles_descuento[i].descuento;
+            list += `<tr style="background:palegreen">
+                <td></td>
+                <td>${d.detalles_descuento[i].desc.descripcion}</td>
+                <td>- $${d.detalles_descuento[i].descuento}</td>
+                </tr>`;
+        }
+    }
+
+
     console.log(d);
     return '<div class="row slider '+tipo+'">'+
         '<div class="col-xs-12 col-md-8" >'+
@@ -35,7 +50,7 @@ var template = function (d, tipo){
         '</table>'+
         '</div>'+
         '<div class="col-xs-12 col-md-4" style="padding:22px">'+
-        '<span><b>Total:</b> $'+d.total+'</span><br>'+
+        '<span><b>Total:</b> $'+(d.total - descuento)+'</span><br>'+
         '<span><b>Fecha:</b> '+moment(d.fecha).format('DD/MM/YYYY')+'</span><br>'+
         '<span><b>Hora:</b> '+moment(d.fecha).format('HH:mm')+'</span><br>'+
         ((d.status==1)?'<a href="pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Asignar Conductor</a><br><br>':'<a href="pedidos/'+d.id+'" class="btn btn-primary col-xs-12">Ver detalles</a><br><br>') +
@@ -117,7 +132,6 @@ function addTableEvents(elemTable, table, tipo){
  * @returns {{processing: boolean, serverSide: boolean, ajax: {url: string, data: {id: (*|jQuery)}}, language: {url: string}, bLengthChange: boolean, columns: *[], order: Array}}
  */
 function generarTablaPedidos(tipo){
-    console.log($("#_url").val() + "/pedidos/" + tipo)
     return {
         processing: true,
         serverSide: true,
@@ -185,8 +199,14 @@ function generarTablaPedidos(tipo){
                 "orderable":      false,
                 "searchable":     true,
                 "render": function(data, type, full, meta){
+                    var descuento = 0;
+                    for (var i = full.detalles_descuento.length - 1 ; i >= 0; i--){
+                        for(var j = full.detalles_descuento[i].cantidad -1; j>= 0; j--) {
+                            descuento += full.detalles_descuento[i].descuento;
+                        }
+                    }
                     if(data)
-                        return "$" + data.toFixed(2);
+                        return "$" + (data - descuento).toFixed(2);
                     else return data;
                 }}
         ],

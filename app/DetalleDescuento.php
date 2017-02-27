@@ -9,7 +9,8 @@ class DetalleDescuento extends Model
     protected $fillable = [
             'pedido_id',
             'descuento_id',
-            'descuento'
+            'descuento',
+            'cantidad'
         ];
 
 
@@ -18,6 +19,10 @@ class DetalleDescuento extends Model
     }
 
     public function descuento(){
+        return $this->belongsTo('App\Descuento', 'descuento_id');
+    }
+
+    public function desc(){
         return $this->belongsTo('App\Descuento', 'descuento_id');
     }
 }

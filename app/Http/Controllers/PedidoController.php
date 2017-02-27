@@ -133,6 +133,9 @@ class PedidoController extends Controller
         $total = 0;
 
         foreach( $productos as $detalle) {
+            //TODO: Quitar este jarcoud
+            $detalle->producto_id = $detalle->id;
+            //---------------------------------------
             $det = array(
                 "pedido_id" => $pedido->id,
                 "producto_id" => $detalle->id,
@@ -150,10 +153,6 @@ class PedidoController extends Controller
 
         PromocionesController::aplicarPromociones($user->id, $productos, $pedido);
 
-
-
-
-
         return redirect()->route('detalle', ['pedido_id' => $pedido->id]);
 
     }
@@ -168,7 +167,10 @@ class PedidoController extends Controller
      */
     public function pedidosSolicitadosTable()
     {
-        $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->orderBy('fecha', 'desc')->with('cliente')->with('detalles')
+        $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->orderBy('fecha', 'desc')->with('cliente')
+            ->with('detalles')
+            ->with('detallesDescuento')
+            ->with('detallesDescuento.desc')
             ->with('detalles.producto')->get();
 
         return Datatables::of($pedidos)->make(true);
@@ -183,6 +185,8 @@ class PedidoController extends Controller
     {
         $pedidos = Pedido::where('status', '=', Pedido::ASIGNADO)->orWhere('status', '=', Pedido::EN_CAMINO)
             ->with('cliente')->with('detalles')
+            ->with('detallesDescuento')
+            ->with('detallesDescuento.desc')
             ->with('detalles.producto')->get();
 
         return Datatables::of($pedidos)->make(true);
