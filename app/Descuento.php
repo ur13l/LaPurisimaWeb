@@ -15,7 +15,8 @@ class Descuento extends Model
         'descuento',
         'descuento_porcentaje',
         'fecha_vencimiento',
-        'usos_restantes'
+        'usos_restantes',
+        'descripcion'
     ];
 
     protected $dates = ['deleted_at'];

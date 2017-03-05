@@ -170,6 +170,7 @@ class PedidoController extends Controller
         $pedidos = Pedido::where('status', '=', Pedido::SOLICITADO)->orderBy('fecha', 'desc')->with('cliente')
             ->with('detalles')
             ->with('detallesDescuento')
+            ->with('detallesDescuento.desc')
             ->with('detalles.producto')->get();
 
         return Datatables::of($pedidos)->make(true);
@@ -184,6 +185,8 @@ class PedidoController extends Controller
     {
         $pedidos = Pedido::where('status', '=', Pedido::ASIGNADO)->orWhere('status', '=', Pedido::EN_CAMINO)
             ->with('cliente')->with('detalles')
+            ->with('detallesDescuento')
+            ->with('detallesDescuento.desc')
             ->with('detalles.producto')->get();
 
         return Datatables::of($pedidos)->make(true);

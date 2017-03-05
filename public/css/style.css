@@ -13,3 +13,14 @@
 body {
   padding-top: 60px;
 }
+
+
+table {
+
+}
+
+td{
+  max-width: 200px;
+  min-width:20px;
+  overflow-x: hidden;
+}
