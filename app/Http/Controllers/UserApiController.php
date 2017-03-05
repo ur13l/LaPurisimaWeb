@@ -61,16 +61,22 @@ class UserApiController extends Controller
     $usuario = Auth::guard('api')->user();
     $saved = false;
     if($usuario->exists()){
-      if(base64_decode($request->input('imagen_usuario'))){
+
+
+        $data = explode(',', $request->input('imagen_usuario'));
+
+
+        if(count($data) > 1 && base64_decode($data[1])){
         $usuario->update($request->except('imagen_usuario'));
         $data = $request->input('imagen_usuario');
-        $route = "/storage/perfil/";
+        $route = "storage/perfil/";
+          $is64 = true;
           ImageController::eliminarImagen($usuario->imagen_usuario);
 
           $usuario->imagen_usuario = url(ImageController::saveImage($data, $route, uniqid("usuario_")));
       }
       else{
-
+        $is64 = false;
         if($request->has('url_usuario')){
             $usuario->imagen_usuario = $request->input('url_usuario');
         }
@@ -80,7 +86,8 @@ class UserApiController extends Controller
       $saved = $usuario->save();
     }
     return response()->json([
-      "success" => $saved
+      "success" => $saved,
+        "is64" => $is64
     ]);
   }
 
