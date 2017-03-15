@@ -44,6 +44,7 @@ class PromocionesController extends Controller
                     $fec = str_replace('/', '-', $request->input('fecha'));
                     $promoN['fecha_vencimiento'] = date('Y-m-d', strtotime($fec));
                     $promoN['usos_restantes'] = $request->input('limiteNum');
+                    $promoN['descripcion'] = $request->input('descripcion');
                     Descuento::create($promoN);
                 }
             }
@@ -55,6 +56,7 @@ class PromocionesController extends Controller
                 $fec = str_replace('/', '-', $request->input('fecha'));
                 $promoN['fecha_vencimiento'] = date('Y-m-d', strtotime($fec));
                 $promoN['usos_restantes'] = $request->input('limiteNum');
+                $promoN['descripcion'] = $request->input('descripcion');
                 Descuento::create($promoN);
             }
 
@@ -79,6 +81,7 @@ class PromocionesController extends Controller
             $fec = str_replace('/', '-', $request->input('fecha'));
             $promoN['fecha_vencimiento'] = date('Y-m-d', strtotime($fec));
             $promoN['usos_restantes'] = $request->input('limiteNum');
+            $promoN['descripcion'] = $request->input('descripcion');
             Descuento::create($promoN);
         }
         return view('promociones.index', array('message' => 'create'));
@@ -96,6 +99,7 @@ class PromocionesController extends Controller
         $fec = str_replace('/', '-', $request->input('fecha'));
         $promoN['fecha_vencimiento'] = date('Y-m-d', strtotime($fec));
         $promoN['usos_restantes'] = $request->input('limiteNum');
+        $promoN['descripcion'] = $request->input('descripcion');
         Descuento::create($promoN);
         return view('promociones.index', array('message' => 'create'));
     }
@@ -141,7 +145,7 @@ class PromocionesController extends Controller
         $descuentos = Descuento::where('user_id', $user->id)
             ->where('producto_id', null)
             ->where(function($q) {
-                $q->where('fecha_vencimiento', '>=', Carbon::now())
+                $q->where('fecha_vencimiento', '>=', Carbon::now('America/Mexico_City'))
                     ->orWhere('fecha_vencimiento', null);
             })
             ->where(function($q){
@@ -155,7 +159,7 @@ class PromocionesController extends Controller
             $descuentos =  Descuento::where('user_id', null)
                 ->where('producto_id', null)
                 ->where(function($q) {
-                    $q->where('fecha_vencimiento', '>=', Carbon::now())
+                    $q->where('fecha_vencimiento', '>=', Carbon::now('America/Mexico_City'))
                         ->orWhere('fecha_vencimiento', null);
                 })
                 ->where(function($q){
@@ -173,7 +177,7 @@ class PromocionesController extends Controller
                     $promo = Descuento::where('user_id', $id_user)
                         ->where('producto_id', $producto['producto_id'])
                         ->where(function ($q) {
-                            $q->where('fecha_vencimiento', '>=', Carbon::now())
+                            $q->where('fecha_vencimiento', '>=', Carbon::now('America/Mexico_City'))
                                 ->orWhere('fecha_vencimiento', null);
                         })
                         ->where(function ($q) {
@@ -193,7 +197,7 @@ class PromocionesController extends Controller
                         $promo = Descuento::where('user_id', null)
                             ->where('producto_id', $producto['producto_id'])
                             ->where(function ($q) {
-                                $q->where('fecha_vencimiento', '>=', Carbon::now())
+                                $q->where('fecha_vencimiento', '>=', Carbon::now('America/Mexico_City'))
                                     ->orWhere('fecha_vencimiento', null);
                             })
                             ->where(function ($q) {
@@ -288,7 +292,8 @@ class PromocionesController extends Controller
                     DetalleDescuento::create([
                         'pedido_id'=>$pedido->id,
                         'descuento_id'=>$descuento->id,
-                        'descuento' => $desc
+                        'descuento' => $desc,
+                        'cantidad' => 1
                     ]);
                 }
 

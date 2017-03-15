@@ -378,7 +378,7 @@ function generarTablaPromociones(tipo){
             "orderable":      false,
             "searchable":     true,
             "render": data => {
-                if(data == 0){
+                if(!data){
                     return '<span class="label label-primary">No aplica</span>'
                 }
                 return `${data}%`;

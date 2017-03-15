@@ -32,7 +32,8 @@ class PedidoApiController extends Controller
         $insufficientStock = [];
         foreach( $request->input('detalles') as $detalle){
             $producto = Producto::find($detalle['producto_id']);
-            if($producto->stock < $detalle['cantidad']){
+
+            if(isset($producto) && $producto->stock < $detalle['cantidad']){
                 $insufficientStock[] = $producto->nombre;
             }
         }
