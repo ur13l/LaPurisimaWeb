@@ -124,6 +124,8 @@ class PedidoController extends Controller
             "latitud" => $request->input('latitud'),
             "longitud" => $request->input('longitud'),
             "direccion" => $request->input('direccion'),
+            "tipo_pago_id" => $request->input('tipo_pago_id'),
+            "cantidad_pago" => $request->input('cantidad_pago'),
             "status" => Pedido::SOLICITADO
         ));
 

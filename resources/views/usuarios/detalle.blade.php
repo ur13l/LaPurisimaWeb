@@ -36,6 +36,10 @@
                                             <td>{{$user->telefono}}</td>
                                         </tr>
                                         <tr>
+                                            <th>Teléfono de casa</th>
+                                            <td>{{$user->telefono_casa}}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Calle</th>
                                             <td>{{$user->calle}}</td>
                                         </tr>

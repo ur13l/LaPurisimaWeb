@@ -134,9 +134,9 @@ class UserApiController extends Controller
 
   public function getUserByPhone(Request $request){
       $phone = $request->input('telefono');
-      $user = User::where('telefono', '=', $phone)->select('id', 'nombre', 'telefono', 'email', 'calle', 'colonia', 'referencia', 'imagen_usuario')->first();
+      $user = User::where('telefono', '=', $phone)->select('id', 'nombre', 'telefono', 'telefono_casa', 'email', 'calle', 'colonia', 'referencia', 'imagen_usuario')->first();
       if(isset($user)){
-          $ultPedido = Pedido::where("cliente_id", "=", $user->id)->orderBy('fecha','desc')->select('direccion','latitud', 'longitud')->first();
+          $ultPedido = Pedido::where("cliente_id", "=", $user->id)->orderBy('fecha','desc')->select('direccion','latitud', 'longitud', 'tipo_pago_id', 'cantidad_pago')->first();
 
           return response()->json(array(
               "user"=>$user,
@@ -157,6 +157,7 @@ class UserApiController extends Controller
         $usuarios = User::where("nombre", 'like', "%$q%")
             ->orWhere("telefono", "like", "%$q%")
             ->orWhere('email', "like", "%$q%")
+            ->orWhere('telefono_casa', "like", "%$q%")
             ->paginate($page);
         return $usuarios;
     }
