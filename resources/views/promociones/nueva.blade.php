@@ -33,7 +33,7 @@
             <div class="form-group col-xs-12 col-md-6" id="form-grouplimite">
                 {{Form::checkbox('limiteChk', '1', false, array('class'=>'limiteChk', 'id'=>'u_limiteChk'))}}
                 {{Form::label('Límite de usos')}}
-                {{Form::number('limiteNum', '', array('class'=>'form-control limiteNum','id'=>'u_limiteNum'))}}
+                {{Form::number('limiteNum', '', array('class'=>'form-control limiteNum','id'=>'u_limiteNum', 'disabled'=>'disabled'))}}
             </div>
             <div class="form-group col-xs-12" id="form-grouplimite">
                 {{Form::label('','Tipo de descuento')}}
@@ -61,7 +61,7 @@
                                     {{Form::number('descuentoPrecioInput', 0, array('class'=>'form-control', 'id'=>'u_descuentoPrecioInput', 'min'=>'0', 'max'=>'1000000'))}}
                                 </div>
                             </div>
-                            <div class="form-group col-xs-12 col-md-8 hide form-group-descuento-porcentaje" id="form-group-descuento-porcentaje">
+                            <div class="form-group col-xs-12 col-md-8 col-md-offset-2 hide form-group-descuento-porcentaje" id="form-group-descuento-porcentaje">
                                 <div class="input-group">
 
                                     {{Form::number('descuentoPorcInput', 0, array('class'=>'form-control', 'id'=>'u_descuentoPorcInput','min'=>'0', 'max'=>'100'))}}

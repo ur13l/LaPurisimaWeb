@@ -244,6 +244,10 @@ class PromocionesController extends Controller
                                 }
                                 $descuento->save();
                             }
+                            //Cuando no se tiene límite de usos, se guarda la cantidad de productos sobre los que se aplica el descuento.
+                            else {
+                                $cantidad = $producto->cantidad;
+                            }
 
                             //Se genera un detalle por producto.
                             DetalleDescuento::create([
