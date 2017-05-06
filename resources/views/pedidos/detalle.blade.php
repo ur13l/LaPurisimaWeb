@@ -65,6 +65,26 @@
 
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Tipo de pago</th>
+                                        <td>
+                                            {{$pedido->tipo_pago_id == 1 ? "Efectivo" : "Tarjeta de crédito/débito"}}
+                                        </td>
+                                    </tr>
+                                    @if($pedido->tipo_pago_id == 1)
+                                        <tr>
+                                            <th>Pago con</th>
+                                            <td>
+                                                ${{number_format($pedido->cantidad_pago, 2)}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cambio</th>
+                                            <td>
+                                                ${{number_format($pedido->cantidad_pago - $pedido->total - $des1, 2)}}
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @if($pedido->status != 4 && $pedido->status != 5 && $pedido->status != 6)
                                         <tr>
                                             <th>Cancelar Pedido</th>
@@ -86,7 +106,7 @@
                                 <table class="table ">
                                     <tbody>
                                     <tr>
-                                        <td class="text-center" colspan="2"><img height="100" src="{{url("/".$pedido->cliente->imagen_usuario)}}" alt=""></td>
+                                        <td cladss="text-center" colspan="2"><img height="100" src="{{url("/".$pedido->cliente->imagen_usuario)}}" alt=""></td>
                                     </tr>
                                     <tr>
                                         <th>Nombre</th>

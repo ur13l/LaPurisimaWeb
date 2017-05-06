@@ -42,7 +42,16 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-xs-12 col-md-6">
+                            <div class="form-group col-xs-12  col-md-6">
+                                {{Form::label('telefono_casa', 'Teléfono de casa')}}
+                                @if ($action == "create")
+                                    {{Form::text('telefono_casa', null, array('class'=>'form-control'))}}
+                                @else
+                                    {{Form::text('telefono_casa', null, array('class'=>'form-control'))}}
+                                @endif
+                            </div>
+
+                            <div class="form-group col-xs-12">
                                 {{Form::label('tipo_usuario_id', 'Tipo')}}
                                 {{Form::select('tipo_usuario_id', array(
                                     '1' => "Administrador",

@@ -84,7 +84,7 @@ class UserController extends Controller
     public function clientes()
     {
         $clientes = User::where('tipo_usuario_id', '=', User::CLIENTE)
-            ->select(['id', 'imagen_usuario', 'nombre', 'email', 'telefono'])
+            ->select(['id', 'imagen_usuario', 'nombre', 'email', 'telefono', 'telefono_casa'])
             ->get();
         return Datatables::of($clientes)->make(true);
     }
@@ -97,7 +97,7 @@ class UserController extends Controller
     public function administradores()
     {
         $clientes = User::where('tipo_usuario_id', '=', User::ADMINISTRADOR)
-            ->select(['id', 'imagen_usuario', 'nombre', 'email', 'telefono'])
+            ->select(['id', 'imagen_usuario', 'nombre', 'email', 'telefono', 'telefono_casa'])
             ->get();
         return Datatables::of($clientes)->make(true);
     }

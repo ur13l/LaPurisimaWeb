@@ -61,16 +61,22 @@ class UserApiController extends Controller
     $usuario = Auth::guard('api')->user();
     $saved = false;
     if($usuario->exists()){
-      if(base64_decode($request->input('imagen_usuario'))){
+
+
+        $data = explode(',', $request->input('imagen_usuario'));
+
+
+        if(count($data) > 1 && base64_decode($data[1])){
         $usuario->update($request->except('imagen_usuario'));
         $data = $request->input('imagen_usuario');
-        $route = "/storage/perfil/";
+        $route = "storage/perfil/";
+          $is64 = true;
           ImageController::eliminarImagen($usuario->imagen_usuario);
 
           $usuario->imagen_usuario = url(ImageController::saveImage($data, $route, uniqid("usuario_")));
       }
       else{
-
+        $is64 = false;
         if($request->has('url_usuario')){
             $usuario->imagen_usuario = $request->input('url_usuario');
         }
@@ -80,7 +86,8 @@ class UserApiController extends Controller
       $saved = $usuario->save();
     }
     return response()->json([
-      "success" => $saved
+      "success" => $saved,
+        "is64" => $is64
     ]);
   }
 
@@ -127,9 +134,9 @@ class UserApiController extends Controller
 
   public function getUserByPhone(Request $request){
       $phone = $request->input('telefono');
-      $user = User::where('telefono', '=', $phone)->select('id', 'nombre', 'telefono', 'email', 'calle', 'colonia', 'referencia', 'imagen_usuario')->first();
+      $user = User::where('telefono', '=', $phone)->select('id', 'nombre', 'telefono', 'telefono_casa', 'email', 'calle', 'colonia', 'referencia', 'imagen_usuario')->first();
       if(isset($user)){
-          $ultPedido = Pedido::where("cliente_id", "=", $user->id)->orderBy('fecha','desc')->select('direccion','latitud', 'longitud')->first();
+          $ultPedido = Pedido::where("cliente_id", "=", $user->id)->orderBy('fecha','desc')->select('direccion','latitud', 'longitud', 'tipo_pago_id', 'cantidad_pago')->first();
 
           return response()->json(array(
               "user"=>$user,
@@ -150,6 +157,7 @@ class UserApiController extends Controller
         $usuarios = User::where("nombre", 'like', "%$q%")
             ->orWhere("telefono", "like", "%$q%")
             ->orWhere('email', "like", "%$q%")
+            ->orWhere('telefono_casa', "like", "%$q%")
             ->paginate($page);
         return $usuarios;
     }

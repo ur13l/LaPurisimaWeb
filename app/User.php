@@ -25,6 +25,7 @@ class User extends Authenticatable
     'api_token',
     'calificacion',
      'telefono',
+      'telefono_casa',
      'datos_repartidor_id'
 
   ];

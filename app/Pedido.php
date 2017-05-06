@@ -28,7 +28,9 @@ class Pedido extends Model
         'longitud',
         'direccion',
         'status',
-        'fecha'
+        'fecha',
+        'tipo_pago_id',
+        'cantidad_pago'
     ];
 
     public function detalles(){
@@ -37,13 +39,13 @@ class Pedido extends Model
 
     public function cliente(){
         return $this->belongsTo('App\User', 'cliente_id')->select(array(
-            'id', 'nombre', 'email', 'imagen_usuario', 'telefono'
+            'id', 'nombre', 'email', 'imagen_usuario', 'telefono', 'telefono_casa'
         ));
     }
 
     public function repartidor(){
         return $this->belongsTo('App\User', 'conductor_id')->select(array(
-            'id','nombre', 'email', 'imagen_usuario', 'telefono'
+            'id','nombre', 'email', 'imagen_usuario', 'telefono', 'telefono_casa'
         ));
     }
 

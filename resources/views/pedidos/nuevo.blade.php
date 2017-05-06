@@ -77,7 +77,23 @@
                                     </div>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td>
+                                    <div class="form-group col-xs-12">
+                                        {{Form::label('tipo_pago_id', 'Tipo de pago')}}
+                                        {{Form::select('tipo_pago_id', array(
+                                            '1' => "Efectivo",
+                                            '2' => "Tarjeta de crédito"),
+                                            1, array('id'=>'tipo_pago_id', 'class'=>'form-control'))}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group col-xs-12">
+                                        {{Form::label('cantidad_pago', 'Pago de:')}}
+                                        {{Form::number('cantidad_pago', null, array('id'=>'cantidad_pago', 'class'=>'form-control'))}}
+                                    </div>
+                                </td>
+                            </tr>
 
                         </table>
 
@@ -87,7 +103,7 @@
                         <h4>Seleccione los Productos</h4>
                         <div class="form-group">
                             <div class="col-xs-5 selectContainer">
-                                <select class="form-control" name="size">
+                                <select class="form-control" id="productos-select" name="size">
                                     <option value="">Escriba el nombre del producto</option>
                                     @foreach($productos as $producto)
                                         <option value="{{$producto->id}}">{{$producto->nombre}} - ${{number_format($producto->precio,2)}}</option>
@@ -169,8 +185,6 @@
         }
 
         function showPosition(position) {
-
-            console.log("SHWQOH");
             console.log( position.coords.latitude)
             console.log( position.coords.longitude);
         }
@@ -184,13 +198,26 @@
         var xhr2;
         var productos = [];
         $(function(){
-            $("select").combobox();
+            $("#productos-select").combobox();
 
-            $("select").on('change', function(){
+            $("#productos-select").on('change', function(){
+                console.log(this.value);
                 addProduct(this.value);
-                $("select").val(0);
+                $(".productos").val(0);
             });
 
+            $("#tipo_pago_id").change(function() {
+                if(this.value == 1) {
+
+                    $("#cantidad_pago").prop('disabled', false);
+                }
+                else {
+
+                    $("#cantidad_pago").prop('disabled', true);
+
+                    $("#cantidad_pago").val("");
+                }
+            });
 
             $("#telefono").on('change keyup pase', function(){
 
@@ -223,7 +250,6 @@
                                 $("#imagen_usuario").attr("src","{{url('/img/default.png')}}");
                         }
                         else{
-                            console.log("WOWOWOW0");
                             $("#nombre").val("").prop("disabled", false);
                             $("#email").val("").prop("disabled", false).change();
                             $("#direccion").val("");
@@ -320,6 +346,8 @@
                                     latitud: map.getCenter().lat(),
                                     longitud: map.getCenter().lng(),
                                     direccion: $("#direccion").val(),
+                                    tipo_pago_id: $("#tipo_pago_id").val(),
+                                    cantidad_pago: $("#cantidad_pago").val(),
                                     productos: JSON.stringify(productos)
                                 };
 
@@ -351,7 +379,7 @@
                     });
 
                     $("#table-productos").append('<tr id="'+id+'">'+
-                        '<td class="col-xs-1"><button id="'+id+'_eliminar" class="btn btn-danger">x</button></td>'+
+                        '<td class="col-xs-1"><button id="'+id+'_eliminar" class="btn btn-danger">&times;</button></td>'+
                         '<td class="col-xs-1"><input class="form-control" id="'+id+'_cantidad" type="number" value=1 min=1></td>'+
                         '<td class="col-xs-6">'+$("#"+id+"_nombre").val()+'</td>'+
                         '<td class="col-xs-2">$'+$("#"+id+"_precio").val()+'</td>'+
