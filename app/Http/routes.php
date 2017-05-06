@@ -158,14 +158,11 @@ Route::group(['prefix' => 'promociones'], function(){
 Route::group(['prefix' => 'reportes'], function(){
     Route::get('/', 'ReportesController@index');
     Route::post('generar', 'ReportesController@generaExcel');
-    Route::post('generarClientes', 'ReportesController@generaExcelClientes');
+  /*  Route::post('generarClientes', 'ReportesController@generaExcelClientes');
     Route::post('generarBodega', 'ReportesController@generaExcelBodega');
-    Route::post('generarEntregado', 'ReportesController@generaExcelEntregado');
+    Route::post('generarEntregado', 'ReportesController@generaExcelEntregado');*/
 });
 
 Route::get('/productos', 'ProductoController@index');
 
 Route::get('/graficas', 'GraficaController@index');
-
-
-

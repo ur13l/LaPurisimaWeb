@@ -28,8 +28,9 @@
                           <div class="form-group">
                               {{ Form::open(array('url' => '/reportes/generar', 'class' => 'form')) }}
                               {{Form::label('telefono', 'Teléfono')}}
-                              {{Form::number('telefono', null, array('class'=>'form-control'))}}
+                              {{Form::number('telefono', null, array('class'=>'form-control telefono'))}}
                               {{ Form::hidden('invisibleid', '', array('id' => 'invisibleid','class' => 'invisibleid'))}}
+                              {{ Form::hidden('tipo', '1', array('id' => 'tipo','class' => 'tipo'))}}
                               <span class="help-inline text-danger hidden"></span>
                           </div>
                           <div class="row">
@@ -46,8 +47,6 @@
                   </div>
               </div>
       <div class="col-md-10 col-md-offset-1">
-
-
           <div class="panel panel-default">
               <div class="panel-heading">
                   <div class="row">
@@ -70,10 +69,56 @@
                       </div>
                   @endif
                   <div class="form-group">
-                      {{ Form::open(array('url' => '/reportes/generarClientes', 'class' => 'form')) }}
+                      {{ Form::open(array('url' => '/reportes/generar', 'class' => 'form')) }}
                       {{Form::label('telefono', 'Teléfono')}}
-                      {{Form::number('telefono', null, array('class'=>'form-control'))}}
-                      {{ Form::hidden('invisibleid', '', array('id' => 'invisibleid','class' => 'invisibleid'))}}
+                      {{Form::number('telefono', null, array('class'=>'form-control telefono'))}}
+                      {{Form::label('fecha', 'Fecha de inicio')}}
+                      {{Form::date('fecha', null, array('class'=>'form-control'))}}
+                      {{ Form::hidden('invisibleid', '', array('id' => 'invisibleid','class' => 'invisibleid '))}}
+                      {{ Form::hidden('tipo', '2', array('id' => 'tipo','class' => 'tipo'))}}
+                      <span class="help-inline text-danger hidden"></span>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                      {!! Form::submit('Generar', array('class'=>'btn btn-primary firstReport', 'disabled')) !!}
+                      <!-- <a href="{{url('/reportes/generar')}}"><button type="button" class="btn btn-primary halfleft">Generar</button></a>-->
+                      </div>
+                      <div class="col-md-6">
+                          {{Form::label('nombre', ' ',array('class'=>'nombre') )}}
+                          {{Form::close() }}
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                  <div class="row">
+                      <div class="col-md-11">
+                          Reporte  Regresado a bodega por repartidor
+                      </div>
+                      <div class="col-md-1">
+                          <a href="" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-question-sign questionMark" aria-hidden="true"></a>
+                      </div>
+                  </div>
+              </div>
+              <div class="panel-body">
+                  @if (count($errors) > 0)
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                  @endif
+                  <div class="form-group">
+                      {{ Form::open(array('url' => '/reportes/generar', 'class' => 'form')) }}
+                      {{Form::label('telefono', 'Teléfono')}}
+                      {{Form::number('telefono', null, array('class'=>'form-control telefono'))}}
+                      {{ Form::hidden('invisibleid', '', array('id' => 'invisibleid','class' => 'invisibleid '))}}
+                      {{ Form::hidden('tipo', '3', array('id' => 'tipo','class' => 'tipo'))}}
                       <span class="help-inline text-danger hidden"></span>
                   </div>
                   <div class="row">
@@ -88,70 +133,54 @@
                   </div>
               </div>
           </div>
-
-
-       <!-- <div class="panel panel-default">
-          <div class="panel-heading">
-                  Reporte Entregado a clientes por repartidor
-            </div>
-          <div class="panel-body">
-            <a href="{{url('/reportes/generar')}}"><button type="button" class="btn btn-primary">Generar</button></a></div>
-          </div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="col-md-10 col-md-offset-1">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-                  Reporte  Regresado a bodega por repartidor
-              </div>
-            <div class="panel-body">
-              <a href="{{url('/reportes/generar')}}"><button type="button" class="btn btn-primary">Generar</button></a></div>
-            </div>
-          </div>
           <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">
-                  Reporte  Producto entregado a clientes
+                  <div class="row">
+                      <div class="col-md-11">
+                        Reporte  Producto entregado a clientes
+                      </div>
+                      <div class="col-md-1">
+                          <a href="" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-question-sign questionMark" aria-hidden="true"></a>
+                      </div>
+                  </div>
                 </div>
-              <div class="panel-body">
-                <a href="{{url('/reportes/generar')}}"><button type="button" class="btn btn-primary">Generar</button></a></div>
-              </div>
-            </div>
-
-
-
-
+                <div class="panel-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <div class="form-group">
+                        {{ Form::open(array('url' => '/reportes/generar', 'class' => 'form')) }}
+                        {{Form::label('telefono', 'Teléfono')}}
+                        {{Form::number('telefono', null, array('class'=>'form-control telefono'))}}
+                        {{Form::label('fecha', 'Fecha de inicio')}}
+                        {{Form::date('fecha', null, array('class'=>'form-control'))}}
+                        {{ Form::hidden('invisibleid', '', array('id' => 'invisibleid','class' => 'invisibleid '))}}
+                        {{ Form::hidden('tipo', '4', array('id' => 'tipo','class' => 'tipo'))}}
+                        <span class="help-inline text-danger hidden"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        {!! Form::submit('Generar', array('class'=>'btn btn-primary firstReport', 'disabled')) !!}
+                        <!-- <a href="{{url('/reportes/generar')}}"><button type="button" class="btn btn-primary halfleft">Generar</button></a>-->
+                        </div>
+                        <div class="col-md-6">
+                            {{Form::label('nombre', ' ',array('class'=>'nombre') )}}
+                            {{Form::close() }}
+                        </div>
+                    </div>
+                </div>
     </div>
   </div>
+</div>
 </div>
 
         <!-- Modal Instructions -->

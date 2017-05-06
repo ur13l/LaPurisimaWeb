@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Yajra\Datatables\Datatables;
+use App\Pedido;
+use Carbon\Carbon;
 use Auth;
 
 
@@ -30,7 +32,51 @@ class GraficaController extends Controller
      */
      public function index(Request $request){
          if(Auth::user()->tipo_usuario_id == 1) {
-             return view('graficas.index');
+            $fecha = Carbon::now('America/Mexico_City');
+            $anio = Carbon::now('America/Mexico_City')->year;
+            $totales = array(0,0,0,0,0,0,0,0,0,0,0,0);
+           //año actual
+            $pedidos = Pedido::where('created_at','>=', $anio.'-01-01 00:00: 00')->get();
+             foreach ($pedidos as $pedido){
+               if($pedido->fecha >= $anio."-01"){
+                 $totales[0]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-02"){
+                 $totales[1]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-03"){
+                 $totales[2]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-04"){
+                 $totales[3]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-05"){
+                 $totales[4]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-06"){
+                 $totales[5]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-07"){
+                 $totales[6]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-08"){
+                 $totales[7]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-09"){
+                 $totales[8]+= $pedido->total;
+               }
+               if($pedido->fecha >= $anio."-10"){
+                 $totales[9]+= $pedido->total;
+                }
+               if($pedido->fecha >= $anio."-11"){
+                 $totales[10]+= $pedido->total;
+                 }
+               if($pedido->fecha >= $anio."-12"){
+                 $totales[11]+= $pedido->total;
+                  }
+                }
+            // return view('graficas.index', ['repartidores' => $repartidores]);
+             return view('graficas.index', ['totales' => $totales]);
          }
        return redirect()->action('HomeController@index');
      }
