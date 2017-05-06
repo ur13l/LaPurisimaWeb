@@ -44,46 +44,236 @@ class ReportesController extends Controller
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       */
      public function generaExcel(Request $request){
-         $id = $request->input('user_id');
-
+         $telefono= $request->input('telefono');
+         $id= $request->input('invisibleid');
+         $repartidorfilter = DatosRepartidor::where('user_id','=', $id)->get();
          $repartidores = DatosRepartidor::all();
+         $html = '<style>table {border-collapse: collapse;} table, th, td {border: 1px solid black;}</style><table class="table" bordered="1"><tr>';
+         $html.= '<th>Repartidor</th> <th>Correo</th><th>Teléfono</th></th><th>Producto</th> <th>Cantidad</th> </tr>';
 
-         $html = '';
-         foreach($repartidores as $repartidor){
-             $html.="<h1>".$repartidor->user->nombre."</h1>";
-             $html.="<h2>".$repartidor->user->correo."</h2>";
-             foreach($repartidor->productos as $producto){
-                 $html .= "<p>".$producto->nombre."</p>";
-                 $html .= "<p>".$producto->pivot->cantidad."</p><hr>";
+         if(count($repartidorfilter) == 0) {
+             foreach ($repartidores as $repartidor) {
+                 $html .= "<tr>";
+                 $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                 $html .= "<td>" . $repartidor->user->email . "</td>";
+                 $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                 $html .= "<td></td>";
+                 $html .= "<td></td>";
+                 $html .= "</tr>";
+                 foreach ($repartidor->productos as $producto) {
+                     $html .= "<tr>";
+                     $html .= "<td></td>";
+                     $html .= "<td></td>";
+                     $html .= "<td></td>";
+                     $html .= "<td>" . $producto->nombre . "</td>";
+                     $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                     $html .= "</tr>";
+                 }
+
              }
+         }else{
+             foreach ($repartidorfilter as $repartidor) {
+                 $html .= "<tr>";
+                 $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                 $html .= "<td>" . $repartidor->user->email . "</td>";
+                 $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                 $html .= "</tr>";
+                 foreach ($repartidor->productos as $producto) {
+                     $html .= "<tr>";
+                     $html .= "<td></td>";
+                     $html .= "<td></td>";
+                     $html .= "<td></td>";
+                     $html .= "<td>" . $producto->nombre . "</td>";
+                     $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                     $html .= "</tr>";
+                 }
 
+             }
          }
-
-
-         return $html;
-
-
-         /**
-          $productos = DB::table('productos')->get();
-            $output = "";
-            $output .= '<table class="table" bordered="1"><tr>          ';
-          $output.= '<th> nombre</th> <th> stock</th> <th> contenido</th>';
-            $output .= '</tr>';
-          foreach ($productos as $producto) {
-                 $output .= '
-                      <tr>
-                           <td>'.$producto->nombre.'</td>
-                           <td>'.$producto->stock.'</td>
-                           <td>'.$producto->contenido.'</td>
-                      </tr>
-                 ';
-
-               }
-            $output .= '</table>';
+            $html .='</table>';
             header("Content-Type: application/xls");
             header("Content-Disposition: attachment; filename=reportes.xls");
-              echo $output;
-          * */
+            echo $html;
 }
+
+
+    /**
+     * Función que genera un excel según la consulta.
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function generaExcelClientes(Request $request){
+        $telefono= $request->input('telefono');
+        $id= $request->input('invisibleid');
+        $repartidorfilter = DatosRepartidor::where('user_id','=', $id)->get();
+        $repartidores = DatosRepartidor::all();
+        $html = '<style>table {border-collapse: collapse;} table, th, td {border: 1px solid black;}</style><table class="table" bordered="1"><tr>';
+        $html.= '<th>Repartidor</th> <th>Correo</th><th>Teléfono</th></th><th>Producto</th> <th>Cantidad</th> </tr>';
+
+        if(count($repartidorfilter) == 0) {
+            foreach ($repartidores as $repartidor) {
+                $html .= "<tr>";
+                $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                $html .= "<td>" . $repartidor->user->email . "</td>";
+                $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                $html .= "<td></td>";
+                $html .= "<td></td>";
+                $html .= "</tr>";
+                foreach ($repartidor->productos as $producto) {
+                    $html .= "<tr>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td>" . $producto->nombre . "</td>";
+                    $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                    $html .= "</tr>";
+                }
+
+            }
+        }else{
+            foreach ($repartidorfilter as $repartidor) {
+                $html .= "<tr>";
+                $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                $html .= "<td>" . $repartidor->user->email . "</td>";
+                $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                $html .= "</tr>";
+                foreach ($repartidor->productos as $producto) {
+                    $html .= "<tr>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td>" . $producto->nombre . "</td>";
+                    $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                    $html .= "</tr>";
+                }
+
+            }
+        }
+        $html .='</table>';
+        header("Content-Type: application/xls");
+        header("Content-Disposition: attachment; filename=reportes.xls");
+        echo $html;
+    }
+
+
+    /**
+     * Función que genera un excel según la consulta.
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function generaExcelBodega(Request $request){
+        $telefono= $request->input('telefono');
+        $id= $request->input('invisibleid');
+        $repartidorfilter = DatosRepartidor::where('user_id','=', $id)->get();
+        $repartidores = DatosRepartidor::all();
+        $html = '<style>table {border-collapse: collapse;} table, th, td {border: 1px solid black;}</style><table class="table" bordered="1"><tr>';
+        $html.= '<th>Repartidor</th> <th>Correo</th><th>Teléfono</th></th><th>Producto</th> <th>Cantidad</th> </tr>';
+
+        if(count($repartidorfilter) == 0) {
+            foreach ($repartidores as $repartidor) {
+                $html .= "<tr>";
+                $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                $html .= "<td>" . $repartidor->user->email . "</td>";
+                $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                $html .= "<td></td>";
+                $html .= "<td></td>";
+                $html .= "</tr>";
+                foreach ($repartidor->productos as $producto) {
+                    $html .= "<tr>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td>" . $producto->nombre . "</td>";
+                    $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                    $html .= "</tr>";
+                }
+
+            }
+        }else{
+            foreach ($repartidorfilter as $repartidor) {
+                $html .= "<tr>";
+                $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                $html .= "<td>" . $repartidor->user->email . "</td>";
+                $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                $html .= "</tr>";
+                foreach ($repartidor->productos as $producto) {
+                    $html .= "<tr>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td>" . $producto->nombre . "</td>";
+                    $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                    $html .= "</tr>";
+                }
+
+            }
+        }
+        $html .='</table>';
+        header("Content-Type: application/xls");
+        header("Content-Disposition: attachment; filename=reportes.xls");
+        echo $html;
+    }
+
+
+    /**
+     * Función que genera un excel según la consulta.
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function generaExcelEntregado(Request $request){
+        $telefono= $request->input('telefono');
+        $id= $request->input('invisibleid');
+        $repartidorfilter = DatosRepartidor::where('user_id','=', $id)->get();
+        $repartidores = DatosRepartidor::all();
+        $html = '<style>table {border-collapse: collapse;} table, th, td {border: 1px solid black;}</style><table class="table" bordered="1"><tr>';
+        $html.= '<th>Repartidor</th> <th>Correo</th><th>Teléfono</th></th><th>Producto</th> <th>Cantidad</th> </tr>';
+
+        if(count($repartidorfilter) == 0) {
+            foreach ($repartidores as $repartidor) {
+                $html .= "<tr>";
+                $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                $html .= "<td>" . $repartidor->user->email . "</td>";
+                $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                $html .= "<td></td>";
+                $html .= "<td></td>";
+                $html .= "</tr>";
+                foreach ($repartidor->productos as $producto) {
+                    $html .= "<tr>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td>" . $producto->nombre . "</td>";
+                    $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                    $html .= "</tr>";
+                }
+
+            }
+        }else{
+            foreach ($repartidorfilter as $repartidor) {
+                $html .= "<tr>";
+                $html .= "<td>" . $repartidor->user->nombre . "</td>";
+                $html .= "<td>" . $repartidor->user->email . "</td>";
+                $html .= "<td>" . $repartidor->user->telefono . "</td>";
+                $html .= "</tr>";
+                foreach ($repartidor->productos as $producto) {
+                    $html .= "<tr>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                    $html .= "<td>" . $producto->nombre . "</td>";
+                    $html .= "<td>" . $producto->pivot->cantidad . "</td>";
+                    $html .= "</tr>";
+                }
+
+            }
+        }
+        $html .='</table>';
+        header("Content-Type: application/xls");
+        header("Content-Disposition: attachment; filename=reportes.xls");
+        echo $html;
+    }
+
+
+
 
 }

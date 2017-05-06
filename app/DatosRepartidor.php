@@ -28,7 +28,7 @@ class DatosRepartidor extends Model
 
     public function user(){
         return $this->belongsTo("App\User")->select(array(
-            'id','nombre', 'email', 'imagen_usuario'
+            'id','nombre', 'email', 'imagen_usuario','telefono'
         ));
     }
 }
