@@ -91,7 +91,7 @@
               </div>
           </div>
         </div>
-        <div class="col-md-10 col-md-offset-1">
+      <!--  <div class="col-md-10 col-md-offset-1">
           <div class="panel panel-default">
             <div class="panel-heading">
                   <div class="row">
@@ -125,7 +125,7 @@
                       <div class="col-md-6">
                       {!! Form::submit('Generar', array('class'=>'btn btn-primary firstReport')) !!}
                       <!-- <a href="{{url('/reportes/generar')}}"><button type="button" class="btn btn-primary halfleft">Generar</button></a>-->
-                      </div>
+                    <!--  </div>
                       <div class="col-md-6">
                           {{Form::label('nombre', ' ',array('class'=>'nombre') )}}
                           {{Form::close() }}
@@ -133,7 +133,7 @@
                   </div>
               </div>
           </div>
-        </div>
+        </div>-->
 
           <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">

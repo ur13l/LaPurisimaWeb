@@ -25,6 +25,8 @@ class GraficaController extends Controller
     }
 
 
+
+
     /**
      * Función que devuelve la vista principal para generar graficas.
      * @param Request $request
@@ -35,8 +37,9 @@ class GraficaController extends Controller
             $fecha = Carbon::now('America/Mexico_City');
             $anio = Carbon::now('America/Mexico_City')->year;
             $totales = array(0,0,0,0,0,0,0,0,0,0,0,0);
+            $pedidosarra = array(array());
            //año actual
-            $pedidos = Pedido::where('created_at','>=', $anio.'-01-01 00:00: 00')->get();
+            $pedidos = Pedido::where('created_at','>=', $anio.'-01-01 00:00: 00')->where('status','=','4')->get();
              foreach ($pedidos as $pedido){
                if($pedido->fecha >= $anio."-01"){
                  $totales[0]+= $pedido->total;
@@ -75,12 +78,11 @@ class GraficaController extends Controller
                  $totales[11]+= $pedido->total;
                   }
                 }
-            // return view('graficas.index', ['repartidores' => $repartidores]);
+              
              return view('graficas.index', ['totales' => $totales]);
          }
        return redirect()->action('HomeController@index');
      }
-
 
 
 

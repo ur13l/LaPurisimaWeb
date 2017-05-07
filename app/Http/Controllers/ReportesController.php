@@ -101,7 +101,7 @@ class ReportesController extends Controller
          $html.= "Repartidor ".$repartidorfilter[0]->user->nombre. " Teléfono ".$repartidorfilter[0]->user->telefono;
          $html.= '<th>Cliente</th> <th>Dirección</th><th>Fecha</th><th>Cantidad</th> </tr>';
          if($fecha == ""){
-         $pedidos = Pedido::where('conductor_id','=',$repartidorfilter[0]->user_id)->get();
+         $pedidos = Pedido::where('conductor_id','=',$repartidorfilter[0]->user_id)->where('status','=','4')->get();
          foreach ($pedidos as $pedido) {
            $html .= "<tr>";
            $html .= "<td>" . $pedido->cliente->nombre . "</td>";
@@ -112,7 +112,7 @@ class ReportesController extends Controller
          }
        }else{ //2017-05-01
          //dd($fecha.' 00:00:00');
-         $pedidosfilter = Pedido::where('created_at','>=', $fecha.' 00:00:00')->where('conductor_id','=',$repartidorfilter[0]->user_id)->get();
+         $pedidosfilter = Pedido::where('created_at','>=', $fecha.' 00:00:00')->where('conductor_id','=',$repartidorfilter[0]->user_id)->where('status','=','4')->get();
          if($pedidosfilter == "[]"){
          }else{
          foreach ($pedidosfilter as $pedido) {
@@ -139,7 +139,7 @@ class ReportesController extends Controller
         $html.= "Repartidor ".$repartidorfilter[0]->user->nombre. " Teléfono ".$repartidorfilter[0]->user->telefono;
         $html.= '<th>Cliente</th> <th>Dirección</th><th>Fecha</th><th>Producto</th><th>No. Productos</th><th>Cantidad</th> </tr>';
         if($fecha == ""){
-        $pedidos = Pedido::where('conductor_id','=',$repartidorfilter[0]->user_id)->get();
+        $pedidos = Pedido::where('conductor_id','=',$repartidorfilter[0]->user_id)->where('status','=','4')->get();
         foreach ($pedidos as $pedido) {
           $html .= "<tr>";
           $html .= "<td>" . $pedido->cliente->nombre . "</td>";
