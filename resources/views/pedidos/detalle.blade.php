@@ -71,7 +71,7 @@
                                             {{$pedido->tipo_pago_id == 1 ? "Efectivo" : "Tarjeta de crédito/débito"}}
                                         </td>
                                     </tr>
-                                    @if($pedido->tipo_pago_id == 1)
+                                    @if($pedido->tipo_pago_id == 1 && $pedido->cantidad_pago > 0)
                                         <tr>
                                             <th>Pago con</th>
                                             <td>
@@ -81,7 +81,7 @@
                                         <tr>
                                             <th>Cambio</th>
                                             <td>
-                                                ${{number_format($pedido->cantidad_pago - $pedido->total - $des1, 2)}}
+                                                ${{number_format($pedido->cantidad_pago - ($pedido->total - $des1), 2)}}
                                             </td>
                                         </tr>
                                     @endif
@@ -106,7 +106,7 @@
                                 <table class="table ">
                                     <tbody>
                                     <tr>
-                                        <td cladss="text-center" colspan="2"><img height="100" src="{{url("/".$pedido->cliente->imagen_usuario)}}" alt=""></td>
+                                        <td cladss="text-center" colspan="2"><img height="100" src="{{$pedido->cliente->imagen_usuario}}" alt=""></td>
                                     </tr>
                                     <tr>
                                         <th>Nombre</th>
@@ -115,6 +115,11 @@
                                     <tr>
                                         <th>Email</th>
                                         <td>{{$pedido->cliente->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            <a href="{{url('/pedidos')}}" class="btn btn-info col-xs-12" > Regresar a pedidos</a>
+                                        </th>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -246,6 +251,7 @@
                                             <th>Email</th>
                                             <td>{{$pedido->repartidor->email}}</td>
                                         </tr>
+
                                         </tbody>
                                     </table>
                                 @else

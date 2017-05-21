@@ -7,6 +7,8 @@
 
     <title>La Purísima</title>
 
+    <link rel="manifest" href="{{url('/manifest.json')}}">
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
@@ -50,7 +52,6 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Inicio</a></li>
                     @if (Auth::user())
                       @if (Auth::user()->tipo_usuario_id == 1)
                         <li><a href="{{ url('/productos') }}">Productos</a></li>
@@ -107,6 +108,67 @@
     <script type="text/javascript" src="{{url('/js/handlebars-v4.0.5.js')}}"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @yield('scripts')
+
+    <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAjGz9ssE5_rnubqRzf06xqr02C2Y2wEbg",
+        authDomain: "lapurisima-162004.firebaseapp.com",
+        databaseURL: "https://lapurisima-162004.firebaseio.com",
+        projectId: "lapurisima-162004",
+        storageBucket: "lapurisima-162004.appspot.com",
+        messagingSenderId: "684650354150"
+      };
+      firebase.initializeApp(config);
+
+      const messaging = firebase.messaging();
+
+      messaging.requestPermission()
+        .then(function() {
+          console.log('Notification permission granted.');
+          // TODO(developer): Retrieve an Instance ID token for use with FCM.
+          // ...
+          return messaging.getToken()
+
+        })
+        .catch(function(err) {
+          console.log('Unable to get permission to notify.', err);
+        });
+
+
+        // Get Instance ID token. Initially this makes a network call, once retrieved
+  // subsequent calls to getToken will return from cache.
+      messaging.getToken()
+      .then(function(currentToken) {
+        if (currentToken) {
+          sendTokenToServer(currentToken);
+        } else {
+          // Show permission request.
+          console.log('No Instance ID token available. Request permission to generate one.');
+          // Show permission UI.
+          setTokenSentToServer(false);
+        }
+      })
+      .catch(function(err) {
+        console.log('An error occurred while retrieving token. ', err);
+        //showToken('Error retrieving Instance ID token. ', err);
+        //setTokenSentToServer(false);
+      });
+
+      function sendTokenToServer(token) {
+        $.ajax({
+          url: '{{url('/token/register')}}',
+          method: 'POST',
+          data: {
+            token: token
+          },
+          success: function (data) {
+            console.log(data);
+          }
+        })
+      }
+    </script>
 
 </body>
 </html>

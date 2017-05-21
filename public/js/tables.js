@@ -226,7 +226,12 @@ function generarTablaUsuario(tipo){
             "orderable":      false,
             "searchable":     true,
             "render": function(data, type, full, meta) {
-              return '<img class="img-'+tipo+' img-circle" src="'+data+'" height="50" width="50" >'
+                if (data) {
+                    return '<img class="img-'+tipo+' img-circle" src="'+data+'" height="50" width="50" >';
+                }
+                else {
+                    return '<img class="img-'+tipo+' img-circle" src="/img/empty_placeholder.jpg" height="50" width="50" >'
+                }
             },
             "defaultContent": '<img class="img-'+tipo+' img-circle" src="img/default.png" height="48">'
         },
@@ -291,7 +296,12 @@ function generarTablaProductos(tipo){
             "orderable":      false,
             "searchable":     true,
             "render": function(data, type, full, meta) {
-                return '<img class="imagen img-circle" src="'+data+'" height="50" width="50">'
+                if(data) {
+                    return '<img class="imagen img-circle" src="' + data + '" height="50" width="50">';
+                }
+                else {
+                    return '<img class="imagen img-circle" src="/img/empty_placeholder.jpg" height="50" width="50">';
+                }
             },
             "defaultContent": '<img class="imagen" src="img/arrow-open.png" height="16">'
         },
@@ -324,7 +334,7 @@ function generarTablaProductos(tipo){
             "orderable":      false,
             "searchable":     true,
             "render" : function(data){
-                return `<a style="float:left;" href="producto/eliminar/${data}" class="close text-center center-block">&times</a></td>`
+                    return `<a style="float:left;" href="producto/eliminar/${data}" class="close text-center center-block">&times</a></td>`;
             }
         }
     ];

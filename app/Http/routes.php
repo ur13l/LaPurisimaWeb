@@ -11,8 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/', function () {
+        return view('pedidos.index');
+    });
 });
 
 
@@ -163,3 +166,5 @@ Route::group(['prefix' => 'reportes'], function(){
 Route::get('/productos', 'ProductoController@index');
 
 Route::get('/graficas', 'GraficaController@index');
+
+Route::post('/token/register', 'NotificacionController@registrar');
