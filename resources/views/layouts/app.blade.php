@@ -110,6 +110,9 @@
     @yield('scripts')
 
     <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase-messaging.js"></script>
+
     <script>
       // Initialize Firebase
       var config = {

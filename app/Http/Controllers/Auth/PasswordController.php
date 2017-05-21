@@ -66,7 +66,7 @@ class PasswordController extends Controller
         $response = Password::broker($broker)->sendResetLink(
             $this->getSendResetLinkEmailCredentials($request),
             function($message){
-              $message->subject("Reestablecer contraseña");
+              $message->subject("Restablecer contraseña");
             }
         );
 
