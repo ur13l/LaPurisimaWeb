@@ -19,7 +19,7 @@ class NotificacionController extends Controller
  public function registrar(Request $request) {
      $token = $request->input('token');
 
-     $tk = Token::where('token', $token);
+     $tk = Token::where('token', $token)->get()->first();
      if(!isset($tk)){
        Token::create([
          'token' => $token
