@@ -171,3 +171,4 @@ Route::get('/productos', 'ProductoController@index');
 Route::get('/graficas', 'GraficaController@index');
 
 Route::post('/token/register', 'NotificacionController@registrar');
+Route::get('/notificacion/enviar', 'NotificacionController@enviarNotificacion');

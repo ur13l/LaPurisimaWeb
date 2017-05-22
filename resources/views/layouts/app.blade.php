@@ -31,6 +31,7 @@
     </style>
 </head>
 <body id="app-layout">
+    {{csrf_field()}}
     <nav class="navbar navbar-default navbar-top">
         <div class="container">
             <div class="navbar-header">
@@ -159,12 +160,31 @@
         //setTokenSentToServer(false);
       });
 
+      // Callback fired if Instance ID token is updated.
+  messaging.onTokenRefresh(function() {
+    messaging.getToken()
+    .then(function(refreshedToken) {
+      console.log('Token refreshed.');
+      // Indicate that the new Instance ID token has not yet been sent to the
+      // app server.
+      //setTokenSentToServer(false);
+      // Send Instance ID token to app server.
+      sendTokenToServer(refreshedToken);
+      // ...
+    })
+    .catch(function(err) {
+      console.log('Unable to retrieve refreshed token ', err);
+      //showToken('Unable to retrieve refreshed token ', err);
+    });
+  });
+
       function sendTokenToServer(token) {
         $.ajax({
           url: '{{url('/token/register')}}',
           method: 'POST',
           data: {
-            token: token
+            token: token,
+            _token: $("[name=_token]").val()
           },
           success: function (data) {
             console.log(data);

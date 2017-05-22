@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Token;
+use App\Utils;
 use App\Http\Requests;
 
 class NotificacionController extends Controller
@@ -17,9 +18,13 @@ class NotificacionController extends Controller
   */
  public function registrar(Request $request) {
      $token = $request->input('token');
-     Token::create([
-       'token' => $token
-     ]);
+
+     $tk = Token::where('token', $token);
+     if(!isset($tk)){
+       Token::create([
+         'token' => $token
+       ]);
+     }
      return response()->json([
          "success" => true,
          "errors" => [],
@@ -27,5 +32,30 @@ class NotificacionController extends Controller
          "data" => true
      ]);
  }
+
+
+public function enviarNotificacion( Request $request ) {
+
+  $tokens = Token::pluck('token');
+ //Envío de las notificaciones a iOS y Android
+ $message = array(
+            'title' => "Título de prueba",
+            'body' => "Mensaje",
+            'link_url' => "",
+            'sound' => 'default',
+            'priority' => 'high',
+            'category' => 'URL_CATEGORY',
+            'tag' => ''
+          );
+        $message_status = \App\Utils\Notifications::sendNotification($tokens, $message, 'notification');
+        //Condición que se cumple si fueron enviados los mensajes.
+        if(isset($message_status)){
+          dd($message_status);
+        }
+
+
+  }
+
+
 
 }
