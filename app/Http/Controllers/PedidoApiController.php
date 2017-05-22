@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Token;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Pedido;
@@ -65,6 +66,22 @@ class PedidoApiController extends Controller
             $pedido->total = $total;
             $pedido->status = Pedido::SOLICITADO;
             $pedido->save();
+
+            $tokens = Token::pluck('token');
+            //Envío de las notificaciones a iOS y Android
+            $message = array(
+                'title' => "Nuevo Pedido",
+                'body' => "Nueva solicitud de pedido",
+                'link_url' => url('/pedidos'),
+                'sound' => 'default',
+                'priority' => 'high',
+                'category' => 'URL_CATEGORY',
+                'tag' => ''
+            );
+            $message_status = \App\Utils\Notifications::sendNotification($tokens, $message, 'notification');
+            //Condición que se cumple si fueron enviados los mensajes.
+            if(isset($message_status)){
+            }
 
             PromocionesController::aplicarPromociones($cliente->id,$detalles, $pedido);
             return response()->json([

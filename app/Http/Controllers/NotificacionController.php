@@ -50,7 +50,6 @@ public function enviarNotificacion( Request $request ) {
         $message_status = \App\Utils\Notifications::sendNotification($tokens, $message, 'notification');
         //Condición que se cumple si fueron enviados los mensajes.
         if(isset($message_status)){
-          dd($message_status);
         }
 
 
