@@ -151,7 +151,7 @@
           // Show permission request.
           console.log('No Instance ID token available. Request permission to generate one.');
           // Show permission UI.
-          setTokenSentToServer(false);
+          //setTokenSentToServer(false);
         }
       })
       .catch(function(err) {
