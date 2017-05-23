@@ -74,7 +74,7 @@ class PedidoApiController extends Controller
                 'body' => "Nueva solicitud de pedido",
                 'link_url' => url('/pedidos'),
                 'click_action' => url("/pedidos"),
-                'icon' => url('/img/logo-lapurisima'),
+                'icon' => "url('/img/logo-lapurisima')",
                 'sound' => 'default',
                 'priority' => 'high',
                 'category' => 'URL_CATEGORY',
