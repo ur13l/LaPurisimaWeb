@@ -74,7 +74,7 @@ class PedidoApiController extends Controller
                 'body' => "Nueva solicitud de pedido",
                 'link_url' => url('/pedidos'),
                 'click_action' => url("/pedidos"),
-                'image' => 'https://www.brightedge.com/blog/wp-content/uploads/2016/02/HTTPs.jpg',
+                'icon' => 'https://www.brightedge.com/blog/wp-content/uploads/2016/02/HTTPs.jpg',
                 'sound' => 'default',
                 'priority' => 'high',
                 'category' => 'URL_CATEGORY',
