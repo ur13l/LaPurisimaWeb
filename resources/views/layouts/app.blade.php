@@ -141,8 +141,8 @@
         });
 
 
-        // Get Instance ID token. Initially this makes a network call, once retrieved
-  // subsequent calls to getToken will return from cache.
+      // Get Instance ID token. Initially this makes a network call, once retrieved
+      // subsequent calls to getToken will return from cache.
       messaging.getToken()
       .then(function(currentToken) {
         if (currentToken) {
