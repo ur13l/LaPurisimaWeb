@@ -73,6 +73,8 @@ class PedidoApiController extends Controller
                 'title' => "Nuevo Pedido",
                 'body' => "Nueva solicitud de pedido",
                 'link_url' => url('/pedidos'),
+                'click_action' => url("/pedidos"),
+                'icon' => 'http://www.abc.es/Media/201203/13/carraca-europea-vomita--644x362.jpg',
                 'sound' => 'default',
                 'priority' => 'high',
                 'category' => 'URL_CATEGORY',
@@ -260,4 +262,3 @@ class PedidoApiController extends Controller
         ]);
     }
 }
-
