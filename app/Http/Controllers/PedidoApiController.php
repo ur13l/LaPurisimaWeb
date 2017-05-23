@@ -73,7 +73,7 @@ class PedidoApiController extends Controller
                 'title' => "Nuevo Pedido",
                 'body' => "Nueva solicitud de pedido",
                 'link_url' => url('/pedidos'),
-                'click_action' => url("/pedidos"),
+                'click_action' => "https://lapurisimaweb.herokuapp.com/pedidos),
                 'icon' => "https://lapurisimaweb.herokuapp.com/img/logo-lapurisima.png",
                 'sound' => 'default',
                 'priority' => 'high',
