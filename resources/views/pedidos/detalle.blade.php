@@ -200,7 +200,13 @@
 
                                             {{Form::close()}}
                                         </div> <div class="content-loading" style="display: none;"></div>
+
                                         <div class="row row-horizon repartidores-container"  style="overflow: hidden; text-align:center; white-space:nowrap;">
+                                          @if(count($repartidores) == 0)
+                                            <div class="col-xs-12">
+                                              No hay repartidores disponibles.
+                                            </div>
+                                          @endif
                                             @foreach($repartidores as $index => $repartidor)
                                                 @if($index >= 4)
                                                     <?php $display = 'none'; ?>
@@ -232,8 +238,16 @@
                                                 </div>
                                             @endforeach
                                         </div>
-                                        <div id="left-repartidor"><img src="{{url('/img/previous.png')}}" height="32" alt=""></div>
-                                        <div id="right-repartidor"><img src="{{url('/img/next.png')}}" height="32" alt=""></div>
+
+                                        @if(count($repartidores) > 0)
+                                          <?php $display = "inline"; ?>
+                                        @else
+                                          <?php $display = "none"; ?>
+
+                                        @endif
+                                          <div id="left-repartidor" style="display:{{$display}}"><img src="{{url('/img/previous.png')}}" height="32" alt=""></div>
+                                          <div id="right-repartidor" style="display:{{$display}}"><img src="{{url('/img/next.png')}}" height="32" alt=""></div>
+
                                         </div>
                                     </div>
                                 @elseif(isset($pedido->repartidor))
@@ -375,8 +389,15 @@
                     },
                     success:function(data){
                         firstPosition = 0;
-                        if(data == "")
-                            data = "<div style='height:128px; text-align:center'>No se encontraron registros</div>";
+                        if(data == "") {
+                          data = "<div style='height:128px; text-align:center'>No se encontraron registros</div>";
+                          $("#left-repartidor").hide();
+                          $("#right-repartidor").hide();
+                        }
+                        else {
+                          $("#left-repartidor").show();
+                          $("#right-repartidor").show();
+                        }
                         $(".repartidores-container").html(data);
                         $(".content-loading").hide();
                         $(".repartidores-container").show();

@@ -68,14 +68,14 @@ class PedidoController extends Controller
      */
     public function repartidores(Request $request){
         $search = $request->input('search');
-        $repartidores = User::where('tipo_usuario_id', '=', '2')->where('nombre', 'like', '%'.$search.'%')->paginate(100);
+        $repartidores = User::where('tipo_usuario_id', '=', '2')->join('datos_repartidores', 'users.id', '=', 'datos_repartidores.user_id')->where('status', 1)->where('nombre', 'like', '%'.$search.'%')->paginate(100);
         return view('layouts.repartidores', ['repartidores' => $repartidores]);
     }
 
     /**
     * @route /pedidos/nuevo
     * @param $request
-    * @return 
+    * @return
     */
     public function nuevoPedido(Request $request){
         $productos = Producto::all();

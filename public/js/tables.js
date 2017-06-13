@@ -33,8 +33,6 @@ var template = function (d, tipo){
         }
     }
 
-
-    console.log(d);
     return '<div class="row slider '+tipo+'">'+
         '<div class="col-xs-12 col-md-8" >'+
         '<h4>Detalle de pedido</h4>' +
@@ -320,7 +318,10 @@ function generarTablaProductos(tipo){
             "searchable":     true},
         {data: 'precio', name: 'precio',"className":'details-control-'+ tipo,
             "orderable":      false,
-            "searchable":     true},
+            "searchable":     true,
+            "render": function(data, type, full, meta) {
+              return "$" + Number(data).toFixed(2);
+            }},
         {data: 'id', name: 'editar',"className":'details-control-'+ tipo,
             "orderable":      false,
             "searchable":     true,
@@ -436,8 +437,3 @@ function generarTablaPromociones(tipo){
         order: []
     }
 }
-
-
-
-
-
