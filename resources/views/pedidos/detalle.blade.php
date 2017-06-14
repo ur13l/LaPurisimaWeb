@@ -358,7 +358,7 @@
                 }
             });
 
-            $(".repartidor-container").on('click', function(){
+            $(document).on('click', ".repartidor-container", function(){
                 var nombre = $($(this).find(".repartidor-nombre")).html();
                 var email = $($(this).find(".repartidor-email")).val();
                 var telefono = $($(this).find(".repartidor-telefono")).val();
