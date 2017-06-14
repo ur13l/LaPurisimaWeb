@@ -202,8 +202,12 @@ class PedidoController extends Controller
      * @return mixed
      */
     public function historialPedidosTable(Request $request){
-        $pedidos = Pedido::where('cliente_id', '=', $request->input('id'))->with('cliente')->with('detalles')
-            ->with('detalles.producto')->get();
+        $pedidos = Pedido::where('cliente_id', '=', $request->input('id'))
+        ->with('cliente')
+        ->with('detalles')
+        ->with('detallesDescuento')
+        ->with('detallesDescuento.desc')
+        ->with('detalles.producto')->get();
         return Datatables::of($pedidos)->make(true);
     }
 

@@ -92,6 +92,14 @@
                                                 <a href="{{url("/usuarios/editar/$user->id")}}" class="btn btn-primary">Editar perfil</a>
                                             </th>
                                         </tr>
+
+                                        @if($user->tipo_usuario_id == 2)
+                                        <tr>
+                                          <th class="text-center">
+                                              <a href="{{url("/usuarios/stock/$user->id")}}" class="btn btn-primary">Modificar stock</a>
+                                          </th>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

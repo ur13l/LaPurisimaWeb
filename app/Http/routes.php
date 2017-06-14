@@ -43,6 +43,8 @@ Route::group(['prefix' => 'usuarios'], function(){
     Route::get('/{id_user}', 'UserController@detalle');
     Route::get('/editar/{id_user}', 'UserController@editar');
     Route::get('/eliminar/{id_user}', 'UserController@eliminar');
+    Route::get('/stock/{id_user}', 'UserController@stockRepartidor');
+    Route::post('/stock/actualizar', 'UserController@actualizarStockRepartidor');
 });
 
 /**

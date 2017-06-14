@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Producto;
 
 use Yajra\Datatables\Datatables;
 
@@ -200,5 +201,86 @@ class UserController extends Controller
     }
 
 
+public function stockRepartidor($id) {
+  $usuario = User::find($id);
+  $dr = $usuario->datosRepartidor;
+  $productos = Producto::where('stock', '>', '0')->get();
+  if(isset($dr)) {
+    return view('usuarios.stock', ['user' =>$usuario, 'productos' => $productos]);
+  }
+
+  return redirect()->action('UserController@index' );
+
+}
+
+
+public function actualizarStockRepartidor (Request $request) {
+  $user = User::find($request->id);
+  $items = $request->productos;
+  $band = true;
+  $errors = [];
+  foreach($items as $item) {
+    if(!$this->tieneStock($item['cantidad'], $item['id'], $user)){
+      $band = false;
+      $producto = Producto::find($item['id']);
+      $errors[] = "No hay suficiente stock del producto " . $producto->nombre . ", solo hay ". $producto->stock . " disponibles.";
+    }
+  }
+
+  if($band) {
+    $this->updateStock($items, $user);
+    return response()->json([
+      'success' => true,
+      'errors' => $errors
+    ]);
+  }
+  return response()->json([
+    'success' => false,
+    'errors' => $errors
+  ]);
+}
+
+private function tieneStock($cantidad, $idProducto, $usuario) {
+  $producto = Producto::find($idProducto);
+  $stockActual = $usuario->datosRepartidor->productos->find($idProducto);
+  if(isset($stockActual)) {
+    $cantidad = $cantidad - $stockActual->pivot->cantidad;
+  }
+  else {
+    $cantidad = $cantidad;
+  }
+  if ($producto->stock >= $cantidad ){
+    return true;
+  }
+  return false;
+}
+
+
+private function updateStock($items, $user) {
+  foreach($items as $item) {
+    $producto = Producto::find($item['id']);
+    $stockActual = $user->datosRepartidor->productos->find($item['id']);
+    if(isset($stockActual)) {
+      $cantidad = $item['cantidad'] - $stockActual->pivot->cantidad;
+    }
+    else {
+      $cantidad = $item['cantidad'];
+    }
+    if ($producto->stock >= $cantidad ){
+      $producto->stock -= $cantidad;
+      $producto->save();
+      if(isset($stockActual)) {
+
+        $user->datosRepartidor->productos()->updateExistingPivot($item['id'], ['cantidad' => $stockActual->pivot->cantidad + $cantidad]);
+        $user->datosRepartidor->save();
+      }
+      else {
+        $user->datosRepartidor->productos()->attach($item['id']);
+        $user->datosRepartidor->productos()->updateExistingPivot($item['id'], ['cantidad' => $cantidad]);
+        $user->datosRepartidor->save();
+      }
+    }
+  }
+}
 
 }

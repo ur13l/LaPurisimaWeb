@@ -149,7 +149,17 @@ function generarTablaPedidos(tipo){
                 "orderable":      false,
                 "searchable":     true,
                 "data":           null,
-                "defaultContent": '<img class="img-'+tipo+'" src="img/arrow-open.png" height="16">'
+                "render": function (data) {
+                  if(location.href.search("pedidos") != -1) {
+                    return '<img class="img-'+tipo+'" src="img/arrow-open.png" height="16">';
+                  }
+                  else {
+
+                      return '<img class="img-'+tipo+'" src="../img/arrow-open.png" height="16">';
+                  }
+                }
+
+
             },
 
             {data: 'fecha', name: 'fecha',"className":'details-control-' + tipo,
@@ -198,10 +208,13 @@ function generarTablaPedidos(tipo){
                 "searchable":     true,
                 "render": function(data, type, full, meta){
                     var descuento = 0;
-                    for (var i = full.detalles_descuento.length - 1 ; i >= 0; i--){
-                        for(var j = full.detalles_descuento[i].cantidad -1; j>= 0; j--) {
-                            descuento += full.detalles_descuento[i].descuento;
-                        }
+                    console.log(full.detalles_descuento);
+                    if(full.detalles_descuento) {
+                      for (var i = full.detalles_descuento.length - 1 ; i >= 0; i--){
+                          for(var j = full.detalles_descuento[i].cantidad -1; j>= 0; j--) {
+                              descuento += full.detalles_descuento[i].descuento;
+                          }
+                      }
                     }
                     if(data)
                         return "$" + (data - descuento).toFixed(2);
