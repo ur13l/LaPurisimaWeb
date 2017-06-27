@@ -261,4 +261,30 @@ class PedidoApiController extends Controller
             "error" => $errors
         ]);
     }
+
+
+    public function pedidoEnCamino(Request $request){
+        $repartidor = Auth::guard('api')->user();
+        $pedido = Pedido::find($request->input('id_pedido'));
+        $errors = [];
+        $save = false;
+        if(isset($pedido)){
+            if($pedido->status == Pedido::ASIGNADO){
+                $pedido->status = Pedido::EN_CAMINO;
+                $save = $pedido->save();
+            }
+            else{
+                $errors[] = "invalid.state";
+            }
+            //Aquí se puede enviar una notificación push al conductor para indicar la cancelación de un envío.
+        }
+        else{
+            $errors[] = "unauthorized.user";
+        }
+        return response()->json([
+            "success"=> $save,
+            "error" => $errors
+        ]);
+    }
+
 }
