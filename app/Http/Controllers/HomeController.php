@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-      if(Request::secure()) {
+      if(!Request::secure()) {
         return redirect()->secure('/');
       }
         return view('pedidos.index');
